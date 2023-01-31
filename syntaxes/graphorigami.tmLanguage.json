@@ -9,6 +9,9 @@
       "include": "#comment"
     },
     {
+      "include": "#template-substitution"
+    },
+    {
       "include": "#operators"
     }
   ],
@@ -80,6 +83,12 @@
         },
         {
           "include": "#identifier"
+        },
+        {
+          "include": "#operators"
+        },
+        {
+          "include": "#separators"
         }
       ]
     },
@@ -112,7 +121,11 @@
     },
     "operators": {
       "name": "keyword.operator.graphorigami",
-      "match": "[=/:%]"
+      "match": "[=]"
+    },
+    "separators": {
+      "name": "punctuation.separator.graphorigami",
+      "match": "[\\/:%,]"
     },
     "string": {
       "name": "string.quoted.single.graphorigami",
@@ -156,13 +169,13 @@
       "begin": "\\{\\{",
       "beginCaptures": {
         "0": {
-          "name": "punctuation.definition.template-expression.begin.graphorigami"
+          "name": "support.constant.graphorigami"
         }
       },
       "end": "\\}\\}",
       "endCaptures": {
         "0": {
-          "name": "punctuation.definition.template-expression.end.graphorigami"
+          "name": "support.constant.graphorigami"
         }
       },
       "patterns": [
