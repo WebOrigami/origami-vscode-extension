@@ -1,19 +1,16 @@
 {
   "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
-  "name": "Graph Origami",
-  "scopeName": "source.graphorigami",
+  "name": "Graph Origami Template",
+  "scopeName": "text.html.graphorigami",
   "patterns": [
     {
-      "include": "#expression"
-    },
-    {
-      "include": "#comment"
+      "include": "#yfm"
     },
     {
       "include": "#template-substitution"
     },
     {
-      "include": "#operators"
+      "include": "text.html.basic"
     }
   ],
   "repository": {
@@ -113,7 +110,7 @@
       ]
     },
     "identifier": {
-      "name": "variable.graphorigami",
+      "name": "variable.parameter.graphorigami",
       "match": "[^=\\(\\)\\{\\}\\[\\]\\$\\\"\\'\\/:`%,#\\s]+"
     },
     "number": {
@@ -182,6 +179,20 @@
       "patterns": [
         {
           "include": "#expression"
+        }
+      ]
+    },
+    "yfm": {
+      "patterns": [
+        {
+          "patterns": [
+            {
+              "include": "source.yaml"
+            }
+          ],
+          "begin": "(?<!\\s)---\\n$",
+          "end": "^---\\s",
+          "name": "markup.raw.yaml.front-matter"
         }
       ]
     }

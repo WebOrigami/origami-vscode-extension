@@ -10,16 +10,41 @@
     "Programming Languages"
   ],
   "contributes": {
-    "languages": [{
-      "id": "graphorigami",
-      "aliases": ["Graph Origami", "graphorigami"],
-      "extensions": [".graph",".ori"],
-      "configuration": "./language-configuration.json"
-    }],
-    "grammars": [{
-      "language": "graphorigami",
-      "scopeName": "source.graphorigami",
-      "path": "./syntaxes/graphorigami.tmLanguage.json"
-    }]
+    "languages": [
+      {
+        "id": "graphorigami",
+        "aliases": [
+          "Graph Origami",
+          "graphorigami"
+        ],
+        "extensions": [
+          ".graph"
+        ],
+        "configuration": "./language-configuration.json"
+      },
+      {
+        "id": "graphorigamitemplate",
+        "aliases": [
+          "Graph Origami Template",
+          "graphorigamitemplate"
+        ],
+        "extensions": [
+          ".ori"
+        ],
+        "configuration": "./language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "graphorigami",
+        "scopeName": "source.graphorigami",
+        "path": "./syntaxes/graphorigami.tmLanguage.json"
+      },
+      {
+        "language": "graphorigamitemplate",
+        "scopeName": "text.html.graphorigami",
+        "path": "./syntaxes/graphorigami.template.tmLanguage.json"
+      }
+    ]
   }
 }
