@@ -1,14 +1,9 @@
-lambda
-templateLiteral
-graph
-object
-functionComposition
-urlProtocolCall
-protocolCall
-slashCall
-percentCall
-group
-getReference
+front matter
 
+different grammar for .graph vs .ori
 
-`Hello, {{ name }}!`
+# Sample graph
+index.html = `Hello, {{ name }}!`
+name = teamData.yaml/0/name
+message = greet(name)
+data = https://example.com/teamData.yaml

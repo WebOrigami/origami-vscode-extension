@@ -7,6 +7,9 @@
     },
     {
       "include": "#comment"
+    },
+    {
+      "include": "#operators"
     }
   ],
   "repository": {
@@ -34,6 +37,18 @@
         }
       ]
     },
+    "assignment": {
+      "name": "variable.graphorigami",
+      "match": "([^=\\(\\)\\{\\}\\[\\]\\$\\\"\\'\\/:`%,#\\s]+)\\s*(=)",
+      "captures": {
+        "1": {
+          "name": "entity.name.tag.graphorigami"
+        },
+        "2": {
+          "name": "keyword.operator.graphorigami"
+        }
+      }
+    },
     "comment": {
       "name": "comment.line.graphorigami",
       "begin": "#",
@@ -56,12 +71,48 @@
         },
         {
           "include": "#template-literal"
+        },
+        {
+          "include": "#group"
+        },
+        {
+          "include": "#assignment"
+        },
+        {
+          "include": "#identifier"
         }
       ]
+    },
+    "group": {
+      "begin": "\\(",
+      "beginCaptures": {
+        "0": {
+          "name": "meta.brace.round.js"
+        }
+      },
+      "end": "\\)",
+      "endCaptures": {
+        "0": {
+          "name": "meta.brace.round.js"
+        }
+      },
+      "patterns": [
+        {
+          "include": "#expression"
+        }
+      ]
+    },
+    "identifier": {
+      "name": "variable.graphorigami",
+      "match": "[^=\\(\\)\\{\\}\\[\\]\\$\\\"\\'\\/:`%,#\\s]+"
     },
     "number": {
       "match": "(?x)        # turn on extended mode\n  -?        # an optional minus\n  (?:\n    0       # a zero\n    |       # ...or...\n    [1-9]   # a 1-9 character\n    \\d*     # followed by zero or more digits\n  )\n  (?:\n    (?:\n      \\.    # a period\n      \\d+   # followed by one or more digits\n    )?\n    (?:\n      [eE]  # an e character\n      [+-]? # followed by an option +/-\n      \\d+   # followed by one or more digits\n    )?      # make exponent optional\n  )?        # make decimal portion optional",
       "name": "constant.numeric.graphorigami"
+    },
+    "operators": {
+      "name": "keyword.operator.graphorigami",
+      "match": "[=/:%]"
     },
     "string": {
       "name": "string.quoted.single.graphorigami",
