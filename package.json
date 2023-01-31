@@ -1,0 +1,25 @@
+{
+  "name": "graph-origami",
+  "displayName": "Graph Origami",
+  "description": "Language support for the Graph Origami expression language",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.74.0"
+  },
+  "categories": [
+    "Programming Languages"
+  ],
+  "contributes": {
+    "languages": [{
+      "id": "graphorigami",
+      "aliases": ["Graph Origami", "graphorigami"],
+      "extensions": [".graph",".ori"],
+      "configuration": "./language-configuration.json"
+    }],
+    "grammars": [{
+      "language": "graphorigami",
+      "scopeName": "source.graphorigami",
+      "path": "./syntaxes/graphorigami.tmLanguage.json"
+    }]
+  }
+}
