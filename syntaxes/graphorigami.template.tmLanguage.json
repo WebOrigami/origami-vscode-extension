@@ -155,15 +155,15 @@
       },
       "patterns": [
         {
-          "include": "#string-character-escape"
+          "include": "#template-substitution"
         },
         {
-          "include": "#template-substitution"
+          "include": "text.html.basic"
         }
       ]
     },
     "template-substitution": {
-      "name": "string.interpolated.graphorigami variable.parameter.graphorigami",
+      "name": "string.interpolated.graphorigami",
       "begin": "\\{\\{",
       "beginCaptures": {
         "0": {

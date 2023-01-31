@@ -158,10 +158,10 @@
       },
       "patterns": [
         {
-          "include": "#string-character-escape"
+          "include": "#template-substitution"
         },
         {
-          "include": "#template-substitution"
+          "include": "#string-character-escape"
         }
       ]
     },
