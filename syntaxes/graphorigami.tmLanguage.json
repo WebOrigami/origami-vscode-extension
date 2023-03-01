@@ -65,31 +65,34 @@
           "include": "#array"
         },
         {
+          "include": "#assignment"
+        },
+        {
           "include": "#comment"
-        },
-        {
-          "include": "#number"
-        },
-        {
-          "include": "#string"
-        },
-        {
-          "include": "#template-literal"
         },
         {
           "include": "#group"
         },
         {
-          "include": "#assignment"
+          "include": "#identifier"
         },
         {
-          "include": "#identifier"
+          "include": "#number"
         },
         {
           "include": "#operators"
         },
         {
           "include": "#separators"
+        },
+        {
+          "include": "#string-double-quote"
+        },
+        {
+          "include": "#string-single-quote"
+        },
+        {
+          "include": "#template-literal"
         }
       ]
     },
@@ -128,7 +131,21 @@
       "name": "punctuation.separator.graphorigami",
       "match": "[\\/:%,]"
     },
-    "string": {
+    "string-character-escape": {
+      "name": "constant.character.escape.graphorigami",
+      "match": "\\\\(x[0-9A-Fa-f]{2}|u[0-9A-Fa-f]{4}|u\\{[0-9A-Fa-f]+\\}|[0-2][0-7]{0,2}|3[0-6][0-7]?|37[0-7]?|[4-7][0-7]?|.|$)"
+    },
+    "string-double-quote": {
+      "name": "string.quoted.double.graphorigami",
+      "begin": "\"",
+      "end": "\"",
+      "patterns": [
+        {
+          "include": "#string-character-escape"
+        }
+      ]
+    },
+    "string-single-quote": {
       "name": "string.quoted.single.graphorigami",
       "begin": "'",
       "end": "'",
@@ -137,10 +154,6 @@
           "include": "#string-character-escape"
         }
       ]
-    },
-    "string-character-escape": {
-      "name": "constant.character.escape.graphorigami",
-      "match": "\\\\(x[0-9A-Fa-f]{2}|u[0-9A-Fa-f]{4}|u\\{[0-9A-Fa-f]+\\}|[0-2][0-7]{0,2}|3[0-6][0-7]?|37[0-7]?|[4-7][0-7]?|.|$)"
     },
     "template-literal": {
       "name": "string.template.graphorigami",
