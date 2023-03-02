@@ -1,8 +1,8 @@
 {
-  "name": "graph-origami",
+  "name": "origami-vscode-extension",
   "version": "0.0.1",
-  "displayName": "Graph Origami",
-  "description": "Language support for the Graph Origami expression language",
+  "displayName": "Graph Origami VS Code Extension",
+  "description": "Language support for Graph Origami",
   "repository": {
     "type": "git",
     "url": "https://github.com/GraphOrigami/origami-vscode-extension"
