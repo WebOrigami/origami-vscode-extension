@@ -1,5 +1,5 @@
 {
-  "name": "origami-vscode-extension",
+  "name": "@graphorigami/origami-vscode-extension",
   "version": "0.0.1",
   "displayName": "Graph Origami VS Code Extension",
   "description": "Language support for Graph Origami",
