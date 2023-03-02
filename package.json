@@ -1,5 +1,5 @@
 {
-  "name": "@graphorigami/origami-vscode-extension",
+  "name": "origami-vscode-extension",
   "version": "0.0.1",
   "displayName": "Graph Origami VS Code Extension",
   "description": "Language support for Graph Origami",
@@ -15,6 +15,9 @@
   ],
   "scripts": {
     "build": "mkdir -p build; vsce package --out build/graph-origami.vsix"
+  },
+  "devDependencies": {
+    "@vscode/vsce": "2.18.0"
   },
   "contributes": {
     "languages": [
