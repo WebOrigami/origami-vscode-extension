@@ -50,6 +50,10 @@
         }
       }
     },
+    "builtin": {
+      "name": "keyword.graphorigami",
+      "match": "@[^=\\(\\)\\{\\}\\[\\]\\$\\\"\\'\\/:`%,#\\s]+"
+    },
     "comment": {
       "name": "comment.line.graphorigami",
       "begin": "#",
@@ -63,6 +67,9 @@
         },
         {
           "include": "#assignment"
+        },
+        {
+          "include": "#builtin"
         },
         {
           "include": "#comment"
