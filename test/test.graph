@@ -1,5 +1,0 @@
-# Sample graph
-index.html = `Hello, {{ name }}!`
-name = teamData.yaml/0/name
-message = greet(name)
-data = https://example.com/teamData.yaml

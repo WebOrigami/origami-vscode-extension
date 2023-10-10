@@ -28,7 +28,7 @@
           "graphorigami"
         ],
         "extensions": [
-          ".graph"
+          ".ori"
         ],
         "configuration": "./language-configuration.json"
       },
@@ -39,7 +39,7 @@
           "graphorigamitemplate"
         ],
         "extensions": [
-          ".ori"
+          ".orit"
         ],
         "configuration": "./language-configuration.json"
       }
