@@ -13,14 +13,18 @@
   "categories": [
     "Programming Languages"
   ],
-  "type": "commonjs",
-  "main": "./src/extension.js",
+  "main": "./out/src/extension",
   "scripts": {
-    "build": "mkdir -p build; vsce package --out build/graph-origami.vsix"
+    "build": "mkdir -p build; vsce package --out build/graph-origami.vsix",
+    "compile": "tsc",
+    "vscode:prepublish": "npm run compile",
+    "watch": "tsc -watch"
   },
   "devDependencies": {
+    "@types/node": "20.8.10",
     "@vscode/vsce": "2.22.0",
-    "@types/vscode": "1.83.1"
+    "@types/vscode": "1.83.1",
+    "typescript": "5.2.2"
   },
   "activationEvents": [
     "onFileSystem:treefs"

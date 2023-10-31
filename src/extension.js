@@ -1,10 +1,10 @@
-const vscode = require("vscode");
-const { TreeFS } = require("./TreeFS");
+import * as vscode from "vscode";
+import { TreeFS } from "./TreeFS.js";
 
 /**
  * @param {import("vscode").ExtensionContext} context
- */
-function activate(context) {
+ export */
+export function activate(context) {
   console.log("activate");
 
   const treeFs = new TreeFS();
@@ -18,20 +18,18 @@ function activate(context) {
     vscode.commands.registerCommand("treefs.init", () => {
       console.log("treefs.init");
 
-      if (initialized) {
-        return;
-      }
-      initialized = true;
+      if (!initialized) {
+        treeFs.writeFile(
+          vscode.Uri.parse(`treefs:/file.txt`),
+          Buffer.from("Hello, world."),
+          {
+            create: true,
+            overwrite: true,
+          }
+        );
 
-      // most common files types
-      treeFs.writeFile(
-        vscode.Uri.parse(`treefs:/file.txt`),
-        Buffer.from("Hello, world."),
-        {
-          create: true,
-          overwrite: true,
-        }
-      );
+        initialized = true;
+      }
 
       vscode.workspace.updateWorkspaceFolders(0, 0, {
         uri: vscode.Uri.parse("treefs:/"),
@@ -40,7 +38,3 @@ function activate(context) {
     })
   );
 }
-
-module.exports = {
-  activate,
-};

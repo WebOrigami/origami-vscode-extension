@@ -1,12 +1,12 @@
-const path = require("path");
-const vscode = require("vscode");
+import * as path from "node:path";
+import * as vscode from "vscode";
 
 /** @typedef {File | Directory} Entry */
 
 /**
  * @implements {vscode.FileStat}
  */
-class File {
+export class File {
   /**
    * @param {string} name
    */
@@ -34,7 +34,7 @@ class File {
 /**
  * @implements {vscode.FileStat}
  */
-class Directory {
+export class Directory {
   /**
    * @param {string} name
    */
@@ -68,7 +68,7 @@ class Directory {
  *
  * @implements {vscode.FileSystemProvider}
  */
-class TreeFS {
+export class TreeFS {
   root = new Directory("");
 
   /**
@@ -310,9 +310,3 @@ class TreeFS {
     }, 5);
   }
 }
-
-module.exports = {
-  File,
-  Directory,
-  TreeFS,
-};
