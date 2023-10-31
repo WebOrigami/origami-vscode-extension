@@ -1,5 +1,12 @@
 import * as path from "node:path";
 import * as vscode from "vscode";
+// import Tree from "./async-tree/Tree.js";
+
+// const test = Tree.from({
+//   "hello.txt": "Hello, world.",
+// });
+
+console.log("loaded?!?");
 
 /** @typedef {File | Directory} Entry */
 
@@ -117,7 +124,7 @@ export class TreeFS {
    *
    * @param {vscode.Uri} uri
    */
-  readDirectory(uri) {
+  async readDirectory(uri) {
     const entry = this._lookupAsDirectory(uri, false);
     /** type {[string, vscode.FileType][]} */
     const result = [];
@@ -157,7 +164,13 @@ export class TreeFS {
    * @param {Uint8Array} content
    * @param {{ create: boolean, overwrite: boolean }} options
    */
-  writeFile(uri, content, options) {
+  async writeFile(uri, content, options) {
+    // const { Tree } = await import("@graphorigami/async-tree");
+    // console.log("loaded?!?");
+    // const test = Tree.from({
+    //   "hello.txt": "Hello, world.",
+    // });
+
     const basename = path.posix.basename(uri.path);
     const parent = this._lookupParentDirectory(uri);
     let entry = parent.entries.get(basename);

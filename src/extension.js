@@ -12,24 +12,23 @@ export function activate(context) {
   context.subscriptions.push(
     vscode.workspace.registerFileSystemProvider("treefs", treeFs)
   );
-  let initialized = false;
 
   context.subscriptions.push(
     vscode.commands.registerCommand("treefs.init", () => {
       console.log("treefs.init");
 
-      if (!initialized) {
-        treeFs.writeFile(
-          vscode.Uri.parse(`treefs:/file.txt`),
-          Buffer.from("Hello, world."),
-          {
-            create: true,
-            overwrite: true,
-          }
-        );
+      const root = treeFs.root;
+      root.entries = new Map();
+      root.size = 0;
 
-        initialized = true;
-      }
+      treeFs.writeFile(
+        vscode.Uri.parse(`treefs:/file.txt`),
+        Buffer.from("Hello, world."),
+        {
+          create: true,
+          overwrite: true,
+        }
+      );
 
       vscode.workspace.updateWorkspaceFolders(0, 0, {
         uri: vscode.Uri.parse("treefs:/"),

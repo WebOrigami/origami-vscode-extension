@@ -20,6 +20,9 @@
     "vscode:prepublish": "npm run compile",
     "watch": "tsc -watch"
   },
+  "dependencies": {
+    "@graphorigami/async-tree": "https://gitpkg.now.sh/GraphOrigami/origami/async-tree?ae6dcffb"
+  },
   "devDependencies": {
     "@types/node": "20.8.10",
     "@vscode/vsce": "2.22.0",
