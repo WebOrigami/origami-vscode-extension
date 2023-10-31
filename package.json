@@ -8,18 +8,31 @@
     "url": "https://github.com/GraphOrigami/origami-vscode-extension"
   },
   "engines": {
-    "vscode": "^1.74.0"
+    "vscode": "^1.75.0"
   },
   "categories": [
     "Programming Languages"
   ],
+  "type": "commonjs",
+  "main": "./src/extension.js",
   "scripts": {
     "build": "mkdir -p build; vsce package --out build/graph-origami.vsix"
   },
   "devDependencies": {
-    "@vscode/vsce": "2.18.0"
+    "@vscode/vsce": "2.22.0",
+    "@types/vscode": "1.83.1"
   },
+  "activationEvents": [
+    "onFileSystem:treefs"
+  ],
   "contributes": {
+    "commands": [
+      {
+        "command": "treefs.init",
+        "title": "Init TreeFS",
+        "category": "TreeFS"
+      }
+    ],
     "languages": [
       {
         "id": "graphorigami",
