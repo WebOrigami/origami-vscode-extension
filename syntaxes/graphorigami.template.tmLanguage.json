@@ -1,6 +1,6 @@
 {
   "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
-  "name": "Graph Origami Template",
+  "name": "Web Origami Template",
   "scopeName": "text.html.graphorigami",
   "patterns": [
     {

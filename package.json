@@ -1,8 +1,8 @@
 {
   "name": "origami-vscode-extension",
   "version": "0.0.1",
-  "displayName": "Graph Origami VS Code Extension",
-  "description": "Language support for Graph Origami",
+  "displayName": "Web Origami VS Code Extension",
+  "description": "Language support for Web Origami",
   "repository": {
     "type": "git",
     "url": "https://github.com/GraphOrigami/origami-vscode-extension"
@@ -24,7 +24,7 @@
       {
         "id": "graphorigami",
         "aliases": [
-          "Graph Origami",
+          "Web Origami",
           "graphorigami"
         ],
         "extensions": [
@@ -35,7 +35,7 @@
       {
         "id": "graphorigamitemplate",
         "aliases": [
-          "Graph Origami Template",
+          "Web Origami Template",
           "graphorigamitemplate"
         ],
         "extensions": [
