@@ -1,7 +1,7 @@
 {
   "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
-  "name": "Web Origami",
-  "scopeName": "source.graphorigami",
+  "name": "Origami",
+  "scopeName": "source.origami",
   "patterns": [
     {
       "include": "#expression"
@@ -21,49 +21,49 @@
       "begin": "\\[",
       "beginCaptures": {
         "0": {
-          "name": "punctuation.definition.array.begin.graphorigami"
+          "name": "punctuation.definition.array.begin.origami"
         }
       },
       "end": "\\]",
       "endCaptures": {
         "0": {
-          "name": "punctuation.definition.array.end.graphorigami"
+          "name": "punctuation.definition.array.end.origami"
         }
       },
-      "name": "meta.structure.array.graphorigami",
+      "name": "meta.structure.array.origami",
       "patterns": [
         {
           "include": "#expression"
         },
         {
           "match": ",",
-          "name": "punctuation.separator.array.graphorigami"
+          "name": "punctuation.separator.array.origami"
         }
       ]
     },
     "assignment": {
-      "name": "variable.graphorigami",
+      "name": "variable.origami",
       "match": "([^=\\(\\)\\{\\}\\[\\]\\$\\\"\\'\\/:`%,#\\s]+)\\s*(=)",
       "captures": {
         "1": {
-          "name": "entity.name.tag.graphorigami"
+          "name": "entity.name.tag.origami"
         },
         "2": {
-          "name": "keyword.operator.graphorigami"
+          "name": "keyword.operator.origami"
         }
       }
     },
     "builtin": {
-      "name": "keyword.graphorigami",
+      "name": "keyword.origami",
       "match": "@[^=\\(\\)\\{\\}\\[\\]\\$\\\"\\'\\/:`%,#\\s]+"
     },
     "comment": {
-      "name": "comment.line.graphorigami",
+      "name": "comment.line.origami",
       "begin": "#",
       "end": "$"
     },
     "expression": {
-      "name": "meta.expression.graphorigami",
+      "name": "meta.expression.origami",
       "patterns": [
         {
           "include": "#array"
@@ -123,27 +123,27 @@
       ]
     },
     "identifier": {
-      "name": "variable.graphorigami",
+      "name": "variable.origami",
       "match": "[^=\\(\\)\\{\\}\\[\\]\\$\\\"\\'\\/:`%,#\\s]+"
     },
     "number": {
       "match": "(?x)        # turn on extended mode\n  -?        # an optional minus\n  (?:\n    0       # a zero\n    |       # ...or...\n    [1-9]   # a 1-9 character\n    \\d*     # followed by zero or more digits\n  )\n  (?:\n    (?:\n      \\.    # a period\n      \\d+   # followed by one or more digits\n    )?\n    (?:\n      [eE]  # an e character\n      [+-]? # followed by an option +/-\n      \\d+   # followed by one or more digits\n    )?      # make exponent optional\n  )?        # make decimal portion optional",
-      "name": "constant.numeric.graphorigami"
+      "name": "constant.numeric.origami"
     },
     "operators": {
-      "name": "keyword.operator.graphorigami",
+      "name": "keyword.operator.origami",
       "match": "[=]"
     },
     "separators": {
-      "name": "punctuation.separator.graphorigami",
+      "name": "punctuation.separator.origami",
       "match": "[\\/:%,]"
     },
     "string-character-escape": {
-      "name": "constant.character.escape.graphorigami",
+      "name": "constant.character.escape.origami",
       "match": "\\\\(x[0-9A-Fa-f]{2}|u[0-9A-Fa-f]{4}|u\\{[0-9A-Fa-f]+\\}|[0-2][0-7]{0,2}|3[0-6][0-7]?|37[0-7]?|[4-7][0-7]?|.|$)"
     },
     "string-double-quote": {
-      "name": "string.quoted.double.graphorigami",
+      "name": "string.quoted.double.origami",
       "begin": "\"",
       "end": "\"",
       "patterns": [
@@ -153,7 +153,7 @@
       ]
     },
     "string-single-quote": {
-      "name": "string.quoted.single.graphorigami",
+      "name": "string.quoted.single.origami",
       "begin": "'",
       "end": "'",
       "patterns": [
@@ -163,17 +163,17 @@
       ]
     },
     "template-literal": {
-      "name": "string.template.graphorigami",
+      "name": "string.template.origami",
       "begin": "`",
       "beginCaptures": {
         "0": {
-          "name": "punctuation.definition.string.template.begin.graphorigami"
+          "name": "punctuation.definition.string.template.begin.origami"
         }
       },
       "end": "`",
       "endCaptures": {
         "0": {
-          "name": "punctuation.definition.string.template.end.graphorigami"
+          "name": "punctuation.definition.string.template.end.origami"
         }
       },
       "patterns": [
@@ -182,21 +182,24 @@
         },
         {
           "include": "#string-character-escape"
+        },
+        {
+          "include": "text.html.basic"
         }
       ]
     },
     "template-substitution": {
-      "name": "string.interpolated.graphorigami variable.parameter.graphorigami",
+      "name": "string.interpolated.origami variable.parameter.origami",
       "begin": "\\{\\{",
       "beginCaptures": {
         "0": {
-          "name": "support.constant.graphorigami"
+          "name": "support.constant.origami"
         }
       },
       "end": "\\}\\}",
       "endCaptures": {
         "0": {
-          "name": "support.constant.graphorigami"
+          "name": "support.constant.origami"
         }
       },
       "patterns": [

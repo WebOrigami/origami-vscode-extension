@@ -9,5 +9,5 @@ Alternatively, you can build the project into an installable `.vsix` file:
 
 ```console
 $ npm run build
-$ code --install-extension build/graph-origami.vsix
+$ code --install-extension build/origami.vsix
 ```

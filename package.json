@@ -1,11 +1,11 @@
 {
   "name": "origami-vscode-extension",
   "version": "0.0.1",
-  "displayName": "Web Origami VS Code Extension",
-  "description": "Language support for Web Origami",
+  "displayName": "Origami language support",
+  "description": "Language support for the Origami language",
   "repository": {
     "type": "git",
-    "url": "https://github.com/GraphOrigami/origami-vscode-extension"
+    "url": "https://github.com/WebOrigami/origami-vscode-extension"
   },
   "engines": {
     "vscode": "^1.74.0"
@@ -14,7 +14,7 @@
     "Programming Languages"
   ],
   "scripts": {
-    "build": "mkdir -p build; vsce package --out build/graph-origami.vsix"
+    "build": "mkdir -p build; vsce package --out build/origami.vsix"
   },
   "devDependencies": {
     "@vscode/vsce": "2.18.0"
@@ -22,38 +22,22 @@
   "contributes": {
     "languages": [
       {
-        "id": "graphorigami",
+        "id": "origami",
         "aliases": [
-          "Web Origami",
-          "graphorigami"
+          "Origami",
+          "Web Origami"
         ],
         "extensions": [
           ".ori"
-        ],
-        "configuration": "./language-configuration.json"
-      },
-      {
-        "id": "graphorigamitemplate",
-        "aliases": [
-          "Web Origami Template",
-          "graphorigamitemplate"
-        ],
-        "extensions": [
-          ".orit"
         ],
         "configuration": "./language-configuration.json"
       }
     ],
     "grammars": [
       {
-        "language": "graphorigami",
-        "scopeName": "source.graphorigami",
-        "path": "./syntaxes/graphorigami.tmLanguage.json"
-      },
-      {
-        "language": "graphorigamitemplate",
-        "scopeName": "text.html.graphorigami",
-        "path": "./syntaxes/graphorigami.template.tmLanguage.json"
+        "language": "origami",
+        "scopeName": "source.origami",
+        "path": "./syntaxes/origami.tmLanguage.json"
       }
     ]
   }
