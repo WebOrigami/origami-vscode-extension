@@ -124,7 +124,7 @@
     },
     "identifier": {
       "name": "variable.origami",
-      "match": "[^=\\(\\)\\{\\}\\[\\]\\$\\\"\\'\\/:`%,#\\s]+"
+      "match": "[^=\\(\\)\\{\\}\\[\\]<>\\$\\\"\\'\\/:`%,#\\s]+"
     },
     "number": {
       "match": "(?x)        # turn on extended mode\n  -?        # an optional minus\n  (?:\n    0       # a zero\n    |       # ...or...\n    [1-9]   # a 1-9 character\n    \\d*     # followed by zero or more digits\n  )\n  (?:\n    (?:\n      \\.    # a period\n      \\d+   # followed by one or more digits\n    )?\n    (?:\n      [eE]  # an e character\n      [+-]? # followed by an option +/-\n      \\d+   # followed by one or more digits\n    )?      # make exponent optional\n  )?        # make decimal portion optional",
@@ -132,7 +132,7 @@
     },
     "operators": {
       "name": "keyword.operator.origami",
-      "match": "[=]"
+      "match": "=>|="
     },
     "separators": {
       "name": "punctuation.separator.origami",
@@ -181,6 +181,9 @@
           "include": "#template-substitution"
         },
         {
+          "include": "#template-substitution-js"
+        },
+        {
           "include": "#string-character-escape"
         },
         {
@@ -197,6 +200,26 @@
         }
       },
       "end": "\\}\\}",
+      "endCaptures": {
+        "0": {
+          "name": "support.constant.origami"
+        }
+      },
+      "patterns": [
+        {
+          "include": "#expression"
+        }
+      ]
+    },
+    "template-substitution-js": {
+      "name": "string.interpolated.origami variable.parameter.origami",
+      "begin": "\\$\\{",
+      "beginCaptures": {
+        "0": {
+          "name": "support.constant.origami"
+        }
+      },
+      "end": "\\}",
       "endCaptures": {
         "0": {
           "name": "support.constant.origami"
