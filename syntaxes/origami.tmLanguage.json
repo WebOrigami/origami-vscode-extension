@@ -58,9 +58,18 @@
       "match": "@[^=\\(\\)\\{\\}\\[\\]\\$\\\"\\'\\/:`%,#\\s]+"
     },
     "comment": {
-      "name": "comment.line.origami",
-      "begin": "#",
-      "end": "$"
+      "patterns": [
+        {
+          "name": "comment.line.origami",
+          "begin": "(^|\\s)//",
+          "end": "$"
+        },
+        {
+          "name": "comment.block.origami",
+          "begin": "/\\*",
+          "end": "\\*/"
+        }
+      ]
     },
     "expression": {
       "name": "meta.expression.origami",

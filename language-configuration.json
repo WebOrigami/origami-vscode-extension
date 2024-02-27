@@ -1,23 +1,26 @@
 {
   "comments": {
-    // symbol used for single line comment. Remove this entry if your language does not support line comments
-    "lineComment": "#"
+    "lineComment": "//",
+    "blockComment": ["/*", "*/"]
   },
   // symbols used as brackets
   "brackets": [
+    ["${", "}"],
     ["{", "}"],
     ["[", "]"],
     ["(", ")"]
   ],
   // symbols that are auto closed when typing
   "autoClosingPairs": [
-    ["{", "}"],
-    ["[", "]"],
-    ["(", ")"],
-    ["\"", "\""],
-    ["'", "'"],
-    ["`", "`"]
+    { "open": "{", "close": "}" },
+    { "open": "[", "close": "]" },
+    { "open": "(", "close": ")" },
+    { "open": "'", "close": "'", "notIn": ["string", "comment"] },
+    { "open": "\"", "close": "\"", "notIn": ["string"] },
+    { "open": "`", "close": "`", "notIn": ["string", "comment"] },
+    { "open": "/**", "close": " */", "notIn": ["string"] }
   ],
+  "autoCloseBefore": ";:.,=}])>` \n\t",
   // symbols that can be used to surround a selection
   "surroundingPairs": [
     ["{", "}"],
@@ -26,5 +29,55 @@
     ["\"", "\""],
     ["'", "'"],
     ["`", "`"]
+  ],
+  // Copied from https://github.com/microsoft/vscode/blob/main/extensions/javascript/javascript-language-configuration.json
+  // to match the doc comment behavior in JavaScript.
+  "onEnterRules": [
+    {
+      // e.g. /** | */
+      "beforeText": {
+        "pattern": "^\\s*/\\*\\*(?!/)([^\\*]|\\*(?!/))*$"
+      },
+      "afterText": {
+        "pattern": "^\\s*\\*/$"
+      },
+      "action": {
+        "indent": "indentOutdent",
+        "appendText": " * "
+      }
+    },
+    {
+      // e.g. /** ...|
+      "beforeText": {
+        "pattern": "^\\s*/\\*\\*(?!/)([^\\*]|\\*(?!/))*$"
+      },
+      "action": {
+        "indent": "none",
+        "appendText": " * "
+      }
+    },
+    {
+      // e.g.  * ...|
+      "beforeText": {
+        "pattern": "^(\\t|[ ])*[ ]\\*([ ]([^\\*]|\\*(?!/))*)?$"
+      },
+      "previousLineText": {
+        "pattern": "(?=^(\\s*(/\\*\\*|\\*)).*)(?=(?!(\\s*\\*/)))"
+      },
+      "action": {
+        "indent": "none",
+        "appendText": "* "
+      }
+    },
+    {
+      // e.g.  */|
+      "beforeText": {
+        "pattern": "^(\\t|[ ])*[ ]\\*/\\s*$"
+      },
+      "action": {
+        "indent": "none",
+        "removeText": 1
+      }
+    }
   ]
 }
