@@ -1,9 +1,10 @@
 {
   "name": "origami-vscode-extension",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "displayName": "Origami language support",
-  "description": "Language support for the Origami language",
+  "description": "Language support for the Origami expression language",
   "publisher": "WebOrigami",
+  "icon": "icon.png",
   "repository": {
     "type": "git",
     "url": "https://github.com/WebOrigami/origami-vscode-extension"
