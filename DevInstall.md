@@ -11,3 +11,11 @@ Alternatively, you can build the project into an installable `.vsix` file:
 $ npm run build
 $ code --install-extension build/origami.vsix
 ```
+
+# Publishing
+
+To publish the extension to the VS Code Marketplace:
+
+```console
+$ npx @vscode/vsce publish
+```
