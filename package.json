@@ -1,6 +1,6 @@
 {
   "name": "origami-vscode-extension",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "displayName": "Origami language support",
   "description": "Language support for the Origami expression language",
   "publisher": "WebOrigami",
@@ -22,6 +22,13 @@
     "@vscode/vsce": "2.24.0"
   },
   "contributes": {
+    "grammars": [
+      {
+        "language": "origami",
+        "scopeName": "source.origami",
+        "path": "./syntaxes/origami.tmLanguage.json"
+      }
+    ],
     "languages": [
       {
         "id": "origami",
@@ -29,17 +36,14 @@
           "Origami",
           "Web Origami"
         ],
+        "configuration": "./language-configuration.json",
         "extensions": [
           ".ori"
         ],
-        "configuration": "./language-configuration.json"
-      }
-    ],
-    "grammars": [
-      {
-        "language": "origami",
-        "scopeName": "source.origami",
-        "path": "./syntaxes/origami.tmLanguage.json"
+        "icon": {
+          "light": "./icon.svg",
+          "dark": "./icon.svg"
+        }
       }
     ]
   }
