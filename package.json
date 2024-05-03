@@ -1,6 +1,6 @@
 {
   "name": "origami-vscode-extension",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "displayName": "Origami language support",
   "description": "Language support for the Origami expression language",
   "publisher": "WebOrigami",
@@ -19,7 +19,7 @@
     "build": "mkdir -p build; vsce package --out build/origami.vsix"
   },
   "devDependencies": {
-    "@vscode/vsce": "2.24.0"
+    "@vscode/vsce": "2.26.1"
   },
   "contributes": {
     "grammars": [
