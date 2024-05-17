@@ -4,6 +4,9 @@
   "scopeName": "source.origami",
   "patterns": [
     {
+      "include": "#shebang"
+    },
+    {
       "include": "#expression"
     },
     {
@@ -11,9 +14,6 @@
     },
     {
       "include": "#template-substitution"
-    },
-    {
-      "include": "#operators"
     }
   ],
   "repository": {
@@ -141,6 +141,14 @@
     "separators": {
       "name": "punctuation.separator.origami",
       "match": "[\\/:%,]"
+    },
+    "shebang": {
+      "match": "^(#!.*)$",
+      "captures": {
+        "1": {
+          "name": "comment.line.shebang.origami"
+        }
+      }
     },
     "string-character-escape": {
       "name": "constant.character.escape.origami",
