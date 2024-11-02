@@ -53,9 +53,13 @@
         }
       }
     },
-    "builtin": {
+    "at-builtin": {
       "name": "keyword.origami",
       "match": "@[^=\\(\\)\\{\\}\\[\\]\\$\\\"\\'\\/:`%,#\\s]+"
+    },
+    "builtin": {
+      "name": "keyword.control.origami",
+      "match": "\\b(Array|Boolean|Buffer|Date|Error|Infinity|Intl|JSON|Map|Math|NaN|Number|Object|RegExp|Set|String|Symbol|add|addNextPrevious|assign|audit|basename|breakpoint|builtins|cache|calc|calendar|changes|clean|clear|code|concat|config|copy|crawl|css.handler|debug|decodeURI|decodeURIComponent|deepMap|deepMerge|deepReverse|deepTake|defineds|dev|divide|document|documentation|encodeURI|encodeURIComponent|entries|equals|explore|false|fetch|files|filter|first|forEach|format|from|fromFn|globs|group|handlers|has|help|htm.handler|html.handler|if|image|indent|index|inherited|inline|inners|isAsyncMutableTree|isAsyncTree|isFinite|isNaN|isTraversable|isTreelike|jpeg.handler|jpg.handler|js|js.handler|json|json.handler|jsonKeys|jsonParse|keys|length|log|map|mapReduce|match|md.handler|mdHtml|merge|mjs.handler|multiply|naturalOrder|new|node|not|null|once|or|ori|ori.handler|oridocument.handler|origami|pack|paginate|parent|parseFloat|parseInt|path|paths|plain|post|process|project|redirect|regexMatch|remove|repeat|resize|reverse|rss|serve|setDeep|shell|shuffle|site|sitemap|slash|slug|sort|static|stdin|string|subtract|svg|take|text|toFunction|traverse|traverseOrThrow|traversePath|tree|true|txt.handler|undefined|unpack|url|usage|values|version|wasm.handler|watch|xhtml.handler|yaml|yaml.handler|yamlParse|yml.handler)\\b"
     },
     "comment": {
       "patterns": [
@@ -79,6 +83,9 @@
         },
         {
           "include": "#assignment"
+        },
+        {
+          "include": "#at-builtin"
         },
         {
           "include": "#builtin"
