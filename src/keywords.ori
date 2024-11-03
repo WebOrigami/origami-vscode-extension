@@ -1,2 +1,6 @@
 // Get the names of all builtins sorted alphabetically
-values(sort(keys(builtins), =_))
+keys:(builtins)
+// ["clean", "concat", "copy"]
+→ (x) => sort:(x, =_)
+→ (y) => map:(y, =`${_}:`)
+→ values:
