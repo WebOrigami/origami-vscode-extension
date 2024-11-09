@@ -147,7 +147,7 @@
     },
     "namespace": {
       "name": "keyword.control.origami",
-      "match": "\\b(calc:|dev:|explore:|files:|help:|https:|http:|image:|inherited:|js:|new:|node:|origami:|package:|scope:|site:|text:|treehttps:|treehttp:|tree:)\\b"
+      "match": "\\b(calc:|dev:|explore:|files:|help:|https:|http:|image:|inherited:|js:|new:|node:|origami:|package:|scope:|site:|text:|treehttps:|treehttp:|tree:)"
     },
     "number": {
       "match": "(?x)        # turn on extended mode\n  -?        # an optional minus\n  (?:\n    0       # a zero\n    |       # ...or...\n    [1-9]   # a 1-9 character\n    \\d*     # followed by zero or more digits\n  )\n  (?:\n    (?:\n      \\.    # a period\n      \\d+   # followed by one or more digits\n    )?\n    (?:\n      [eE]  # an e character\n      [+-]? # followed by an option +/-\n      \\d+   # followed by one or more digits\n    )?      # make exponent optional\n  )?        # make decimal portion optional",
