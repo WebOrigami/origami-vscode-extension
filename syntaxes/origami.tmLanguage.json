@@ -59,7 +59,7 @@
     },
     "builtin-function": {
       "name": "keyword.control.origami",
-      "match": "\\b[A-Za-z][A-Za-z0-9]*(?=(\\(|\\`))"
+      "match": "(?<!/)\\b[A-Za-z][A-Za-z0-9]*(?=(\\(|\\`))"
     },
     "comment": {
       "patterns": [
