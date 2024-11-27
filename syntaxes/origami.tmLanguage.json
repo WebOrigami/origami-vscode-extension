@@ -155,7 +155,7 @@
     },
     "operators": {
       "name": "keyword.operator.origami",
-      "match": "=>|⇒|->|→|=|\\.\\.\\.|…|&&|\\|\\||!"
+      "match": "===|!==|==|!=|=>|⇒|->|→|=|\\.\\.\\.|…|&&|\\|\\||!|\\?\\?"
     },
     "separators": {
       "name": "punctuation.separator.origami",
