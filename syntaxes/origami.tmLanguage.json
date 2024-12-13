@@ -11,9 +11,6 @@
     },
     {
       "include": "#comment"
-    },
-    {
-      "include": "#template-substitution"
     }
   ],
   "repository": {
@@ -212,9 +209,6 @@
           "include": "#template-substitution"
         },
         {
-          "include": "#template-substitution-js"
-        },
-        {
           "include": "#string-character-escape"
         },
         {
@@ -223,26 +217,6 @@
       ]
     },
     "template-substitution": {
-      "name": "string.interpolated.origami variable.parameter.origami",
-      "begin": "\\{\\{",
-      "beginCaptures": {
-        "0": {
-          "name": "support.constant.origami"
-        }
-      },
-      "end": "\\}\\}",
-      "endCaptures": {
-        "0": {
-          "name": "support.constant.origami"
-        }
-      },
-      "patterns": [
-        {
-          "include": "#expression"
-        }
-      ]
-    },
-    "template-substitution-js": {
       "name": "string.interpolated.origami variable.parameter.origami",
       "begin": "\\$\\{",
       "beginCaptures": {

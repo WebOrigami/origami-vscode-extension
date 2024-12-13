@@ -19,7 +19,7 @@
     "build": "mkdir -p build; vsce package --out build/origami.vsix"
   },
   "devDependencies": {
-    "@vscode/vsce": "2.26.1"
+    "@vscode/vsce": "3.2.1"
   },
   "contributes": {
     "grammars": [
@@ -27,6 +27,11 @@
         "language": "origami",
         "scopeName": "source.origami",
         "path": "./syntaxes/origami.tmLanguage.json"
+      },
+      {
+        "language": "origami-html",
+        "scopeName": "text.html.origami",
+        "path": "./syntaxes/origami-html.tmLanguage.json"
       }
     ],
     "languages": [
@@ -39,6 +44,19 @@
         "configuration": "./language-configuration.json",
         "extensions": [
           ".ori"
+        ],
+        "icon": {
+          "light": "./icon.svg",
+          "dark": "./icon.svg"
+        }
+      },
+      {
+        "id": "origami-html",
+        "aliases": [
+          "Origami HTML Document"
+        ],
+        "extensions": [
+          ".ori.html"
         ],
         "icon": {
           "light": "./icon.svg",

@@ -1,0 +1,43 @@
+{
+  "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+  "name": "Origami HTML Document",
+  "scopeName": "text.html.origami",
+  "patterns": [
+    {
+      "include": "text.html.basic"
+    },
+    {
+      "begin": "^---$",
+      "beginCaptures": {
+        "0": { "name": "punctuation.definition.begin.frontmatter" }
+      },
+      "end": "^---$",
+      "endCaptures": {
+        "0": { "name": "punctuation.definition.end.frontmatter" }
+      },
+      "contentName": "source.origami",
+      "patterns": [
+        {
+          "include": "source.origami"
+        }
+      ]
+    },
+    {
+      "begin": "\\$\\{",
+      "beginCaptures": {
+        "0": { "name": "punctuation.section.embedded.begin.origami" }
+      },
+      "end": "\\}",
+      "endCaptures": {
+        "0": { "name": "punctuation.section.embedded.end.origami" }
+      },
+      "contentName": "source.origami",
+      "patterns": [
+        {
+          "include": "source.origami"
+        }
+      ]
+    }
+  ],
+  "repository": {}
+}
