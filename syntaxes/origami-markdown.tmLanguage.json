@@ -1,11 +1,8 @@
 {
   "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
-  "name": "Origami HTML Document",
-  "scopeName": "text.html.origami",
+  "name": "Origami Markdown Document",
+  "scopeName": "text.html.markdown.origami",
   "patterns": [
-    {
-      "include": "text.html.basic"
-    },
     {
       "begin": "^---$",
       "beginCaptures": {
@@ -37,6 +34,9 @@
           "include": "source.origami"
         }
       ]
+    },
+    {
+      "include": "text.html.markdown"
     }
   ]
 }

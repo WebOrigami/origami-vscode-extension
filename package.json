@@ -32,6 +32,11 @@
         "language": "origami-html",
         "scopeName": "text.html.origami",
         "path": "./syntaxes/origami-html.tmLanguage.json"
+      },
+      {
+        "language": "origami-markdown",
+        "scopeName": "text.html.markdown.origami",
+        "path": "./syntaxes/origami-markdown.tmLanguage.json"
       }
     ],
     "languages": [
@@ -55,8 +60,23 @@
         "aliases": [
           "Origami HTML Document"
         ],
+        "configuration": "./language-configuration.json",
         "extensions": [
           ".ori.html"
+        ],
+        "icon": {
+          "light": "./icon.svg",
+          "dark": "./icon.svg"
+        }
+      },
+      {
+        "id": "origami-markdown",
+        "aliases": [
+          "Origami Markdown Document"
+        ],
+        "configuration": "./language-configuration.json",
+        "extensions": [
+          ".ori.md"
         ],
         "icon": {
           "light": "./icon.svg",
