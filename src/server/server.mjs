@@ -1,20 +1,17 @@
+import { TextDocument } from "vscode-languageserver-textdocument";
+import * as autoComplete from "./autoComplete.mjs";
+
 import languageServerPackage from "vscode-languageserver";
 const {
-  CompletionItem,
-  CompletionItemKind,
   createConnection,
   Diagnostic,
   DiagnosticSeverity,
-  DidChangeConfigurationNotification,
   DocumentDiagnosticReportKind,
   InitializeResult,
   ProposedFeatures,
-  TextDocumentPositionParams,
   TextDocuments,
   TextDocumentSyncKind,
 } = languageServerPackage;
-
-import { TextDocument } from "vscode-languageserver-textdocument";
 
 // Create a connection for the server, using Node's IPC as a transport.
 // Also include all preview / proposed LSP features.
@@ -131,49 +128,9 @@ async function validateTextDocument(textDocument) {
   return diagnostics;
 }
 
-// This handler provides the initial list of the completion items.
-connection.onCompletion(
-  (/** @type {TextDocumentPositionParams} */ _textDocumentPosition) => {
-    // The pass parameter contains the position of the text document in
-    // which code complete got requested. For the example we ignore this
-    // info and always provide the same completion items.
-    /** @type {CompletionItem[]} */
-    const result = [
-      {
-        label: "TypeScript",
-        kind: CompletionItemKind.Text,
-        data: 1,
-      },
-      {
-        label: "JavaScript",
-        kind: CompletionItemKind.Text,
-        data: 2,
-      },
-      {
-        label: "tree:",
-        kind: CompletionItemKind.Text,
-        data: 3,
-      },
-    ];
-    return result;
-  }
-);
-
-// This handler resolves additional information for the item selected in
-// the completion list.
-connection.onCompletionResolve((/** @type {CompletionItem} */ item) => {
-  if (item.data === 1) {
-    item.detail = "TypeScript details";
-    item.documentation = "TypeScript documentation";
-  } else if (item.data === 2) {
-    item.detail = "JavaScript details";
-    item.documentation = "JavaScript documentation";
-  } else if (item.data === 3) {
-    item.detail = "tree: details";
-    item.documentation = "tree: documentation";
-  }
-  return item;
-});
+// Wire up auto-complete
+connection.onCompletion(autoComplete.completion);
+connection.onCompletionResolve(autoComplete.completionResolve);
 
 // Make the text document manager listen on the connection
 // for open, change and close text document events
