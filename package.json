@@ -15,13 +15,47 @@
   "categories": [
     "Programming Languages"
   ],
+  "activationEvents": [
+    "onLanguage:origami"
+  ],
+  "type": "module",
+  "main": "./src/client/extension.js",
   "scripts": {
     "build": "mkdir -p build; vsce package --out build/origami.vsix"
   },
+  "dependencies": {
+    "@weborigami/language": "0.2.9",
+    "vscode-languageclient": "9.0.1",
+    "vscode-languageserver": "9.0.1",
+    "vscode-languageserver-textdocument": "1.0.12"
+  },
   "devDependencies": {
-    "@vscode/vsce": "3.2.1"
+    "@vscode/vsce": "3.2.2"
   },
   "contributes": {
+    "configuration": {
+      "type": "object",
+      "title": "Example configuration",
+      "properties": {
+        "languageServerExample.maxNumberOfProblems": {
+          "scope": "resource",
+          "type": "number",
+          "default": 100,
+          "description": "Controls the maximum number of problems produced by the server."
+        },
+        "languageServerExample.trace.server": {
+          "scope": "window",
+          "type": "string",
+          "enum": [
+            "off",
+            "messages",
+            "verbose"
+          ],
+          "default": "off",
+          "description": "Traces the communication between VS Code and the language server."
+        }
+      }
+    },
     "grammars": [
       {
         "language": "origami",
