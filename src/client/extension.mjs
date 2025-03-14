@@ -1,12 +1,12 @@
+// This ES module relies upon `vscode` being set as a global variable by the
+// CommonJS wrapper, as VS Code won't otherwise make that module available here.
+
 import * as path from "path";
 
 // vscode-languageclient is a CommonJS module so we can't use import syntax, but
 // can use destructuring assignment instead
 import languageClientPackage from "vscode-languageclient";
 const { LanguageClient, TransportKind } = languageClientPackage;
-
-// Will be set by setVsCode below
-let vscode;
 
 let client;
 
@@ -60,9 +60,4 @@ export function deactivate() {
     return undefined;
   }
   return client.stop();
-}
-
-// Give the CommonJS wrapper a way to pass us the vscode object
-export function setVsCode(vsCodeInstance) {
-  vscode = vsCodeInstance;
 }
