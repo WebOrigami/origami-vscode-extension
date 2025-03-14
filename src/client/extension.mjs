@@ -1,27 +1,24 @@
 import * as path from "path";
-import { ExtensionContext, workspace } from "vscode";
 
-import {
-  LanguageClient,
-  LanguageClientOptions,
-  ServerOptions,
-  TransportKind,
-} from "vscode-languageclient/node";
+// vscode-languageclient is a CommonJS module so we can't use import syntax, but
+// can use destructuring assignment instead
+import languageClientPackage from "vscode-languageclient";
+const { LanguageClient, TransportKind } = languageClientPackage;
 
-/** @type {LanguageClient} */
+// Will be set by setVsCode below
+let vscode;
+
 let client;
 
-/**
- *
- * @param {ExtensionContext} context
- */
 export function activate(context) {
   // The server is implemented in node
-  const serverModule = context.asAbsolutePath(path.join("out", "server.js"));
+  // const serverModule = context.asAbsolutePath(path.join("out", "server.js"));
+  const serverModule = context.asAbsolutePath(
+    path.join("src", "server", "server.cjs")
+  );
 
   // If the extension is launched in debug mode then the debug server options are used
   // Otherwise the run options are used
-  /** @type {ServerOptions} */
   const serverOptions = {
     run: {
       module: serverModule,
@@ -34,7 +31,6 @@ export function activate(context) {
   };
 
   // Options to control the language client
-  /** @type {LanguageClientOptions} */
   const clientOptions = {
     // Register the server for plain text documents
     documentSelector: [
@@ -43,7 +39,7 @@ export function activate(context) {
     ],
     synchronize: {
       // Notify the server about file changes to '.clientrc files contained in the workspace
-      fileEvents: workspace.createFileSystemWatcher("**/.clientrc"),
+      fileEvents: vscode.workspace.createFileSystemWatcher("**/.clientrc"),
     },
   };
 
@@ -64,4 +60,9 @@ export function deactivate() {
     return undefined;
   }
   return client.stop();
+}
+
+// Give the CommonJS wrapper a way to pass us the vscode object
+export function setVsCode(vsCodeInstance) {
+  vscode = vsCodeInstance;
 }

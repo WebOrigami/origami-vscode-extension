@@ -18,10 +18,10 @@
   "activationEvents": [
     "onLanguage:origami"
   ],
-  "main": "./out/extension.js",
+  "type": "commonjs",
+  "main": "./src/client/extension.cjs",
   "scripts": {
-    "build": "mkdir -p build; vsce package --out build/origami.vsix",
-    "build-lsp": "node scripts/build-lsp.js"
+    "build": "mkdir -p build; vsce package --out build/origami.vsix"
   },
   "dependencies": {
     "@weborigami/language": "0.2.9",
@@ -31,7 +31,6 @@
     "vscode-languageserver-textdocument": "1.0.12"
   },
   "devDependencies": {
-    "esbuild": "0.25.1",
     "@vscode/vsce": "3.2.2"
   },
   "contributes": {
