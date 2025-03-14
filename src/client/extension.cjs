@@ -5,6 +5,7 @@ globalThis.vscode = require("vscode");
 
 let extension;
 
+// Create a proxy extension that just calls the one in the ES module
 module.exports = {
   async activate(context) {
     extension ??= await import("./extension.mjs");
