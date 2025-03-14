@@ -1,11 +1,10 @@
 import { TextDocument } from "vscode-languageserver-textdocument";
 import * as autoComplete from "./autoComplete.mjs";
+import validate from "./validate.mjs";
 
 import languageServerPackage from "vscode-languageserver";
 const {
   createConnection,
-  Diagnostic,
-  DiagnosticSeverity,
   DocumentDiagnosticReportKind,
   InitializeResult,
   ProposedFeatures,
@@ -61,7 +60,10 @@ connection.languages.diagnostics.on(async (params) => {
   if (document !== undefined) {
     result = {
       kind: DocumentDiagnosticReportKind.Full,
-      items: await validateTextDocument(document),
+      items: await validate(
+        document,
+        hasDiagnosticRelatedInformationCapability
+      ),
     };
   } else {
     // We don't know the document. We can either try to read it from disk
@@ -77,56 +79,8 @@ connection.languages.diagnostics.on(async (params) => {
 // The content of a text document has changed. This event is emitted
 // when the text document first opened or when its content has changed.
 documents.onDidChangeContent((change) => {
-  validateTextDocument(change.document);
+  validate(change.document, hasDiagnosticRelatedInformationCapability);
 });
-
-/** @param {TextDocument} textDocument */
-async function validateTextDocument(textDocument) {
-  const maxNumberOfProblems = 100;
-
-  // The validator creates diagnostics for all uppercase words length 2 and more
-  const text = textDocument.getText();
-  const pattern = /\b[A-Z]{2,}\b/g;
-
-  /** @type {RegExpExecArray | null} */
-  let m;
-
-  let problems = 0;
-  const diagnostics = [];
-  while ((m = pattern.exec(text)) && problems < maxNumberOfProblems) {
-    problems++;
-    /** @type {Diagnostic} */
-    const diagnostic = {
-      severity: DiagnosticSeverity.Warning,
-      range: {
-        start: textDocument.positionAt(m.index),
-        end: textDocument.positionAt(m.index + m[0].length),
-      },
-      message: `${m[0]} is all uppercase.`,
-      source: "ex",
-    };
-    if (hasDiagnosticRelatedInformationCapability) {
-      diagnostic.relatedInformation = [
-        {
-          location: {
-            uri: textDocument.uri,
-            range: Object.assign({}, diagnostic.range),
-          },
-          message: "Spelling matters",
-        },
-        {
-          location: {
-            uri: textDocument.uri,
-            range: Object.assign({}, diagnostic.range),
-          },
-          message: "Particularly for names",
-        },
-      ];
-    }
-    diagnostics.push(diagnostic);
-  }
-  return diagnostics;
-}
 
 // Wire up auto-complete
 connection.onCompletion(autoComplete.completion);
