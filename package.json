@@ -10,7 +10,7 @@
     "url": "https://github.com/WebOrigami/origami-vscode-extension"
   },
   "engines": {
-    "vscode": "^1.74.0"
+    "vscode": "^1.75.0"
   },
   "categories": [
     "Programming Languages"
@@ -18,18 +18,20 @@
   "activationEvents": [
     "onLanguage:origami"
   ],
-  "type": "module",
-  "main": "./src/client/extension.js",
+  "main": "./out/extension.js",
   "scripts": {
-    "build": "mkdir -p build; vsce package --out build/origami.vsix"
+    "build": "mkdir -p build; vsce package --out build/origami.vsix",
+    "build-lsp": "node scripts/build-lsp.js"
   },
   "dependencies": {
     "@weborigami/language": "0.2.9",
+    "@types/vscode": "1.75.1",
     "vscode-languageclient": "9.0.1",
     "vscode-languageserver": "9.0.1",
     "vscode-languageserver-textdocument": "1.0.12"
   },
   "devDependencies": {
+    "esbuild": "0.25.1",
     "@vscode/vsce": "3.2.2"
   },
   "contributes": {

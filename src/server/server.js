@@ -227,6 +227,11 @@ connection.onCompletion(
         kind: CompletionItemKind.Text,
         data: 2,
       },
+      {
+        label: "tree:",
+        kind: CompletionItemKind.Text,
+        data: 3,
+      },
     ];
     return result;
   }
@@ -241,6 +246,9 @@ connection.onCompletionResolve((/** @type {CompletionItem} */ item) => {
   } else if (item.data === 2) {
     item.detail = "JavaScript details";
     item.documentation = "JavaScript documentation";
+  } else if (item.data === 3) {
+    item.detail = "tree: details";
+    item.documentation = "tree: documentation";
   }
   return item;
 });
