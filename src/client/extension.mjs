@@ -17,8 +17,6 @@ export function activate(context) {
     path.join("src", "server", "server.cjs")
   );
 
-  // If the extension is launched in debug mode then the debug server options are used
-  // Otherwise the run options are used
   const serverOptions = {
     run: {
       module: serverModule,
@@ -30,16 +28,15 @@ export function activate(context) {
     },
   };
 
-  // Options to control the language client
+  // Declare that the client will handle Origami files
   const clientOptions = {
-    // Register the server for plain text documents
     documentSelector: [
       { scheme: "file", language: "origami" },
       { scheme: "untitled", language: "origami" },
     ],
   };
 
-  // Create the language client and start the client.
+  // Create the language client
   client = new LanguageClient(
     "origamiLanguageServer",
     "Language Server Example",

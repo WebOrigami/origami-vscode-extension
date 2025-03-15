@@ -8,7 +8,7 @@
     {
       "type": "extensionHost",
       "request": "launch",
-      "name": "Launch Client",
+      "name": "Run Extension",
       "runtimeExecutable": "${execPath}",
       "args": ["--extensionDevelopmentPath=${workspaceRoot}"],
       "autoAttachChildProcesses": true

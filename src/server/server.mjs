@@ -1,3 +1,4 @@
+import { fileURLToPath } from "node:url";
 import { TextDocument } from "vscode-languageserver-textdocument";
 import * as autoComplete from "./autoComplete.mjs";
 import validate from "./validate.mjs";
@@ -16,6 +17,8 @@ const {
 // Also include all preview / proposed LSP features.
 const connection = createConnection(ProposedFeatures.all);
 
+let workspaceFolderPaths;
+
 // Create a simple text document manager.
 const documents = new TextDocuments(TextDocument);
 
@@ -26,6 +29,11 @@ connection.onInitialize(
   (params) => {
     const capabilities = params.capabilities;
 
+    const workspaceFolders = params.workspaceFolders ?? [];
+    workspaceFolderPaths = workspaceFolders.map((folder) =>
+      fileURLToPath(folder.uri)
+    );
+
     hasDiagnosticRelatedInformationCapability =
       capabilities?.textDocument?.publishDiagnostics?.relatedInformation ??
       false;
@@ -35,9 +43,7 @@ connection.onInitialize(
       capabilities: {
         textDocumentSync: TextDocumentSyncKind.Incremental,
         // Tell the client that this server supports code completion.
-        completionProvider: {
-          // resolveProvider: true,
-        },
+        completionProvider: {},
         diagnosticProvider: {
           interFileDependencies: false,
           workspaceDiagnostics: false,
@@ -83,8 +89,9 @@ documents.onDidChangeContent((change) => {
 });
 
 // Wire up auto-complete
-connection.onCompletion(autoComplete.completion);
-// connection.onCompletionResolve(autoComplete.completionResolve);
+connection.onCompletion((params) =>
+  autoComplete.completion(params, workspaceFolderPaths)
+);
 
 // Make the text document manager listen on the connection
 // for open, change and close text document events
