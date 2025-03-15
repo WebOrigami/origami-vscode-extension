@@ -1,0 +1,30 @@
+// Use the Origami help as the basis for auto-completions
+values(
+  map(
+    node_modules/@weborigami/origami/src/help/help.yaml,
+    (namespaceData, namespaceSlash) => [
+      // Completion for the namespace or protocol
+      {
+        label: `${ slash/remove(namespaceSlash) }:`
+        kind: 2 // CompletionItemKind.Method
+        documentation: namespaceData/description
+      }
+      ... namespaceData/commands
+        ? values(map(namespaceData/commands, (commandData, commandSlash) => [
+            // Completion for the namespaced command
+            {
+              label: `${ slash/remove(namespaceSlash) }:${ slash/remove(commandSlash) }`
+              kind: 2 // CompletionItemKind.Method
+              documentation: commandData/description
+            }
+            // Completions for the command without the namespace
+            {
+              label: slash/remove(commandSlash)
+              kind: 2 // CompletionItemKind.Method
+              documentation: commandData/description
+            }
+          ]))/flat()
+        : []
+    ]
+  )
+)/flat()

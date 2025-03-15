@@ -36,7 +36,7 @@ connection.onInitialize(
         textDocumentSync: TextDocumentSyncKind.Incremental,
         // Tell the client that this server supports code completion.
         completionProvider: {
-          resolveProvider: true,
+          // resolveProvider: true,
         },
         diagnosticProvider: {
           interFileDependencies: false,
@@ -84,7 +84,7 @@ documents.onDidChangeContent((change) => {
 
 // Wire up auto-complete
 connection.onCompletion(autoComplete.completion);
-connection.onCompletionResolve(autoComplete.completionResolve);
+// connection.onCompletionResolve(autoComplete.completionResolve);
 
 // Make the text document manager listen on the connection
 // for open, change and close text document events

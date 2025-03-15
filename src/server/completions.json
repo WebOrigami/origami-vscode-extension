@@ -1,0 +1,1377 @@
+[
+  {
+    "label": "dev:",
+    "kind": 2,
+    "documentation": "Develop and debug Origami projects"
+  },
+  {
+    "label": "dev:breakpoint",
+    "kind": 2,
+    "documentation": "Break into the JavaScript debugger, then return a"
+  },
+  {
+    "label": "breakpoint",
+    "kind": 2,
+    "documentation": "Break into the JavaScript debugger, then return a"
+  },
+  {
+    "label": "dev:changes",
+    "kind": 2,
+    "documentation": "Return a tree of changes"
+  },
+  {
+    "label": "changes",
+    "kind": 2,
+    "documentation": "Return a tree of changes"
+  },
+  {
+    "label": "dev:debug",
+    "kind": 2,
+    "documentation": "Add debug features to the tree"
+  },
+  {
+    "label": "debug",
+    "kind": 2,
+    "documentation": "Add debug features to the tree"
+  },
+  {
+    "label": "dev:explore",
+    "kind": 2,
+    "documentation": "Explore the current scope [when run in browser]"
+  },
+  {
+    "label": "explore",
+    "kind": 2,
+    "documentation": "Explore the current scope [when run in browser]"
+  },
+  {
+    "label": "dev:log",
+    "kind": 2,
+    "documentation": "Log message to the console and return a"
+  },
+  {
+    "label": "log",
+    "kind": 2,
+    "documentation": "Log message to the console and return a"
+  },
+  {
+    "label": "dev:serve",
+    "kind": 2,
+    "documentation": "Start a web server for the tree"
+  },
+  {
+    "label": "serve",
+    "kind": 2,
+    "documentation": "Start a web server for the tree"
+  },
+  {
+    "label": "dev:svg",
+    "kind": 2,
+    "documentation": "Render a tree visually in SVG format"
+  },
+  {
+    "label": "svg",
+    "kind": 2,
+    "documentation": "Render a tree visually in SVG format"
+  },
+  {
+    "label": "dev:watch",
+    "kind": 2,
+    "documentation": "Reevaluate fn when tree changes"
+  },
+  {
+    "label": "watch",
+    "kind": 2,
+    "documentation": "Reevaluate fn when tree changes"
+  },
+  {
+    "label": "explore:",
+    "kind": 2,
+    "documentation": "URL protocol to treat a website with JSON keys as a tree"
+  },
+  {
+    "label": "files:",
+    "kind": 2,
+    "documentation": "URL protocol for file system folders and files"
+  },
+  {
+    "label": "help:",
+    "kind": 2,
+    "documentation": "Get help on builtin namespaces and commands"
+  },
+  {
+    "label": "http:",
+    "kind": 2,
+    "documentation": "URL protocol for web resources via HTTP"
+  },
+  {
+    "label": "https:",
+    "kind": 2,
+    "documentation": "URL protocol for web resources via HTTPS"
+  },
+  {
+    "label": "httpstree:",
+    "kind": 2,
+    "documentation": "URL protocol for a website tree via HTTPS"
+  },
+  {
+    "label": "httptree:",
+    "kind": 2,
+    "documentation": "URL protocol for a website tree via HTTP"
+  },
+  {
+    "label": "image:",
+    "kind": 2,
+    "documentation": "Format and resize images"
+  },
+  {
+    "label": "image:format",
+    "kind": 2,
+    "documentation": "Return the image in a different format"
+  },
+  {
+    "label": "format",
+    "kind": 2,
+    "documentation": "Return the image in a different format"
+  },
+  {
+    "label": "image:resize",
+    "kind": 2,
+    "documentation": "Resize the image"
+  },
+  {
+    "label": "resize",
+    "kind": 2,
+    "documentation": "Resize the image"
+  },
+  {
+    "label": "inherited:",
+    "kind": 2,
+    "documentation": "URL protocol to get an inherited value instead of a local one"
+  },
+  {
+    "label": "js:",
+    "kind": 2,
+    "documentation": "JavaScript classes and functions"
+  },
+  {
+    "label": "js:Array",
+    "kind": 2,
+    "documentation": "JavaScript Array class"
+  },
+  {
+    "label": "Array",
+    "kind": 2,
+    "documentation": "JavaScript Array class"
+  },
+  {
+    "label": "js:BigInt",
+    "kind": 2,
+    "documentation": "JavaScript BigInt class"
+  },
+  {
+    "label": "BigInt",
+    "kind": 2,
+    "documentation": "JavaScript BigInt class"
+  },
+  {
+    "label": "js:Boolean",
+    "kind": 2,
+    "documentation": "JavaScript Boolean class"
+  },
+  {
+    "label": "Boolean",
+    "kind": 2,
+    "documentation": "JavaScript Boolean class"
+  },
+  {
+    "label": "js:Date",
+    "kind": 2,
+    "documentation": "JavaScript Date class"
+  },
+  {
+    "label": "Date",
+    "kind": 2,
+    "documentation": "JavaScript Date class"
+  },
+  {
+    "label": "js:Error",
+    "kind": 2,
+    "documentation": "JavaScript Error class"
+  },
+  {
+    "label": "Error",
+    "kind": 2,
+    "documentation": "JavaScript Error class"
+  },
+  {
+    "label": "js:Infinity",
+    "kind": 2,
+    "documentation": "JavaScript Infinity constant"
+  },
+  {
+    "label": "Infinity",
+    "kind": 2,
+    "documentation": "JavaScript Infinity constant"
+  },
+  {
+    "label": "js:Intl",
+    "kind": 2,
+    "documentation": "JavaScript Intl object"
+  },
+  {
+    "label": "Intl",
+    "kind": 2,
+    "documentation": "JavaScript Intl object"
+  },
+  {
+    "label": "js:JSON",
+    "kind": 2,
+    "documentation": "JavaScript JSON object"
+  },
+  {
+    "label": "JSON",
+    "kind": 2,
+    "documentation": "JavaScript JSON object"
+  },
+  {
+    "label": "js:Map",
+    "kind": 2,
+    "documentation": "JavaScript Map class"
+  },
+  {
+    "label": "Map",
+    "kind": 2,
+    "documentation": "JavaScript Map class"
+  },
+  {
+    "label": "js:Math",
+    "kind": 2,
+    "documentation": "JavaScript Math object"
+  },
+  {
+    "label": "Math",
+    "kind": 2,
+    "documentation": "JavaScript Math object"
+  },
+  {
+    "label": "js:NaN",
+    "kind": 2,
+    "documentation": "JavaScript NaN constant"
+  },
+  {
+    "label": "NaN",
+    "kind": 2,
+    "documentation": "JavaScript NaN constant"
+  },
+  {
+    "label": "js:Number",
+    "kind": 2,
+    "documentation": "JavaScript Number class"
+  },
+  {
+    "label": "Number",
+    "kind": 2,
+    "documentation": "JavaScript Number class"
+  },
+  {
+    "label": "js:Object",
+    "kind": 2,
+    "documentation": "JavaScript Object class"
+  },
+  {
+    "label": "Object",
+    "kind": 2,
+    "documentation": "JavaScript Object class"
+  },
+  {
+    "label": "js:RegExp",
+    "kind": 2,
+    "documentation": "JavaScript RegExp class"
+  },
+  {
+    "label": "RegExp",
+    "kind": 2,
+    "documentation": "JavaScript RegExp class"
+  },
+  {
+    "label": "js:Set",
+    "kind": 2,
+    "documentation": "JavaScript Set class"
+  },
+  {
+    "label": "Set",
+    "kind": 2,
+    "documentation": "JavaScript Set class"
+  },
+  {
+    "label": "js:String",
+    "kind": 2,
+    "documentation": "JavaScript String class"
+  },
+  {
+    "label": "String",
+    "kind": 2,
+    "documentation": "JavaScript String class"
+  },
+  {
+    "label": "js:Symbol",
+    "kind": 2,
+    "documentation": "JavaScript Symbol class"
+  },
+  {
+    "label": "Symbol",
+    "kind": 2,
+    "documentation": "JavaScript Symbol class"
+  },
+  {
+    "label": "js:decodeURI",
+    "kind": 2,
+    "documentation": "JavaScript decodeURI function"
+  },
+  {
+    "label": "decodeURI",
+    "kind": 2,
+    "documentation": "JavaScript decodeURI function"
+  },
+  {
+    "label": "js:decodeURIComponent",
+    "kind": 2,
+    "documentation": "JavaScript decodeURIComponent function"
+  },
+  {
+    "label": "decodeURIComponent",
+    "kind": 2,
+    "documentation": "JavaScript decodeURIComponent function"
+  },
+  {
+    "label": "js:encodeURI",
+    "kind": 2,
+    "documentation": "JavaScript encodeURI function"
+  },
+  {
+    "label": "encodeURI",
+    "kind": 2,
+    "documentation": "JavaScript encodeURI function"
+  },
+  {
+    "label": "js:encodeURIComponent",
+    "kind": 2,
+    "documentation": "JavaScript encodeURIComponent function"
+  },
+  {
+    "label": "encodeURIComponent",
+    "kind": 2,
+    "documentation": "JavaScript encodeURIComponent function"
+  },
+  {
+    "label": "js:false",
+    "kind": 2,
+    "documentation": "JavaScript false constant"
+  },
+  {
+    "label": "false",
+    "kind": 2,
+    "documentation": "JavaScript false constant"
+  },
+  {
+    "label": "js:fetch",
+    "kind": 2,
+    "documentation": "JavaScript fetch function"
+  },
+  {
+    "label": "fetch",
+    "kind": 2,
+    "documentation": "JavaScript fetch function"
+  },
+  {
+    "label": "js:isFinite",
+    "kind": 2,
+    "documentation": "JavaScript isFinite function"
+  },
+  {
+    "label": "isFinite",
+    "kind": 2,
+    "documentation": "JavaScript isFinite function"
+  },
+  {
+    "label": "js:isNaN",
+    "kind": 2,
+    "documentation": "JavaScript isNaN function"
+  },
+  {
+    "label": "isNaN",
+    "kind": 2,
+    "documentation": "JavaScript isNaN function"
+  },
+  {
+    "label": "js:null",
+    "kind": 2,
+    "documentation": "JavaScript null constant"
+  },
+  {
+    "label": "null",
+    "kind": 2,
+    "documentation": "JavaScript null constant"
+  },
+  {
+    "label": "js:parseFloat",
+    "kind": 2,
+    "documentation": "JavaScript parseFloat function"
+  },
+  {
+    "label": "parseFloat",
+    "kind": 2,
+    "documentation": "JavaScript parseFloat function"
+  },
+  {
+    "label": "js:parseInt",
+    "kind": 2,
+    "documentation": "JavaScript parseInt function"
+  },
+  {
+    "label": "parseInt",
+    "kind": 2,
+    "documentation": "JavaScript parseInt function"
+  },
+  {
+    "label": "js:true",
+    "kind": 2,
+    "documentation": "JavaScript true constant"
+  },
+  {
+    "label": "true",
+    "kind": 2,
+    "documentation": "JavaScript true constant"
+  },
+  {
+    "label": "js:undefined",
+    "kind": 2,
+    "documentation": "JavaScript undefined constant"
+  },
+  {
+    "label": "undefined",
+    "kind": 2,
+    "documentation": "JavaScript undefined constant"
+  },
+  {
+    "label": "new:",
+    "kind": 2,
+    "documentation": "Create instances of JavaScript classes"
+  },
+  {
+    "label": "node:",
+    "kind": 2,
+    "documentation": "Node.js classes and modules"
+  },
+  {
+    "label": "node:Buffer",
+    "kind": 2,
+    "documentation": "Node.js Buffer class"
+  },
+  {
+    "label": "Buffer",
+    "kind": 2,
+    "documentation": "Node.js Buffer class"
+  },
+  {
+    "label": "node:path",
+    "kind": 2,
+    "documentation": "Node.js path module"
+  },
+  {
+    "label": "path",
+    "kind": 2,
+    "documentation": "Node.js path module"
+  },
+  {
+    "label": "node:process",
+    "kind": 2,
+    "documentation": "Node.js process object"
+  },
+  {
+    "label": "process",
+    "kind": 2,
+    "documentation": "Node.js process object"
+  },
+  {
+    "label": "node:url",
+    "kind": 2,
+    "documentation": "Node.js URL module"
+  },
+  {
+    "label": "url",
+    "kind": 2,
+    "documentation": "Node.js URL module"
+  },
+  {
+    "label": "origami:",
+    "kind": 2,
+    "documentation": "Perform general Origami language functions"
+  },
+  {
+    "label": "origami:basename",
+    "kind": 2,
+    "documentation": "Removes an extension from the key if present"
+  },
+  {
+    "label": "basename",
+    "kind": 2,
+    "documentation": "Removes an extension from the key if present"
+  },
+  {
+    "label": "origami:builtins",
+    "kind": 2,
+    "documentation": "The set of installed builtin functions"
+  },
+  {
+    "label": "builtins",
+    "kind": 2,
+    "documentation": "The set of installed builtin functions"
+  },
+  {
+    "label": "origami:config",
+    "kind": 2,
+    "documentation": "The current project's configuration"
+  },
+  {
+    "label": "config",
+    "kind": 2,
+    "documentation": "The current project's configuration"
+  },
+  {
+    "label": "origami:extension",
+    "kind": 2,
+    "documentation": "Helpers for working with file extensions"
+  },
+  {
+    "label": "extension",
+    "kind": 2,
+    "documentation": "Helpers for working with file extensions"
+  },
+  {
+    "label": "origami:json",
+    "kind": 2,
+    "documentation": "Render the object in JSON format"
+  },
+  {
+    "label": "json",
+    "kind": 2,
+    "documentation": "Render the object in JSON format"
+  },
+  {
+    "label": "origami:jsonParse",
+    "kind": 2,
+    "documentation": "Parse text as JSON"
+  },
+  {
+    "label": "jsonParse",
+    "kind": 2,
+    "documentation": "Parse text as JSON"
+  },
+  {
+    "label": "origami:naturalOrder",
+    "kind": 2,
+    "documentation": "A comparison function for natural sort order"
+  },
+  {
+    "label": "naturalOrder",
+    "kind": 2,
+    "documentation": "A comparison function for natural sort order"
+  },
+  {
+    "label": "origami:once",
+    "kind": 2,
+    "documentation": "Run the function only once, return the same result"
+  },
+  {
+    "label": "once",
+    "kind": 2,
+    "documentation": "Run the function only once, return the same result"
+  },
+  {
+    "label": "origami:ori",
+    "kind": 2,
+    "documentation": "Evaluate the text as an Origami expression"
+  },
+  {
+    "label": "ori",
+    "kind": 2,
+    "documentation": "Evaluate the text as an Origami expression"
+  },
+  {
+    "label": "origami:post",
+    "kind": 2,
+    "documentation": "POST the given data to the URL"
+  },
+  {
+    "label": "post",
+    "kind": 2,
+    "documentation": "POST the given data to the URL"
+  },
+  {
+    "label": "origami:project",
+    "kind": 2,
+    "documentation": "The root folder for the current Origami project"
+  },
+  {
+    "label": "project",
+    "kind": 2,
+    "documentation": "The root folder for the current Origami project"
+  },
+  {
+    "label": "origami:regexMatch",
+    "kind": 2,
+    "documentation": "Return matches of the regex in the text"
+  },
+  {
+    "label": "regexMatch",
+    "kind": 2,
+    "documentation": "Return matches of the regex in the text"
+  },
+  {
+    "label": "origami:repeat",
+    "kind": 2,
+    "documentation": "An array of n copies of the object"
+  },
+  {
+    "label": "repeat",
+    "kind": 2,
+    "documentation": "An array of n copies of the object"
+  },
+  {
+    "label": "origami:shell",
+    "kind": 2,
+    "documentation": "Run the text as a shell command, return the output"
+  },
+  {
+    "label": "shell",
+    "kind": 2,
+    "documentation": "Run the text as a shell command, return the output"
+  },
+  {
+    "label": "origami:slash",
+    "kind": 2,
+    "documentation": "Helpers for working with trailing slashes"
+  },
+  {
+    "label": "slash",
+    "kind": 2,
+    "documentation": "Helpers for working with trailing slashes"
+  },
+  {
+    "label": "origami:stdin",
+    "kind": 2,
+    "documentation": "Returns the content of the standard input stream"
+  },
+  {
+    "label": "stdin",
+    "kind": 2,
+    "documentation": "Returns the content of the standard input stream"
+  },
+  {
+    "label": "origami:string",
+    "kind": 2,
+    "documentation": "Coerce a buffer or document to a string"
+  },
+  {
+    "label": "string",
+    "kind": 2,
+    "documentation": "Coerce a buffer or document to a string"
+  },
+  {
+    "label": "origami:toFunction",
+    "kind": 2,
+    "documentation": "Coerce a tree or packed function definition to a function"
+  },
+  {
+    "label": "toFunction",
+    "kind": 2,
+    "documentation": "Coerce a tree or packed function definition to a function"
+  },
+  {
+    "label": "origami:unpack",
+    "kind": 2,
+    "documentation": "Unpack the buffer into a usable form"
+  },
+  {
+    "label": "unpack",
+    "kind": 2,
+    "documentation": "Unpack the buffer into a usable form"
+  },
+  {
+    "label": "origami:version",
+    "kind": 2,
+    "documentation": "Return the version number of the Origami language"
+  },
+  {
+    "label": "version",
+    "kind": 2,
+    "documentation": "Return the version number of the Origami language"
+  },
+  {
+    "label": "origami:yaml",
+    "kind": 2,
+    "documentation": "Render the object in YAML format"
+  },
+  {
+    "label": "yaml",
+    "kind": 2,
+    "documentation": "Render the object in YAML format"
+  },
+  {
+    "label": "origami:yamlParse",
+    "kind": 2,
+    "documentation": "Parse text as YAML"
+  },
+  {
+    "label": "yamlParse",
+    "kind": 2,
+    "documentation": "Parse text as YAML"
+  },
+  {
+    "label": "package:",
+    "kind": 2,
+    "documentation": "URL protocol for packages installed in node_modules"
+  },
+  {
+    "label": "scope:",
+    "kind": 2,
+    "documentation": "URL protocol to explicitly reference a key in scope"
+  },
+  {
+    "label": "site:",
+    "kind": 2,
+    "documentation": "Add common website features"
+  },
+  {
+    "label": "site:audit",
+    "kind": 2,
+    "documentation": "Identify broken internal links and references"
+  },
+  {
+    "label": "audit",
+    "kind": 2,
+    "documentation": "Identify broken internal links and references"
+  },
+  {
+    "label": "site:crawl",
+    "kind": 2,
+    "documentation": "A tree of a site's discoverable resources"
+  },
+  {
+    "label": "crawl",
+    "kind": 2,
+    "documentation": "A tree of a site's discoverable resources"
+  },
+  {
+    "label": "site:index",
+    "kind": 2,
+    "documentation": "A default index.html page for the tree"
+  },
+  {
+    "label": "index",
+    "kind": 2,
+    "documentation": "A default index.html page for the tree"
+  },
+  {
+    "label": "site:jsonKeys",
+    "kind": 2,
+    "documentation": "Add .keys.json files to a tree"
+  },
+  {
+    "label": "jsonKeys",
+    "kind": 2,
+    "documentation": "Add .keys.json files to a tree"
+  },
+  {
+    "label": "site:redirect",
+    "kind": 2,
+    "documentation": "Redirect to the given URL"
+  },
+  {
+    "label": "redirect",
+    "kind": 2,
+    "documentation": "Redirect to the given URL"
+  },
+  {
+    "label": "site:rss",
+    "kind": 2,
+    "documentation": "Transforms a JSON Feed tree to RSS XML"
+  },
+  {
+    "label": "rss",
+    "kind": 2,
+    "documentation": "Transforms a JSON Feed tree to RSS XML"
+  },
+  {
+    "label": "site:sitemap",
+    "kind": 2,
+    "documentation": "Generate a sitemap for the tree"
+  },
+  {
+    "label": "sitemap",
+    "kind": 2,
+    "documentation": "Generate a sitemap for the tree"
+  },
+  {
+    "label": "site:slug",
+    "kind": 2,
+    "documentation": "A version of the text suitable for use in URLs"
+  },
+  {
+    "label": "slug",
+    "kind": 2,
+    "documentation": "A version of the text suitable for use in URLs"
+  },
+  {
+    "label": "site:static",
+    "kind": 2,
+    "documentation": "Define common static files for the tree"
+  },
+  {
+    "label": "static",
+    "kind": 2,
+    "documentation": "Define common static files for the tree"
+  },
+  {
+    "label": "text:",
+    "kind": 2,
+    "documentation": "Manipulate text"
+  },
+  {
+    "label": "text:document",
+    "kind": 2,
+    "documentation": "Create a document object with the text and data"
+  },
+  {
+    "label": "document",
+    "kind": 2,
+    "documentation": "Create a document object with the text and data"
+  },
+  {
+    "label": "text:indent",
+    "kind": 2,
+    "documentation": "Tagged template literal for normalizing indentation"
+  },
+  {
+    "label": "indent",
+    "kind": 2,
+    "documentation": "Tagged template literal for normalizing indentation"
+  },
+  {
+    "label": "text:inline",
+    "kind": 2,
+    "documentation": "Inline Origami expressions found in the text"
+  },
+  {
+    "label": "inline",
+    "kind": 2,
+    "documentation": "Inline Origami expressions found in the text"
+  },
+  {
+    "label": "text:mdHtml",
+    "kind": 2,
+    "documentation": "Render the markdown as HTML"
+  },
+  {
+    "label": "mdHtml",
+    "kind": 2,
+    "documentation": "Render the markdown as HTML"
+  },
+  {
+    "label": "tree:",
+    "kind": 2,
+    "documentation": "Work with trees"
+  },
+  {
+    "label": "tree:addNextPrevious",
+    "kind": 2,
+    "documentation": "Add next/previous fields to the tree's values"
+  },
+  {
+    "label": "addNextPrevious",
+    "kind": 2,
+    "documentation": "Add next/previous fields to the tree's values"
+  },
+  {
+    "label": "tree:assign",
+    "kind": 2,
+    "documentation": "Apply key/values from source to target"
+  },
+  {
+    "label": "assign",
+    "kind": 2,
+    "documentation": "Apply key/values from source to target"
+  },
+  {
+    "label": "tree:cache",
+    "kind": 2,
+    "documentation": "Caches values from the tree"
+  },
+  {
+    "label": "cache",
+    "kind": 2,
+    "documentation": "Caches values from the tree"
+  },
+  {
+    "label": "tree:clear",
+    "kind": 2,
+    "documentation": "Remove all values from the tree"
+  },
+  {
+    "label": "clear",
+    "kind": 2,
+    "documentation": "Remove all values from the tree"
+  },
+  {
+    "label": "tree:concat",
+    "kind": 2,
+    "documentation": "Concatenate text and/or trees of text"
+  },
+  {
+    "label": "concat",
+    "kind": 2,
+    "documentation": "Concatenate text and/or trees of text"
+  },
+  {
+    "label": "tree:constant",
+    "kind": 2,
+    "documentation": "Return a deep tree with a single constant value"
+  },
+  {
+    "label": "constant",
+    "kind": 2,
+    "documentation": "Return a deep tree with a single constant value"
+  },
+  {
+    "label": "tree:copy",
+    "kind": 2,
+    "documentation": "Copy the source tree to the target"
+  },
+  {
+    "label": "copy",
+    "kind": 2,
+    "documentation": "Copy the source tree to the target"
+  },
+  {
+    "label": "tree:deepMap",
+    "kind": 2,
+    "documentation": "Map the keys and values of a deep tree"
+  },
+  {
+    "label": "deepMap",
+    "kind": 2,
+    "documentation": "Map the keys and values of a deep tree"
+  },
+  {
+    "label": "tree:deepMerge",
+    "kind": 2,
+    "documentation": "Return a deeply-merged tree"
+  },
+  {
+    "label": "deepMerge",
+    "kind": 2,
+    "documentation": "Return a deeply-merged tree"
+  },
+  {
+    "label": "tree:deepReverse",
+    "kind": 2,
+    "documentation": "Reverse order of keys at all levels of the tree"
+  },
+  {
+    "label": "deepReverse",
+    "kind": 2,
+    "documentation": "Reverse order of keys at all levels of the tree"
+  },
+  {
+    "label": "tree:deepTake",
+    "kind": 2,
+    "documentation": "The first n values from the deep tree"
+  },
+  {
+    "label": "deepTake",
+    "kind": 2,
+    "documentation": "The first n values from the deep tree"
+  },
+  {
+    "label": "tree:deepValues",
+    "kind": 2,
+    "documentation": "The in-order leaf values of the tree"
+  },
+  {
+    "label": "deepValues",
+    "kind": 2,
+    "documentation": "The in-order leaf values of the tree"
+  },
+  {
+    "label": "tree:defineds",
+    "kind": 2,
+    "documentation": "Only the defined values of the tree"
+  },
+  {
+    "label": "defineds",
+    "kind": 2,
+    "documentation": "Only the defined values of the tree"
+  },
+  {
+    "label": "tree:entries",
+    "kind": 2,
+    "documentation": "The tree's [key, value] pairs"
+  },
+  {
+    "label": "entries",
+    "kind": 2,
+    "documentation": "The tree's [key, value] pairs"
+  },
+  {
+    "label": "tree:filter",
+    "kind": 2,
+    "documentation": "Filter the source tree using the filter tree"
+  },
+  {
+    "label": "filter",
+    "kind": 2,
+    "documentation": "Filter the source tree using the filter tree"
+  },
+  {
+    "label": "tree:first",
+    "kind": 2,
+    "documentation": "The first value in the tree"
+  },
+  {
+    "label": "first",
+    "kind": 2,
+    "documentation": "The first value in the tree"
+  },
+  {
+    "label": "tree:forEach",
+    "kind": 2,
+    "documentation": "Apply fn to each (value, key)"
+  },
+  {
+    "label": "forEach",
+    "kind": 2,
+    "documentation": "Apply fn to each (value, key)"
+  },
+  {
+    "label": "tree:from",
+    "kind": 2,
+    "documentation": "Create a tree from an object"
+  },
+  {
+    "label": "from",
+    "kind": 2,
+    "documentation": "Create a tree from an object"
+  },
+  {
+    "label": "tree:fromFn",
+    "kind": 2,
+    "documentation": "A tree defined by a value function"
+  },
+  {
+    "label": "fromFn",
+    "kind": 2,
+    "documentation": "A tree defined by a value function"
+  },
+  {
+    "label": "tree:globKeys",
+    "kind": 2,
+    "documentation": "A tree whose keys can include glob wildcard patterns"
+  },
+  {
+    "label": "globKeys",
+    "kind": 2,
+    "documentation": "A tree whose keys can include glob wildcard patterns"
+  },
+  {
+    "label": "tree:group",
+    "kind": 2,
+    "documentation": "A new tree with values grouped by the function"
+  },
+  {
+    "label": "group",
+    "kind": 2,
+    "documentation": "A new tree with values grouped by the function"
+  },
+  {
+    "label": "tree:has",
+    "kind": 2,
+    "documentation": "True if key exists in tree"
+  },
+  {
+    "label": "has",
+    "kind": 2,
+    "documentation": "True if key exists in tree"
+  },
+  {
+    "label": "tree:inners",
+    "kind": 2,
+    "documentation": "The tree's interior nodes"
+  },
+  {
+    "label": "inners",
+    "kind": 2,
+    "documentation": "The tree's interior nodes"
+  },
+  {
+    "label": "tree:isAsyncMutableTree",
+    "kind": 2,
+    "documentation": "True if object is an async mutable tree"
+  },
+  {
+    "label": "isAsyncMutableTree",
+    "kind": 2,
+    "documentation": "True if object is an async mutable tree"
+  },
+  {
+    "label": "tree:isAsyncTree",
+    "kind": 2,
+    "documentation": "True if object is an async tree"
+  },
+  {
+    "label": "isAsyncTree",
+    "kind": 2,
+    "documentation": "True if object is an async tree"
+  },
+  {
+    "label": "tree:isTraversable",
+    "kind": 2,
+    "documentation": "True if object is traversable"
+  },
+  {
+    "label": "isTraversable",
+    "kind": 2,
+    "documentation": "True if object is traversable"
+  },
+  {
+    "label": "tree:isTreelike",
+    "kind": 2,
+    "documentation": "True if object can be coerced to a tree"
+  },
+  {
+    "label": "isTreelike",
+    "kind": 2,
+    "documentation": "True if object can be coerced to a tree"
+  },
+  {
+    "label": "tree:keys",
+    "kind": 2,
+    "documentation": "The keys of the tree"
+  },
+  {
+    "label": "keys",
+    "kind": 2,
+    "documentation": "The keys of the tree"
+  },
+  {
+    "label": "tree:length",
+    "kind": 2,
+    "documentation": "The tree's size (number of keys)"
+  },
+  {
+    "label": "length",
+    "kind": 2,
+    "documentation": "The tree's size (number of keys)"
+  },
+  {
+    "label": "tree:map",
+    "kind": 2,
+    "documentation": "Create a new tree by mapping keys and/or values"
+  },
+  {
+    "label": "map",
+    "kind": 2,
+    "documentation": "Create a new tree by mapping keys and/or values"
+  },
+  {
+    "label": "tree:mapReduce",
+    "kind": 2,
+    "documentation": "Map values and reduce them"
+  },
+  {
+    "label": "mapReduce",
+    "kind": 2,
+    "documentation": "Map values and reduce them"
+  },
+  {
+    "label": "tree:match",
+    "kind": 2,
+    "documentation": "Matches simple patterns or regular expressions"
+  },
+  {
+    "label": "match",
+    "kind": 2,
+    "documentation": "Matches simple patterns or regular expressions"
+  },
+  {
+    "label": "tree:merge",
+    "kind": 2,
+    "documentation": "Return a new tree merging the given trees"
+  },
+  {
+    "label": "merge",
+    "kind": 2,
+    "documentation": "Return a new tree merging the given trees"
+  },
+  {
+    "label": "tree:paginate",
+    "kind": 2,
+    "documentation": "Group the tree's values into fixed-size sets"
+  },
+  {
+    "label": "paginate",
+    "kind": 2,
+    "documentation": "Group the tree's values into fixed-size sets"
+  },
+  {
+    "label": "tree:parent",
+    "kind": 2,
+    "documentation": "The parent of the given tree node"
+  },
+  {
+    "label": "parent",
+    "kind": 2,
+    "documentation": "The parent of the given tree node"
+  },
+  {
+    "label": "tree:paths",
+    "kind": 2,
+    "documentation": "Slash-separated paths for the tree's values"
+  },
+  {
+    "label": "paths",
+    "kind": 2,
+    "documentation": "Slash-separated paths for the tree's values"
+  },
+  {
+    "label": "tree:plain",
+    "kind": 2,
+    "documentation": "Render the tree as a plain JavaScript object"
+  },
+  {
+    "label": "plain",
+    "kind": 2,
+    "documentation": "Render the tree as a plain JavaScript object"
+  },
+  {
+    "label": "tree:regExpKeys",
+    "kind": 2,
+    "documentation": "A tree whose keys are regular expression strings"
+  },
+  {
+    "label": "regExpKeys",
+    "kind": 2,
+    "documentation": "A tree whose keys are regular expression strings"
+  },
+  {
+    "label": "tree:remove",
+    "kind": 2,
+    "documentation": "Remove the value for the key from tree"
+  },
+  {
+    "label": "remove",
+    "kind": 2,
+    "documentation": "Remove the value for the key from tree"
+  },
+  {
+    "label": "tree:reverse",
+    "kind": 2,
+    "documentation": "Reverse the order of the tree's keys"
+  },
+  {
+    "label": "reverse",
+    "kind": 2,
+    "documentation": "Reverse the order of the tree's keys"
+  },
+  {
+    "label": "tree:root",
+    "kind": 2,
+    "documentation": "The root node of the given tree"
+  },
+  {
+    "label": "root",
+    "kind": 2,
+    "documentation": "The root node of the given tree"
+  },
+  {
+    "label": "tree:setDeep",
+    "kind": 2,
+    "documentation": "Applies the source tree to the target"
+  },
+  {
+    "label": "setDeep",
+    "kind": 2,
+    "documentation": "Applies the source tree to the target"
+  },
+  {
+    "label": "tree:shuffle",
+    "kind": 2,
+    "documentation": "Shuffle the keys of the tree"
+  },
+  {
+    "label": "shuffle",
+    "kind": 2,
+    "documentation": "Shuffle the keys of the tree"
+  },
+  {
+    "label": "tree:sort",
+    "kind": 2,
+    "documentation": "A new tree with its keys sorted"
+  },
+  {
+    "label": "sort",
+    "kind": 2,
+    "documentation": "A new tree with its keys sorted"
+  },
+  {
+    "label": "tree:take",
+    "kind": 2,
+    "documentation": "The first n values in the tree"
+  },
+  {
+    "label": "take",
+    "kind": 2,
+    "documentation": "The first n values in the tree"
+  },
+  {
+    "label": "tree:traverse",
+    "kind": 2,
+    "documentation": "Return the value at the path of keys"
+  },
+  {
+    "label": "traverse",
+    "kind": 2,
+    "documentation": "Return the value at the path of keys"
+  },
+  {
+    "label": "tree:traverseOrThrow",
+    "kind": 2,
+    "documentation": "Return the value at the path of keys or throw"
+  },
+  {
+    "label": "traverseOrThrow",
+    "kind": 2,
+    "documentation": "Return the value at the path of keys or throw"
+  },
+  {
+    "label": "tree:traversePath",
+    "kind": 2,
+    "documentation": "Traverse a slash-separated path"
+  },
+  {
+    "label": "traversePath",
+    "kind": 2,
+    "documentation": "Traverse a slash-separated path"
+  },
+  {
+    "label": "tree:values",
+    "kind": 2,
+    "documentation": "The tree's values"
+  },
+  {
+    "label": "values",
+    "kind": 2,
+    "documentation": "The tree's values"
+  }
+]
