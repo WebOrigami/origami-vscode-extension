@@ -22,8 +22,6 @@ let workspaceFolderPaths;
 // Create a simple text document manager.
 const documents = new TextDocuments(TextDocument);
 
-let hasDiagnosticRelatedInformationCapability = false;
-
 connection.onInitialize(
   /** @param {@import("vscode-languageserver").InitializeParams} params */
   (params) => {
@@ -33,10 +31,6 @@ connection.onInitialize(
     workspaceFolderPaths = workspaceFolders.map((folder) =>
       fileURLToPath(folder.uri)
     );
-
-    hasDiagnosticRelatedInformationCapability =
-      capabilities?.textDocument?.publishDiagnostics?.relatedInformation ??
-      false;
 
     /** @type {InitializeResult} */
     const result = {
@@ -66,10 +60,7 @@ connection.languages.diagnostics.on(async (params) => {
   if (document !== undefined) {
     result = {
       kind: DocumentDiagnosticReportKind.Full,
-      items: await validate(
-        document,
-        hasDiagnosticRelatedInformationCapability
-      ),
+      items: await validate(document),
     };
   } else {
     // We don't know the document. We can either try to read it from disk
@@ -85,7 +76,7 @@ connection.languages.diagnostics.on(async (params) => {
 // The content of a text document has changed. This event is emitted
 // when the text document first opened or when its content has changed.
 documents.onDidChangeContent((change) => {
-  validate(change.document, hasDiagnosticRelatedInformationCapability);
+  validate(change.document);
 });
 
 // Wire up auto-complete
