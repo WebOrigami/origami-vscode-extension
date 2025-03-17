@@ -25,8 +25,6 @@ const documents = new TextDocuments(TextDocument);
 connection.onInitialize(
   /** @param {@import("vscode-languageserver").InitializeParams} params */
   (params) => {
-    const capabilities = params.capabilities;
-
     const workspaceFolders = params.workspaceFolders ?? [];
     workspaceFolderPaths = workspaceFolders.map((folder) =>
       fileURLToPath(folder.uri)

@@ -1,10 +1,10 @@
-// This ES module relies upon `vscode` being set as a global variable by the
-// CommonJS wrapper, as VS Code won't otherwise make that module available here.
+// This ES module can rely upon `vscode` being set as a global variable by the
+// CommonJS wrapper. (The code below doesn't use the `vscode` global yet.)
 
 import * as path from "path";
 
-// vscode-languageclient is a CommonJS module so we can't use import syntax, but
-// can use destructuring assignment instead
+// vscode-languageclient is a CommonJS module so we can't use `import { … }`
+// syntax, but we can use destructuring assignment instead
 import languageClientPackage from "vscode-languageclient";
 const { LanguageClient, TransportKind } = languageClientPackage;
 
