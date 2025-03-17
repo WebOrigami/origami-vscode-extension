@@ -79,7 +79,7 @@ documents.onDidChangeContent((change) => {
 
 // Wire up auto-complete
 connection.onCompletion((params) =>
-  autoComplete.completion(params, workspaceFolderPaths)
+  autoComplete.completion(params.textDocument, workspaceFolderPaths)
 );
 
 // Make the text document manager listen on the connection

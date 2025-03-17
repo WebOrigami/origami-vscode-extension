@@ -4,17 +4,14 @@ import * as url from "url";
 import { completion } from "../src/server/autoComplete.mjs";
 
 describe("auto complete", () => {
-  test("includes names of files between source file and workspace root", async () => {
+  test("completions include names of files between source file and workspace root", async () => {
     const foo = import.meta.url;
     const uri = url.resolve(import.meta.url, "fixtures/test.ori");
     const textDocument = { uri };
     const workspaceFolderPaths = [
       "/Users/jan/Source/Origami/origami-vscode-extension",
     ];
-    const completions = await completion(
-      { textDocument },
-      workspaceFolderPaths
-    );
+    const completions = await completion(textDocument, workspaceFolderPaths);
     function hasCompletion(label) {
       return Object.values(completions).some(
         (completion) => completion.label === label

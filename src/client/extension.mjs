@@ -2,6 +2,7 @@
 // CommonJS wrapper. (The code below doesn't use the `vscode` global yet.)
 
 import * as path from "path";
+import builtinCompletions from "./builtins.json" with { type: "json" };
 
 // vscode-languageclient is a CommonJS module so we can't use `import { … }`
 // syntax, but we can use destructuring assignment instead
@@ -29,12 +30,11 @@ export function activate(context) {
   };
 
   // Declare that the client will handle Origami files
-  const clientOptions = {
-    documentSelector: [
-      { scheme: "file", language: "origami" },
-      { scheme: "untitled", language: "origami" },
-    ],
-  };
+  const documentSelector = [
+    { scheme: "file", language: "origami" },
+    { scheme: "untitled", language: "origami" },
+  ];
+  const clientOptions = { documentSelector };
 
   // Create the language client
   client = new LanguageClient(
@@ -46,6 +46,15 @@ export function activate(context) {
 
   // Start the client. This will also launch the server
   client.start();
+
+  // Register completions for Origami builtins
+  context.subscriptions.push(
+    vscode.languages.registerCompletionItemProvider(documentSelector, {
+      provideCompletionItems() {
+        return builtinCompletions;
+      },
+    })
+  );
 }
 
 export function deactivate() {
