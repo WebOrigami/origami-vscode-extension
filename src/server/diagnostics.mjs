@@ -32,14 +32,8 @@ export function validate(document) {
 function errorDiagnostic(error) {
   const { location, message } = error;
   const range = {
-    start: {
-      line: location.start.line - 1,
-      character: location.start.column - 1,
-    },
-    end: {
-      line: location.end.line - 1,
-      character: location.end.column - 1,
-    },
+    start: peggyPositionToLspPosition(location.start),
+    end: peggyPositionToLspPosition(location.end),
   };
   const diagnostic = {
     severity: DiagnosticSeverity.Error,
@@ -48,4 +42,19 @@ function errorDiagnostic(error) {
   };
 
   return [diagnostic];
+}
+
+/**
+ * Convert an Origami position to an LSP-compatible position
+ *
+ * Origami positions are based on Peggy.js positions, which use 1-based line and
+ * column numbers. LSP positions use 0-based line and column numbers.
+ *
+ * @param {@import("@weborigami/language").Position} peggyPosition
+ */
+function peggyPositionToLspPosition(peggyPosition) {
+  return {
+    line: peggyPosition.line - 1,
+    character: peggyPosition.column - 1,
+  };
 }

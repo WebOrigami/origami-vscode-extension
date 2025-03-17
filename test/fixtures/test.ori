@@ -1,6 +1,6 @@
 {
-  index.html = `Hello, ${ name }!`
-  name = teamData.yaml/0/name
-  message = greet(name)
+  index.html = greet(teamLead)
+  teamLead = teamData.yaml/0/name
+  greet: (name) => `Hello, ${ name }!`
   data = https://example.com/teamData.yaml
 }
