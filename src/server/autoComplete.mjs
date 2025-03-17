@@ -7,8 +7,10 @@ const { CompletionItemKind } = languageServerPackage;
 
 /**
  * @typedef {@import("vscode-languageserver").TextDocument} TextDocument
+ * @typedef {import("vscode-languageserver").TextDocumentPositionParams} TextDocumentPositionParams
  * @typedef {@import("vscode-languageserver").CompletionItem} CompletionItem
  * @typedef {@import("vscode-languageserver").CompletionItemKind} CompletionItemKind
+ * @typedef {import("@weborigami/language").Code} Code
  */
 
 // Maps a folder URI to a set of completions for that folder's files
@@ -17,24 +19,29 @@ const folderCompletions = new Map();
 /**
  * Return completion items applicable to the given document
  *
- * @param {TextDocument} textDocument
+ * @param {TextDocumentPositionParams} params
  * @param {string[]} workspaceFolderPaths
+ * @param {Code|Error} compiledResult
  * @returns {CompletionItem[]}
  */
-export async function completion(textDocument, workspaceFolderPaths) {
-  const url = new URL(textDocument.uri);
-  if (url.protocol !== "file:") {
+export default async function autoComplete(
+  params,
+  workspaceFolderPaths,
+  compiledResult
+) {
+  const { textDocument, position } = params;
+  const uri = new URL(textDocument.uri);
+  if (uri.protocol !== "file:") {
     return [];
   }
 
-  const documentPath = fileURLToPath(url);
-  const folderPath = path.dirname(documentPath);
+  const positionCompletions = getPositionCompletions(compiledResult, position);
 
-  const completions = await getFolderCompletions(
-    folderPath,
-    workspaceFolderPaths
-  );
-  return completions;
+  // Get completions based on the document's folder
+  const documentPath = fileURLToPath(uri);
+  const folderPath = path.dirname(documentPath);
+  const result = await getFolderCompletions(folderPath, workspaceFolderPaths);
+  return result;
 }
 
 async function getFolderCompletions(folderPath, workspaceFolderPaths) {
@@ -73,4 +80,15 @@ async function getFolderCompletions(folderPath, workspaceFolderPaths) {
 
   folderCompletions.set(folderPath, completions);
   return completions;
+}
+
+/**
+ * Return completions for the given position
+ *
+ * @param {Code|Error} compiledResult
+ * @param {import("vscode-languageserver").Position} position
+ * @returns {CompletionItem[]}
+ */
+function getPositionCompletions(compiledResult, position) {
+  return [];
 }

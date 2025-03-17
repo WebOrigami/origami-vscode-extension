@@ -2,29 +2,35 @@ import { compile } from "@weborigami/language";
 import languageServerPackage from "vscode-languageserver";
 const { Diagnostic, DiagnosticSeverity } = languageServerPackage;
 
+// Map document URIs to their compiled Code (or Error)
+export const compileResults = new Map();
+
 /**
- * Return diagnostics for the given document
+ * Compile the document and return diagnostics
  *
  * @typedef {import("vscode-languageserver").Diagnostic} Diagnostic
  * @typedef {import("vscode-languageserver").DiagnosticSeverity} DiagnosticSeverity
  * @typedef {import("vscode-languageserver-textdocument").TextDocument} TextDocument
  *
  * @param {TextDocument} document
- * @param {boolean} includeRelatedInformation
+ * @returns {Diagnostic[]}
  */
-export default async function validate(document) {
+export function validate(document) {
   const text = document.getText();
-  let error;
+  let result;
   try {
-    compile.expression(text);
-    // If we get this far, there are no errors to report
-    return [];
-  } catch (e) {
-    error = e;
+    result = compile.expression(text);
+  } catch (error) {
+    result = error;
   }
+  compileResults.set(document.uri, result);
 
-  // Reformat the error as a diagnostic
-  const { location } = error;
+  return result instanceof Error ? errorDiagnostic(result) : [];
+}
+
+// Convert an Error to a diagnostic
+function errorDiagnostic(error) {
+  const { location, message } = error;
   const range = {
     start: {
       line: location.start.line - 1,
@@ -38,7 +44,7 @@ export default async function validate(document) {
   const diagnostic = {
     severity: DiagnosticSeverity.Error,
     range,
-    message: error.message,
+    message,
   };
 
   return [diagnostic];

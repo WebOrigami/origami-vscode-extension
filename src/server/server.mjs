@@ -1,7 +1,7 @@
 import { fileURLToPath } from "node:url";
 import { TextDocument } from "vscode-languageserver-textdocument";
-import * as autoComplete from "./autoComplete.mjs";
-import validate from "./validate.mjs";
+import autoComplete from "./autoComplete.mjs";
+import * as diagnostics from "./diagnostics.mjs";
 
 import languageServerPackage from "vscode-languageserver";
 const {
@@ -58,7 +58,7 @@ connection.languages.diagnostics.on(async (params) => {
   if (document !== undefined) {
     result = {
       kind: DocumentDiagnosticReportKind.Full,
-      items: await validate(document),
+      items: diagnostics.validate(document),
     };
   } else {
     // We don't know the document. We can either try to read it from disk
@@ -73,14 +73,16 @@ connection.languages.diagnostics.on(async (params) => {
 
 // The content of a text document has changed. This event is emitted
 // when the text document first opened or when its content has changed.
-documents.onDidChangeContent((change) => {
-  validate(change.document);
-});
+// REVIEW: Given diagnostics.on above, why is this necessary?
+documents.onDidChangeContent((change) => diagnostics.validate(change.document));
 
 // Wire up auto-complete
-connection.onCompletion((params) =>
-  autoComplete.completion(params.textDocument, workspaceFolderPaths)
-);
+connection.onCompletion((params) => {
+  const compiledResult = diagnostics.compileResults.get(
+    params.textDocument.uri
+  );
+  return autoComplete(params, workspaceFolderPaths, compiledResult);
+});
 
 // Make the text document manager listen on the connection
 // for open, change and close text document events
