@@ -33,13 +33,14 @@ connection.onInitialize(
     /** @type {InitializeResult} */
     const result = {
       capabilities: {
-        textDocumentSync: TextDocumentSyncKind.Incremental,
         // Tell the client that this server supports code completion.
-        completionProvider: {},
+        completionProvider: true,
+        definitionProvider: true,
         diagnosticProvider: {
           interFileDependencies: false,
           workspaceDiagnostics: false,
         },
+        textDocumentSync: TextDocumentSyncKind.Incremental,
       },
     };
 
@@ -71,11 +72,6 @@ connection.languages.diagnostics.on(async (params) => {
   return result;
 });
 
-// The content of a text document has changed. This event is emitted
-// when the text document first opened or when its content has changed.
-// REVIEW: Given diagnostics.on above, why is this necessary?
-documents.onDidChangeContent((change) => diagnostics.validate(change.document));
-
 // Wire up auto-complete
 connection.onCompletion((params) => {
   const compiledResult = diagnostics.compileResults.get(
@@ -83,6 +79,23 @@ connection.onCompletion((params) => {
   );
   return autoComplete(params, workspaceFolderPaths, compiledResult);
 });
+
+connection.onDefinition((params) => {
+  return {
+    // uri: params.textDocument.uri,
+    // uri: "file:///Users/jan/Source/Origami/origami-vscode-extension/test/fixtures/test.ori.html",
+    uri: "file:///Users/jan/Source/Origami/origami-vscode-extension/test/fixtures/",
+    range: {
+      start: { line: 0, character: 0 },
+      end: { line: 0, character: 0 },
+    },
+  };
+});
+
+// The content of a text document has changed. This event is emitted
+// when the text document first opened or when its content has changed.
+// REVIEW: Given diagnostics.on above, why is this necessary?
+documents.onDidChangeContent((change) => diagnostics.validate(change.document));
 
 // Make the text document manager listen on the connection
 // for open, change and close text document events

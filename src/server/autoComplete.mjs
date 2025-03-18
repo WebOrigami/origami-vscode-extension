@@ -113,7 +113,7 @@ function getPositionCompletions(code, peggyPosition) {
   const { location } = code;
   if (
     peggyPosition.line < location.start.line ||
-    peggyPosition.line > location.end ||
+    peggyPosition.line > location.end.line ||
     (peggyPosition.line === location.start.line &&
       peggyPosition.column < location.start.column) ||
     (peggyPosition.line === location.end.line &&

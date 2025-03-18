@@ -2,7 +2,8 @@ import { compile } from "@weborigami/language";
 import languageServerPackage from "vscode-languageserver";
 const { Diagnostic, DiagnosticSeverity } = languageServerPackage;
 
-// Map document URIs to their compiled Code (or Error)
+// Map document URIs to their compiled Code, or Error, or null (if source is
+// empty)
 export const compileResults = new Map();
 
 /**
@@ -19,7 +20,7 @@ export function validate(document) {
   const text = document.getText();
   let result;
   try {
-    result = compile.expression(text);
+    result = text.trim().length > 0 ? compile.expression(text) : null;
   } catch (error) {
     result = error;
   }

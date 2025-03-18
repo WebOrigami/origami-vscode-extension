@@ -6,7 +6,7 @@ import { fileURLToPath } from "node:url";
 import * as url from "url";
 import autoComplete from "../src/server/autoComplete.mjs";
 
-describe.only("auto complete", () => {
+describe("auto complete", () => {
   test("completions include names of files between source file and workspace root", async () => {
     const uri = url.resolve(import.meta.url, "fixtures/test.ori");
     const params = {
@@ -21,7 +21,7 @@ describe.only("auto complete", () => {
     assert(hasCompletion(completions, "ReadMe.md")); // file at workspace root
   });
 
-  test.only("completions include object keys and lambda parameters within scope of cursor", async () => {
+  test("completions include object keys and lambda parameters within scope of cursor", async () => {
     const uri = url.resolve(import.meta.url, "fixtures/test.ori");
     const position = { line: 3, character: 30 }; // inside template substitution
     const textDocument = { uri };
