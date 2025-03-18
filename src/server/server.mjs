@@ -1,6 +1,7 @@
 import { fileURLToPath } from "node:url";
 import { TextDocument } from "vscode-languageserver-textdocument";
 import autoComplete from "./autoComplete.mjs";
+import definition from "./definition.mjs";
 import * as diagnostics from "./diagnostics.mjs";
 
 import languageServerPackage from "vscode-languageserver";
@@ -80,16 +81,10 @@ connection.onCompletion((params) => {
   return autoComplete(params, workspaceFolderPaths, compiledResult);
 });
 
+// Go to Definition
 connection.onDefinition((params) => {
-  return {
-    // uri: params.textDocument.uri,
-    // uri: "file:///Users/jan/Source/Origami/origami-vscode-extension/test/fixtures/test.ori.html",
-    uri: "file:///Users/jan/Source/Origami/origami-vscode-extension/test/fixtures/",
-    range: {
-      start: { line: 0, character: 0 },
-      end: { line: 0, character: 0 },
-    },
-  };
+  const document = documents.get(params.textDocument.uri);
+  return definition(params, document, workspaceFolderPaths);
 });
 
 // The content of a text document has changed. This event is emitted

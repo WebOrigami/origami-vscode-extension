@@ -1,7 +1,7 @@
 import { FileTree, trailingSlash } from "@weborigami/async-tree";
 import { ops } from "@weborigami/language";
+import path from "node:path";
 import { fileURLToPath } from "node:url";
-import path from "path";
 
 import languageServerPackage from "vscode-languageserver";
 const { CompletionItemKind } = languageServerPackage;
