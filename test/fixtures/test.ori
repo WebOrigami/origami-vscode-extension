@@ -6,4 +6,6 @@
   package.yaml = yaml(package.json)
   about.html = mdHtml(ReadMe.md)
   template = fixtures/template.ori
+  hosts = /etc/hosts
+  bash_profile = ~/.bash_profile
 }
