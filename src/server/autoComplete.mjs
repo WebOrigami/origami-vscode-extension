@@ -42,7 +42,7 @@ export default async function autoComplete(
   if (position && compiledResult && !(compiledResult instanceof Error)) {
     const peggyPosition = lspPositionToPeggyPosition(position);
     const { code } = compiledResult;
-    positionCompletions = getPositionCompletions(code, peggyPosition) ?? [];
+    positionCompletions = getPositionCompletions(code, peggyPosition);
   }
 
   // Get completions based on the document's folder
@@ -104,12 +104,50 @@ async function getFolderCompletions(folderPath, workspaceFolderPaths) {
  * @returns {CompletionItem[]}
  */
 function getPositionCompletions(code, peggyPosition) {
+  const completions = [];
+  for (const declaration of declarationsAbovePosition(code, peggyPosition)) {
+    const fn = declaration[0];
+    switch (fn) {
+      case ops.object:
+        // Add each of the object keys
+        const entries = declaration.slice(1);
+        for (const entry of entries) {
+          const key = entry[0];
+          completions.push({
+            label: key,
+            kind: CompletionItemKind.Property,
+          });
+        }
+        break;
+
+      case ops.lambda:
+        // Add the lambda arguments
+        const args = declaration[1];
+        for (const arg of args) {
+          completions.push({
+            label: arg,
+            kind: CompletionItemKind.Variable,
+          });
+        }
+        break;
+    }
+  }
+  return completions;
+}
+
+/**
+ * Given a position in source code, yield the set of object or lambda
+ * declarations that surround that position, working up toward the root of the
+ * code.
+ *
+ * @param {Code} code
+ * @param {PeggyPosition} peggyPosition
+ */
+function* declarationsAbovePosition(code, peggyPosition) {
   if (!Array.isArray(code) || code.location === undefined) {
-    // Not code, or has no location
-    return null;
+    return;
   }
 
-  // Does the position fall within the source range?
   const { location } = code;
   if (
     peggyPosition.line < location.start.line ||
@@ -119,47 +157,23 @@ function getPositionCompletions(code, peggyPosition) {
     (peggyPosition.line === location.end.line &&
       peggyPosition.column > location.end.column)
   ) {
-    // Outside range
-    return null;
+    // Position is outside of this code
+    return;
   }
 
   // Which argument does the position fall within?
-  let completions = [];
   for (const arg of code) {
-    const argCompletions = getPositionCompletions(arg, peggyPosition);
-    if (argCompletions !== null) {
-      completions = argCompletions;
-      break;
+    if (Array.isArray(arg)) {
+      // If position is outside argument this will return immediately
+      yield* declarationsAbovePosition(arg, peggyPosition);
     }
   }
 
+  // Only yield object and lambda declarations
   const fn = code[0];
-  switch (fn) {
-    case ops.object:
-      // Add each of the object keys
-      const entries = code.slice(1);
-      for (const entry of entries) {
-        const key = entry[0];
-        completions.push({
-          label: key,
-          kind: CompletionItemKind.Property,
-        });
-      }
-      break;
-
-    case ops.lambda:
-      // Add the lambda arguments
-      const args = code[1];
-      for (const arg of args) {
-        completions.push({
-          label: arg,
-          kind: CompletionItemKind.Variable,
-        });
-      }
-      break;
+  if (fn === ops.object || fn === ops.lambda) {
+    yield code;
   }
-
-  return completions;
 }
 
 /**
