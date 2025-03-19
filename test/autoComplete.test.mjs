@@ -6,6 +6,8 @@ import { fileURLToPath } from "node:url";
 import * as url from "url";
 import autoComplete from "../src/server/autoComplete.mjs";
 
+import { TextDocument } from "vscode-languageserver-textdocument";
+
 describe("auto complete", () => {
   test("completions include names of files between source file and workspace root", async () => {
     const uri = url.resolve(import.meta.url, "fixtures/test.ori");
@@ -23,17 +25,32 @@ describe("auto complete", () => {
 
   test("completions include object keys and lambda parameters within scope of cursor", async () => {
     const uri = url.resolve(import.meta.url, "fixtures/test.ori");
-    const position = { line: 3, character: 30 }; // inside template substitution
     const textDocument = { uri };
 
     const filePath = fileURLToPath(uri);
-    const source = await fs.readFile(filePath);
-    const compiled = compile.expression(String(source));
+    const source = String(await fs.readFile(filePath));
+    const compiled = compile.expression(source);
+
+    // Get a position inside the template substitution
+    const document = TextDocument.create(uri, "origami", 1, source);
+    const offset = source.indexOf("${") + 2;
+    const position = document.positionAt(offset);
 
     const params = { textDocument, position };
     const completions = await autoComplete(params, [], compiled);
     assert(hasCompletion(completions, "name")); // lambda parameter
     assert(hasCompletion(completions, "data")); // object key
+  });
+
+  test("completions after path with trailing slash include file names", async () => {
+    // Not a real file, all that matters that it's in the fixtures folder
+    const uri = url.resolve(import.meta.url, "fixtures/doesntExist.ori");
+    const position = { line: 0, character: 0 };
+    const textDocument = { uri };
+
+    const params = { textDocument, position };
+    const completions = await autoComplete(params, []);
+    assert(hasCompletion(completions, "test.ori.html"));
   });
 });
 

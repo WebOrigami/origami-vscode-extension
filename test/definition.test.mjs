@@ -6,7 +6,8 @@ import * as definition from "../src/server/definition.mjs";
 
 describe("definition", () => {
   test("completions include names of files between source file and workspace root", async () => {
-    const uri = url.resolve(import.meta.url, "fixture.ori");
+    // Fake file, we just care that it's in the fixtures folder
+    const uri = url.resolve(import.meta.url, "doesntExist.ori");
     const text = `random stuff test/fixtures/test.ori.html`;
     const textDocument = TextDocument.create(
       uri,

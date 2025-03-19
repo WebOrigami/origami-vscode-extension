@@ -1,3 +1,4 @@
+// Test file for spot-checking syntax highlighting and language features
 {
   index.html = greet(teamLead)
   teamLead = teamData.yaml/0/name
@@ -5,6 +6,8 @@
   data = https://example.com/teamData.yaml
   package.yaml = yaml(package.json)
   about.html = mdHtml(ReadMe.md)
+
+  // Test Go to Definition for various path types
   template = fixtures/template.ori
   hosts = /etc/hosts
   bash_profile = ~/.bash_profile
