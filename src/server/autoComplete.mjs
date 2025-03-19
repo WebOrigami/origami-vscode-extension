@@ -104,8 +104,8 @@ async function getFolderCompletions(folderPath, workspaceFolderPaths) {
  * @returns {CompletionItem[]}
  */
 function getPositionCompletions(code, peggyPosition) {
-  if (!Array.isArray(code)) {
-    // Not actually code
+  if (!Array.isArray(code) || code.location === undefined) {
+    // Not code, or has no location
     return null;
   }
 

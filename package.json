@@ -27,6 +27,7 @@
   },
   "dependencies": {
     "@types/vscode": "1.98.0",
+    "@weborigami/async-tree": "0.2.9",
     "@weborigami/language": "0.2.9",
     "vscode-languageclient": "9.0.1",
     "vscode-languageserver": "9.0.1",
