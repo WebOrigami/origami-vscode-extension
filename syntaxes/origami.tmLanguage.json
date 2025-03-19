@@ -191,17 +191,17 @@
       ]
     },
     "template-literal": {
-      "name": "string.template.origami",
+      "name": "string.interpolated.origami",
       "begin": "`",
       "beginCaptures": {
         "0": {
-          "name": "punctuation.definition.string.template.begin.origami"
+          "name": "punctuation.definition.string.interpolated.begin.origami"
         }
       },
       "end": "`",
       "endCaptures": {
         "0": {
-          "name": "punctuation.definition.string.template.end.origami"
+          "name": "punctuation.definition.string.interpolated.end.origami"
         }
       },
       "patterns": [
@@ -217,7 +217,7 @@
       ]
     },
     "template-substitution": {
-      "name": "string.interpolated.origami variable.parameter.origami",
+      "name": "meta.embedded.expression.origami",
       "begin": "\\$\\{",
       "beginCaptures": {
         "0": {
