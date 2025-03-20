@@ -89,11 +89,6 @@ connection.onDefinition((params) => {
   return definition(params, document, workspaceFolderPaths, compiledResult);
 });
 
-// The content of a text document has changed. This event is emitted
-// when the text document first opened or when its content has changed.
-// REVIEW: Given diagnostics.on above, why is this necessary?
-documents.onDidChangeContent((change) => diagnostics.validate(change.document));
-
 // Make the text document manager listen on the connection
 // for open, change and close text document events
 documents.listen(connection);
