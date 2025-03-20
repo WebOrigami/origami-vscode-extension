@@ -6,6 +6,7 @@
   data = https://example.com/teamData.yaml
   package.yaml = yaml(package.json)
   about.html = mdHtml(ReadMe.md)
+  data.json = json(data)
 
   // Test Go to Definition for various path types
   template = fixtures/template.ori

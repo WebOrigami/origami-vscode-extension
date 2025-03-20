@@ -83,8 +83,10 @@ connection.onCompletion((params) => {
 
 // Go to Definition
 connection.onDefinition((params) => {
-  const document = documents.get(params.textDocument.uri);
-  return definition(params, document, workspaceFolderPaths);
+  const uri = params.textDocument.uri;
+  const document = documents.get(uri);
+  const compiledResult = diagnostics.compileResults.get(uri);
+  return definition(params, document, workspaceFolderPaths, compiledResult);
 });
 
 // The content of a text document has changed. This event is emitted

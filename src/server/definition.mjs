@@ -1,7 +1,9 @@
 import { FileTree } from "@weborigami/async-tree";
+import { ops } from "@weborigami/language";
 import path from "node:path";
 import process from "node:process";
 import { fileURLToPath, pathToFileURL } from "node:url";
+import localDeclarations from "./localDeclarations.mjs";
 
 /**
  * Compile the document and return diagnostics
@@ -18,12 +20,14 @@ import { fileURLToPath, pathToFileURL } from "node:url";
 export default async function definition(
   params,
   document,
-  workspaceFolderPaths
+  workspaceFolderPaths,
+  compiledResult
 ) {
   // Get the path the cursor is inside of
   const text = document.getText();
   const position = document.offsetAt(params.position);
   const targetPath = getPathAtPosition(text, position);
+
   // If the position isn't inside a path, return null. Also return null if the
   // path includes a colon -- we don't handle protocols (or port numbers).
   if (targetPath === null || targetPath.includes(":")) {
@@ -37,6 +41,22 @@ export default async function definition(
   // Find path root in project scope, might be a file or a folder
   const keys = targetPath.split("/");
   const rootKey = keys.shift();
+
+  if (
+    keys.length === 0 &&
+    compiledResult &&
+    !(compiledResult instanceof Error)
+  ) {
+    // Path is a single key, try looking for local declarations first
+    const range = localDeclarationRange(compiledResult.code, rootKey, position);
+    if (range !== null) {
+      return {
+        uri,
+        range,
+      };
+    }
+  }
+
   const root = await findInProjectScope(
     rootKey,
     folderPath,
@@ -132,4 +152,56 @@ export function getPathAtPosition(text, position) {
     end++;
   }
   return start < end ? text.slice(start, end) : null;
+}
+
+// If the key corresponds to a local declaration in the code, return the range
+// of the declaration. Otherwise, return null.
+function localDeclarationRange(code, key, position) {
+  // Walk up from the current position to visit all declarations in scope
+  for (const declaration of localDeclarations(code, position)) {
+    const fn = declaration[0];
+    let location;
+    switch (fn) {
+      case ops.object:
+        const entries = declaration.slice(1);
+        const entry = entries.find((entry) => entry[0] === key);
+        location = entry?.location;
+        break;
+
+      case ops.lambda:
+        const args = declaration[1];
+        const argIndex = args.indexOf(key);
+        if (argIndex >= 0) {
+          // We don't have enough information to go to the exact position of the
+          // argument, so we just go to the start of the lambda
+          location = declaration.location;
+        }
+        break;
+    }
+
+    if (location) {
+      const range = {
+        start: peggyPositionToLspPosition(location.start),
+        end: peggyPositionToLspPosition(location.start),
+      };
+      return range;
+    }
+  }
+
+  return null;
+}
+
+/**
+ * Convert an Origami position to an LSP-compatible position
+ *
+ * Origami positions are based on Peggy.js positions, which use 1-based line and
+ * column numbers. LSP positions use 0-based line and column numbers.
+ *
+ * @param {@import("@weborigami/language").Position} peggyPosition
+ */
+function peggyPositionToLspPosition(peggyPosition) {
+  return {
+    line: peggyPosition.line - 1,
+    character: peggyPosition.column - 1,
+  };
 }
