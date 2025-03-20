@@ -16,7 +16,7 @@ export default async function findInProjectScope(
       path: "/",
       value: new FileTree("/"),
     };
-  } else if (key === "~") {
+  } else if (key === "~" && process.env.HOME) {
     // home folder
     return {
       path: process.env.HOME,

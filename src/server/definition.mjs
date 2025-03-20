@@ -9,8 +9,8 @@ import * as utilities from "./utilities.mjs";
 /**
  * Compile the document and return diagnostics
  *
- * @typedef {@import("@weborigami/language").Code} Code
- * @typedef {@import("@weborigami/language").Position} PeggyPosition
+ * @typedef {import("@weborigami/language").Code} Code
+ * @typedef {import("./index.ts").OrigamiPosition} OrigamiPosition
  * @typedef {import("vscode-languageserver").Location} Location
  * @typedef {import("vscode-languageserver").Position} LSPPosition
  * @typedef {import("vscode-languageserver-textdocument").TextDocument} TextDocument
@@ -19,7 +19,7 @@ import * as utilities from "./utilities.mjs";
  * @param {LSPPosition} lspPosition
  * @param {string[]} workspaceFolderPaths
  * @param {Code | Error} compiledResult
- * @returns {Location | null}
+ * @returns {Promise<Location | null>}
  */
 export default async function definition(
   document,
@@ -114,9 +114,9 @@ export default async function definition(
  * @returns {LSPPosition | null}
  */
 function localDeclarationRange(code, key, lspPosition) {
-  const peggyPosition = utilities.lspPositionToPeggyPosition(lspPosition);
+  const origamiPosition = utilities.lspPositionToOrigamiPosition(lspPosition);
   // Walk up from the current position to visit all declarations in scope
-  for (const declaration of localDeclarations(code, peggyPosition)) {
+  for (const declaration of localDeclarations(code, origamiPosition)) {
     const fn = declaration[0];
     let location;
     switch (fn) {
@@ -139,8 +139,8 @@ function localDeclarationRange(code, key, lspPosition) {
 
     if (location) {
       const range = {
-        start: utilities.peggyPositionToLSPPosition(location.start),
-        end: utilities.peggyPositionToLSPPosition(location.start),
+        start: utilities.origamiPositionToLSPPosition(location.start),
+        end: utilities.origamiPositionToLSPPosition(location.start),
       };
       return range;
     }

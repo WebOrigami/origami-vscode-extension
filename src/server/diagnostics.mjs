@@ -1,5 +1,6 @@
 import { compile } from "@weborigami/language";
 import languageServerPackage from "vscode-languageserver";
+import { origamiPositionToLSPPosition } from "./utilities.mjs";
 const { Diagnostic, DiagnosticSeverity } = languageServerPackage;
 
 // Map document URIs to their compiled Code, or Error, or null (if source is
@@ -10,6 +11,7 @@ export const compileResults = new Map();
  * Compile the document and return diagnostics
  *
  * @typedef {import("vscode-languageserver").Diagnostic} Diagnostic
+ * @typedef {import("./index.ts").OrigamiPosition} OrigamiPosition
  * @typedef {import("vscode-languageserver").DiagnosticSeverity} DiagnosticSeverity
  * @typedef {import("vscode-languageserver-textdocument").TextDocument} TextDocument
  *
@@ -33,8 +35,8 @@ export function validate(document) {
 function errorDiagnostic(error) {
   const { location, message } = error;
   const range = {
-    start: peggyPositionToLSPPosition(location.start),
-    end: peggyPositionToLSPPosition(location.end),
+    start: origamiPositionToLSPPosition(location.start),
+    end: origamiPositionToLSPPosition(location.end),
   };
   const diagnostic = {
     severity: DiagnosticSeverity.Error,
@@ -43,19 +45,4 @@ function errorDiagnostic(error) {
   };
 
   return [diagnostic];
-}
-
-/**
- * Convert an Origami position to an LSP-compatible position
- *
- * Origami positions are based on Peggy.js positions, which use 1-based line and
- * column numbers. LSP positions use 0-based line and column numbers.
- *
- * @param {@import("@weborigami/language").Position} peggyPosition
- */
-function peggyPositionToLSPPosition(peggyPosition) {
-  return {
-    line: peggyPosition.line - 1,
-    character: peggyPosition.column - 1,
-  };
 }

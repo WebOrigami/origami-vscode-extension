@@ -7,6 +7,7 @@ import builtinCompletions from "./builtins.json" with { type: "json" };
 // vscode-languageclient is a CommonJS module so we can't use `import { … }`
 // syntax, but we can use destructuring assignment instead
 import languageClientPackage from "vscode-languageclient";
+// @ts-ignore
 const { LanguageClient, TransportKind } = languageClientPackage;
 
 let client;

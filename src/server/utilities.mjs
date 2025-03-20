@@ -5,7 +5,7 @@
  * Origami positions are based on Peggy.js positions, which use 1-based line and
  * column numbers. LSP positions use 0-based line and column numbers.
  *
- * @typedef {@import("@weborigami/language").Position} PeggyPosition
+ * @typedef {import("./index.ts").OrigamiPosition} OrigamiPosition
  * @typedef {import("vscode-languageserver").Position} LSPPosition
  */
 
@@ -46,9 +46,9 @@ export function getPathAtOffset(text, offset, expandRight = true) {
  * column numbers. LSP positions use 0-based line and column numbers.
  *
  * @param {LSPPosition} lspPosition
- * @returns {PeggyPosition}
+ * @returns {OrigamiPosition}
  */
-export function lspPositionToPeggyPosition(lspPosition) {
+export function lspPositionToOrigamiPosition(lspPosition) {
   return {
     line: lspPosition.line + 1,
     column: lspPosition.character + 1,
@@ -58,12 +58,12 @@ export function lspPositionToPeggyPosition(lspPosition) {
 /**
  * Convert an Origami position to an LSP-compatible position
  *
- * @param {PeggyPosition} peggyPosition
+ * @param {OrigamiPosition} origamiPosition
  * @returns {LSPPosition}
  */
-export function peggyPositionToLSPPosition(peggyPosition) {
+export function origamiPositionToLSPPosition(origamiPosition) {
   return {
-    line: peggyPosition.line - 1,
-    character: peggyPosition.column - 1,
+    line: origamiPosition.line - 1,
+    character: origamiPosition.column - 1,
   };
 }

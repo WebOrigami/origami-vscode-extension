@@ -5,24 +5,25 @@ import { ops } from "@weborigami/language";
  * declarations that surround that position, working up toward the root of the
  * code.
  *
- * @typedef {@import("@weborigami/language").Position} PeggyPosition
+ * @typedef {import("./index.ts").OrigamiPosition} OrigamiPosition
+ * @typedef {import("@weborigami/language").Code} Code
  *
  * @param {Code} code
- * @param {PeggyPosition} peggyPosition
+ * @param {OrigamiPosition} origamiPosition
  */
-export default function* localDeclarations(code, peggyPosition) {
+export default function* localDeclarations(code, origamiPosition) {
   if (!Array.isArray(code) || code.location === undefined) {
     return;
   }
 
   const { location } = code;
   if (
-    peggyPosition.line < location.start.line ||
-    peggyPosition.line > location.end.line ||
-    (peggyPosition.line === location.start.line &&
-      peggyPosition.column < location.start.column) ||
-    (peggyPosition.line === location.end.line &&
-      peggyPosition.column > location.end.column)
+    origamiPosition.line < location.start.line ||
+    origamiPosition.line > location.end.line ||
+    (origamiPosition.line === location.start.line &&
+      origamiPosition.column < location.start.column) ||
+    (origamiPosition.line === location.end.line &&
+      origamiPosition.column > location.end.column)
   ) {
     // Position is outside of this code
     return;
@@ -32,7 +33,7 @@ export default function* localDeclarations(code, peggyPosition) {
   for (const arg of code) {
     if (Array.isArray(arg)) {
       // If position is outside argument this will return immediately
-      yield* localDeclarations(arg, peggyPosition);
+      yield* localDeclarations(arg, origamiPosition);
     }
   }
 

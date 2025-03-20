@@ -10,11 +10,11 @@ import languageServerPackage from "vscode-languageserver";
 const { CompletionItemKind } = languageServerPackage;
 
 /**
- * @typedef {@import("@weborigami/language").Code} Code
- * @typedef {@import("@weborigami/language").Position} PeggyPosition
- * @typedef {@import("vscode-languageserver").CompletionItemKind} CompletionItemKind
- * @typedef {@import("vscode-languageserver").CompletionItem} CompletionItem
- * @typedef {@import("vscode-languageserver").TextDocument} TextDocument
+ * @typedef {import("@weborigami/language").Code} Code
+ * @typedef {import("./index.ts").OrigamiPosition} OrigamiPosition
+ * @typedef {import("vscode-languageserver").CompletionItemKind} CompletionItemKind
+ * @typedef {import("vscode-languageserver").CompletionItem} CompletionItem
+ * @typedef {import("vscode-languageserver").TextDocument} TextDocument
  * @typedef {import("vscode-languageserver").Position} LSPPosition
  */
 
@@ -25,11 +25,11 @@ const cachedFolderCompletions = new Map();
 /**
  * Return completion items applicable to the given document
  *
- * @param {TextDcoument} document
+ * @param {TextDocument} document
  * @param {LSPPosition} lspPosition
  * @param {string[]} workspaceFolderPaths
- * @param {Code | Error} compiledResult
- * @returns {CompletionItem[]}
+ * @param {any} compiledResult
+ * @returns {Promise<CompletionItem[]>}
  */
 export default async function autoComplete(
   document,
@@ -170,10 +170,7 @@ async function getPathCompletions(
 
   // Get the completions for the files in the folder
   const targetFolderPath = current.path;
-  const completions = await getFolderCompletions(
-    targetFolderPath,
-    workspaceFolderPaths
-  );
+  const completions = await getFolderCompletions(targetFolderPath);
   return completions;
 }
 
@@ -182,14 +179,14 @@ async function getPathCompletions(
  * didn't compile, or if the start position doesn't fall within the source that
  * produced the compiled result
  *
- * @param {Code|Error} compiledResult
+ * @param {Code|Error} code
  * @param {LSPPosition} lspPosition
  * @returns {CompletionItem[]}
  */
 function getPositionCompletions(code, lspPosition) {
-  const peggyPosition = utilities.lspPositionToPeggyPosition(lspPosition);
+  const origamiPosition = utilities.lspPositionToOrigamiPosition(lspPosition);
   const completions = [];
-  for (const declaration of localDeclarations(code, peggyPosition)) {
+  for (const declaration of localDeclarations(code, origamiPosition)) {
     const fn = declaration[0];
     switch (fn) {
       case ops.object:
