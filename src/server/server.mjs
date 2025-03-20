@@ -34,8 +34,10 @@ connection.onInitialize(
     /** @type {InitializeResult} */
     const result = {
       capabilities: {
-        // Tell the client that this server supports code completion.
-        completionProvider: true,
+        completionProvider: {
+          // In addition to normal triggers, we trigger on trailing slashes
+          triggerCharacters: ["/"],
+        },
         definitionProvider: true,
         diagnosticProvider: {
           interFileDependencies: false,

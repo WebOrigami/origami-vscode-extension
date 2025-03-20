@@ -17,7 +17,7 @@ describe("auto complete", () => {
     );
 
     assert(hasCompletion(completions, "test.ori.html")); // in same folder
-    assert(hasCompletion(completions, "test/")); // ancestor folder
+    assert(hasCompletion(completions, "test")); // ancestor folder
     assert(hasCompletion(completions, "ReadMe.md")); // file at workspace root
   });
 
@@ -41,11 +41,24 @@ describe("auto complete", () => {
     assert(hasCompletion(completions, "data")); // object key
   });
 
-  test.skip("completions after path with trailing slash include file names", async () => {
-    // const { compiledResult, document, workspaceFolderPaths } =
-    //   await documentFixture();
-    // const completions = await autoComplete(params, []);
-    // assert(hasCompletion(completions, "test.ori.html"));
+  test("completions after path with trailing slash include file names", async () => {
+    const { compiledResult, document, workspaceFolderPaths } =
+      await documentFixture();
+
+    // Get a position after a path fragment
+    const text = document.getText();
+    const fragment = "src/client/";
+    const offset = text.indexOf(fragment) + fragment.length;
+    const position = document.positionAt(offset);
+
+    const completions = await autoComplete(
+      document,
+      position,
+      workspaceFolderPaths,
+      compiledResult
+    );
+
+    assert(hasCompletion(completions, "builtins.json")); // file in same folder
   });
 });
 

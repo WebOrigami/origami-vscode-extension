@@ -2,8 +2,9 @@ import { FileTree, trailingSlash } from "@weborigami/async-tree";
 import { ops } from "@weborigami/language";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import findInProjectScope from "./findInProjectScope.mjs";
 import localDeclarations from "./localDeclarations.mjs";
-import * as position from "./position.mjs";
+import * as utilities from "./utilities.mjs";
 
 import languageServerPackage from "vscode-languageserver";
 const { CompletionItemKind } = languageServerPackage;
@@ -40,29 +41,69 @@ export default async function autoComplete(
   if (uri.protocol !== "file:") {
     return [];
   }
+  const documentPath = fileURLToPath(uri);
+  const folderPath = path.dirname(documentPath);
+
+  // Is the character at the position a trailing slash?
+  const text = document.getText();
+  const offset = document.offsetAt(lspPosition);
+  const char = text[offset - 1];
+  const isTrailingSlash = char ? trailingSlash.has(char) : false;
+
+  if (isTrailingSlash) {
+    // We're at the end of a path
+    const targetPath = utilities.getPathAtOffset(text, offset, false);
+    return targetPath === null
+      ? []
+      : await getPathCompletions(targetPath, folderPath, workspaceFolderPaths);
+  }
 
   let positionCompletions = [];
-  if (position && compiledResult && !(compiledResult instanceof Error)) {
+  if (utilities && compiledResult && !(compiledResult instanceof Error)) {
     const { code } = compiledResult;
     positionCompletions = getPositionCompletions(code, lspPosition);
   }
 
-  // Get completions based on the document's folder
-  const documentPath = fileURLToPath(uri);
-  const folderPath = path.dirname(documentPath);
-  const folderCompletions = await getFolderCompletions(
+  // Get completions based on the scope available in the folder
+  const scopeCompletions = await getFolderScopeCompletions(
     folderPath,
     workspaceFolderPaths
   );
 
-  return positionCompletions.concat(folderCompletions);
+  return positionCompletions.concat(scopeCompletions);
 }
 
-async function getFolderCompletions(folderPath, workspaceFolderPaths) {
+/**
+ * Return the completions for files (including subfolders) in the given folder
+ *
+ * @param {string} folderPath
+ */
+async function getFolderCompletions(folderPath) {
   if (cachedFolderCompletions.has(folderPath)) {
     return cachedFolderCompletions.get(folderPath);
   }
 
+  const tree = new FileTree(folderPath);
+  const keys = await tree.keys();
+  const completions = keys.map((key) => ({
+    label: trailingSlash.remove(key),
+    kind: trailingSlash.has(key)
+      ? CompletionItemKind.Folder
+      : CompletionItemKind.File,
+  }));
+
+  cachedFolderCompletions.set(folderPath, completions);
+  return completions;
+}
+
+/**
+ * Given a folder, return completions for the files in that folder and its
+ * parent folders up to one of the workspace roots or the file system root.
+ *
+ * @param {string} folderPath
+ * @param {string[]} workspaceFolderPaths
+ */
+async function getFolderScopeCompletions(folderPath, workspaceFolderPaths) {
   let parentCompletions;
   const isWorkspaceFolder = workspaceFolderPaths.some(
     (workspaceFolder) =>
@@ -71,7 +112,7 @@ async function getFolderCompletions(folderPath, workspaceFolderPaths) {
   if (!isWorkspaceFolder && folderPath !== "/") {
     // Get parent folder completions
     const parentFolder = path.dirname(folderPath);
-    parentCompletions = await getFolderCompletions(
+    parentCompletions = await getFolderScopeCompletions(
       parentFolder,
       workspaceFolderPaths
     );
@@ -79,21 +120,60 @@ async function getFolderCompletions(folderPath, workspaceFolderPaths) {
     parentCompletions = [];
   }
 
-  const tree = new FileTree(folderPath);
-  const keys = await tree.keys();
-  let completions = keys.map((key) => {
-    const kind = trailingSlash.has(key)
-      ? CompletionItemKind.Folder
-      : CompletionItemKind.File;
-    return {
-      label: key,
-      kind,
-    };
-  });
+  const folderCompetions = await getFolderCompletions(folderPath);
+  const completions = parentCompletions.concat(folderCompetions);
+  return completions;
+}
 
-  completions = parentCompletions.concat(completions);
+/**
+ * Given a path, see if resolves to a folder. If so, return completions for the
+ * files in that folder.
+ *
+ * @param {string} targetPath
+ * @param {string} folderPath
+ * @param {string[]} workspaceFolderPaths
+ */
+async function getPathCompletions(
+  targetPath,
+  folderPath,
+  workspaceFolderPaths
+) {
+  const keys = targetPath.split("/");
+  // The path should end in a slash, so last key should be a space
+  if (keys.at(-1) === "") {
+    keys.pop();
+  }
+  const rootKey = keys.shift();
 
-  cachedFolderCompletions.set(folderPath, completions);
+  // Find the root in the project scope
+  const root = await findInProjectScope(
+    rootKey,
+    folderPath,
+    workspaceFolderPaths
+  );
+
+  // We're only interested if the root is a folder
+  if (root === null || !(root.value instanceof FileTree)) {
+    return null;
+  }
+
+  // If there are more keys, we need to find the next folder in the path
+  let current = root.value;
+  for (const key of keys) {
+    const next = await current.get(key);
+    if (next instanceof FileTree) {
+      current = next;
+    } else {
+      return null; // The path doesn't resolve to a folder
+    }
+  }
+
+  // Get the completions for the files in the folder
+  const targetFolderPath = current.path;
+  const completions = await getFolderCompletions(
+    targetFolderPath,
+    workspaceFolderPaths
+  );
   return completions;
 }
 
@@ -107,7 +187,7 @@ async function getFolderCompletions(folderPath, workspaceFolderPaths) {
  * @returns {CompletionItem[]}
  */
 function getPositionCompletions(code, lspPosition) {
-  const peggyPosition = position.lspPositionToPeggyPosition(lspPosition);
+  const peggyPosition = utilities.lspPositionToPeggyPosition(lspPosition);
   const completions = [];
   for (const declaration of localDeclarations(code, peggyPosition)) {
     const fn = declaration[0];

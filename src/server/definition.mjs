@@ -1,10 +1,10 @@
 import { FileTree } from "@weborigami/async-tree";
 import { ops } from "@weborigami/language";
 import path from "node:path";
-import process from "node:process";
 import { fileURLToPath, pathToFileURL } from "node:url";
+import findInProjectScope from "./findInProjectScope.mjs";
 import localDeclarations from "./localDeclarations.mjs";
-import * as position from "./position.mjs";
+import * as utilities from "./utilities.mjs";
 
 /**
  * Compile the document and return diagnostics
@@ -30,7 +30,7 @@ export default async function definition(
   // Get the path the cursor is inside of
   const text = document.getText();
   const offset = document.offsetAt(lspPosition);
-  const targetPath = getPathAtOffset(text, offset);
+  const targetPath = utilities.getPathAtOffset(text, offset);
 
   // If the position isn't inside a path, return null. Also return null if the
   // path includes a colon -- we don't handle protocols (or port numbers).
@@ -104,64 +104,6 @@ export default async function definition(
   };
 }
 
-// Find the key in the project scope, starting at the given folder path and
-// walking up to one of the workspace roots or the file system root.
-async function findInProjectScope(key, folderPath, workspaceFolderPaths) {
-  // Special cases
-  if (key === "") {
-    // root folder
-    return {
-      path: "/",
-      value: new FileTree("/"),
-    };
-  } else if (key === "~") {
-    // home folder
-    return {
-      path: process.env.HOME,
-      value: new FileTree(process.env.HOME),
-    };
-  }
-
-  let currentPath = folderPath;
-  while (currentPath !== "/") {
-    const fileTree = new FileTree(currentPath);
-    const value = await fileTree.get(key);
-    if (value !== undefined) {
-      return {
-        path: path.join(currentPath, key),
-        value,
-      };
-    }
-
-    if (workspaceFolderPaths?.includes(currentPath)) {
-      break;
-    }
-
-    currentPath = path.dirname(currentPath);
-  }
-
-  return null;
-}
-
-// If the offset is inside a path, return the path. Otherwise, return null.
-export function getPathAtOffset(text, offset) {
-  // Based on the Origami path regex in origami.pegjs, but allows slashes
-  // because we're not parsing the path here. Also allows colons to account for
-  // protocols and port numbers.
-  const pathCharRegex = /[^(){}\[\],\\ \t\n\r]/;
-  // Back up to the start of the path
-  let start = offset;
-  while (start > 0 && pathCharRegex.test(text[start - 1])) {
-    start--;
-  }
-  // Advance to the end of the path
-  let end = offset;
-  while (end < text.length && pathCharRegex.test(text[end])) {
-    end++;
-  }
-  return start < end ? text.slice(start, end) : null;
-}
-
 /**
  * If the key corresponds to a local declaration in the code, return the range
  * of the declaration. Otherwise, return null.
@@ -172,7 +114,7 @@ export function getPathAtOffset(text, offset) {
  * @returns {LSPPosition | null}
  */
 function localDeclarationRange(code, key, lspPosition) {
-  const peggyPosition = position.lspPositionToPeggyPosition(lspPosition);
+  const peggyPosition = utilities.lspPositionToPeggyPosition(lspPosition);
   // Walk up from the current position to visit all declarations in scope
   for (const declaration of localDeclarations(code, peggyPosition)) {
     const fn = declaration[0];
@@ -197,8 +139,8 @@ function localDeclarationRange(code, key, lspPosition) {
 
     if (location) {
       const range = {
-        start: position.peggyPositionToLSPPosition(location.start),
-        end: position.peggyPositionToLSPPosition(location.start),
+        start: utilities.peggyPositionToLSPPosition(location.start),
+        end: utilities.peggyPositionToLSPPosition(location.start),
       };
       return range;
     }

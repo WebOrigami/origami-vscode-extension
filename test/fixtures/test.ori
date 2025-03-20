@@ -9,6 +9,7 @@
   data.json = json(data)
 
   // Test Go to Definition for various path types
+  functions.json = src/client/builtins.json
   template = fixtures/template.ori
   hosts = /etc/hosts
   bash_profile = ~/.bash_profile
