@@ -4,29 +4,33 @@ import path from "node:path";
 import process from "node:process";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import localDeclarations from "./localDeclarations.mjs";
+import * as position from "./position.mjs";
 
 /**
  * Compile the document and return diagnostics
  *
- * @typedef {@import("vscode-languageserver").TypeDefinitionParams} TypeDefinitionParams
+ * @typedef {@import("@weborigami/language").Code} Code
+ * @typedef {@import("@weborigami/language").Position} PeggyPosition
  * @typedef {import("vscode-languageserver").Location} Location
+ * @typedef {import("vscode-languageserver").Position} LSPPosition
  * @typedef {import("vscode-languageserver-textdocument").TextDocument} TextDocument
  *
- * @param {TypeDefinitionParams} params
  * @param {TextDocument} document
+ * @param {LSPPosition} lspPosition
  * @param {string[]} workspaceFolderPaths
+ * @param {Code | Error} compiledResult
  * @returns {Location | null}
  */
 export default async function definition(
-  params,
   document,
+  lspPosition,
   workspaceFolderPaths,
   compiledResult
 ) {
   // Get the path the cursor is inside of
   const text = document.getText();
-  const position = document.offsetAt(params.position);
-  const targetPath = getPathAtPosition(text, position);
+  const offset = document.offsetAt(lspPosition);
+  const targetPath = getPathAtOffset(text, offset);
 
   // If the position isn't inside a path, return null. Also return null if the
   // path includes a colon -- we don't handle protocols (or port numbers).
@@ -34,7 +38,7 @@ export default async function definition(
     return null;
   }
 
-  const uri = params.textDocument.uri;
+  const uri = document.uri;
   const documentPath = fileURLToPath(uri);
   const folderPath = path.dirname(documentPath);
 
@@ -48,7 +52,11 @@ export default async function definition(
     !(compiledResult instanceof Error)
   ) {
     // Path is a single key, try looking for local declarations first
-    const range = localDeclarationRange(compiledResult.code, rootKey, position);
+    const range = localDeclarationRange(
+      compiledResult.code,
+      rootKey,
+      lspPosition
+    );
     if (range !== null) {
       return {
         uri,
@@ -135,30 +143,38 @@ async function findInProjectScope(key, folderPath, workspaceFolderPaths) {
   return null;
 }
 
-// If the position is inside a path, return the path. Otherwise, return null.
-export function getPathAtPosition(text, position) {
+// If the offset is inside a path, return the path. Otherwise, return null.
+export function getPathAtOffset(text, offset) {
   // Based on the Origami path regex in origami.pegjs, but allows slashes
   // because we're not parsing the path here. Also allows colons to account for
   // protocols and port numbers.
   const pathCharRegex = /[^(){}\[\],\\ \t\n\r]/;
   // Back up to the start of the path
-  let start = position;
+  let start = offset;
   while (start > 0 && pathCharRegex.test(text[start - 1])) {
     start--;
   }
   // Advance to the end of the path
-  let end = position;
+  let end = offset;
   while (end < text.length && pathCharRegex.test(text[end])) {
     end++;
   }
   return start < end ? text.slice(start, end) : null;
 }
 
-// If the key corresponds to a local declaration in the code, return the range
-// of the declaration. Otherwise, return null.
-function localDeclarationRange(code, key, position) {
+/**
+ * If the key corresponds to a local declaration in the code, return the range
+ * of the declaration. Otherwise, return null.
+ *
+ * @param {Code} code
+ * @param {string} key
+ * @param {LSPPosition} lspPosition
+ * @returns {LSPPosition | null}
+ */
+function localDeclarationRange(code, key, lspPosition) {
+  const peggyPosition = position.lspPositionToPeggyPosition(lspPosition);
   // Walk up from the current position to visit all declarations in scope
-  for (const declaration of localDeclarations(code, position)) {
+  for (const declaration of localDeclarations(code, peggyPosition)) {
     const fn = declaration[0];
     let location;
     switch (fn) {
@@ -181,27 +197,12 @@ function localDeclarationRange(code, key, position) {
 
     if (location) {
       const range = {
-        start: peggyPositionToLspPosition(location.start),
-        end: peggyPositionToLspPosition(location.start),
+        start: position.peggyPositionToLSPPosition(location.start),
+        end: position.peggyPositionToLSPPosition(location.start),
       };
       return range;
     }
   }
 
   return null;
-}
-
-/**
- * Convert an Origami position to an LSP-compatible position
- *
- * Origami positions are based on Peggy.js positions, which use 1-based line and
- * column numbers. LSP positions use 0-based line and column numbers.
- *
- * @param {@import("@weborigami/language").Position} peggyPosition
- */
-function peggyPositionToLspPosition(peggyPosition) {
-  return {
-    line: peggyPosition.line - 1,
-    character: peggyPosition.column - 1,
-  };
 }

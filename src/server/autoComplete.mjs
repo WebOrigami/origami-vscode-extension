@@ -3,6 +3,7 @@ import { ops } from "@weborigami/language";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import localDeclarations from "./localDeclarations.mjs";
+import * as position from "./position.mjs";
 
 import languageServerPackage from "vscode-languageserver";
 const { CompletionItemKind } = languageServerPackage;
@@ -12,8 +13,8 @@ const { CompletionItemKind } = languageServerPackage;
  * @typedef {@import("@weborigami/language").Position} PeggyPosition
  * @typedef {@import("vscode-languageserver").CompletionItemKind} CompletionItemKind
  * @typedef {@import("vscode-languageserver").CompletionItem} CompletionItem
- * @typedef {@import("vscode-languageserver").TextDocumentPositionParams} TextDocumentPositionParams
  * @typedef {@import("vscode-languageserver").TextDocument} TextDocument
+ * @typedef {import("vscode-languageserver").Position} LSPPosition
  */
 
 // Maps a folder URI to a set of completions for that folder's files
@@ -23,27 +24,27 @@ const cachedFolderCompletions = new Map();
 /**
  * Return completion items applicable to the given document
  *
- * @param {TextDocumentPositionParams} params
+ * @param {TextDcoument} document
+ * @param {LSPPosition} lspPosition
  * @param {string[]} workspaceFolderPaths
- * @param {Code|Error} compiledResult
+ * @param {Code | Error} compiledResult
  * @returns {CompletionItem[]}
  */
 export default async function autoComplete(
-  params,
+  document,
+  lspPosition,
   workspaceFolderPaths,
   compiledResult
 ) {
-  const { textDocument, position } = params;
-  const uri = new URL(textDocument.uri);
+  const uri = new URL(document.uri);
   if (uri.protocol !== "file:") {
     return [];
   }
 
   let positionCompletions = [];
   if (position && compiledResult && !(compiledResult instanceof Error)) {
-    const peggyPosition = lspPositionToPeggyPosition(position);
     const { code } = compiledResult;
-    positionCompletions = getPositionCompletions(code, peggyPosition);
+    positionCompletions = getPositionCompletions(code, lspPosition);
   }
 
   // Get completions based on the document's folder
@@ -63,10 +64,11 @@ async function getFolderCompletions(folderPath, workspaceFolderPaths) {
   }
 
   let parentCompletions;
-  if (
-    workspaceFolderPaths.length > 0 &&
-    !workspaceFolderPaths.includes(folderPath)
-  ) {
+  const isWorkspaceFolder = workspaceFolderPaths.some(
+    (workspaceFolder) =>
+      path.resolve(workspaceFolder) === path.resolve(folderPath)
+  );
+  if (!isWorkspaceFolder && folderPath !== "/") {
     // Get parent folder completions
     const parentFolder = path.dirname(folderPath);
     parentCompletions = await getFolderCompletions(
@@ -101,10 +103,11 @@ async function getFolderCompletions(folderPath, workspaceFolderPaths) {
  * produced the compiled result
  *
  * @param {Code|Error} compiledResult
- * @param {PeggyPosition} peggyPosition
+ * @param {LSPPosition} lspPosition
  * @returns {CompletionItem[]}
  */
-function getPositionCompletions(code, peggyPosition) {
+function getPositionCompletions(code, lspPosition) {
+  const peggyPosition = position.lspPositionToPeggyPosition(lspPosition);
   const completions = [];
   for (const declaration of localDeclarations(code, peggyPosition)) {
     const fn = declaration[0];
@@ -134,20 +137,4 @@ function getPositionCompletions(code, peggyPosition) {
     }
   }
   return completions;
-}
-
-/**
- * Convert an LSP position to an Origami position
- *
- * Origami positions are based on Peggy.js positions, which use 1-based line and
- * column numbers. LSP positions use 0-based line and column numbers.
- *
- * @param {import("vscode-languageserver").Position} lspPosition
- * @returns {PeggyPosition}
- */
-function lspPositionToPeggyPosition(lspPosition) {
-  return {
-    line: lspPosition.line + 1,
-    column: lspPosition.character + 1,
-  };
 }

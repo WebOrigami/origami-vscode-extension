@@ -75,18 +75,20 @@ connection.languages.diagnostics.on(async (params) => {
 
 // Wire up auto-complete
 connection.onCompletion((params) => {
-  const compiledResult = diagnostics.compileResults.get(
-    params.textDocument.uri
-  );
-  return autoComplete(params, workspaceFolderPaths, compiledResult);
+  const { textDocument, position } = params;
+  const uri = textDocument.uri;
+  const document = documents.get(uri);
+  const compiledResult = diagnostics.compileResults.get(uri);
+  return autoComplete(document, position, workspaceFolderPaths, compiledResult);
 });
 
 // Go to Definition
 connection.onDefinition((params) => {
-  const uri = params.textDocument.uri;
+  const { textDocument, position } = params;
+  const uri = textDocument.uri;
   const document = documents.get(uri);
   const compiledResult = diagnostics.compileResults.get(uri);
-  return definition(params, document, workspaceFolderPaths, compiledResult);
+  return definition(document, position, workspaceFolderPaths, compiledResult);
 });
 
 // Make the text document manager listen on the connection

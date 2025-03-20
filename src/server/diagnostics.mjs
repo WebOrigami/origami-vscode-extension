@@ -33,8 +33,8 @@ export function validate(document) {
 function errorDiagnostic(error) {
   const { location, message } = error;
   const range = {
-    start: peggyPositionToLspPosition(location.start),
-    end: peggyPositionToLspPosition(location.end),
+    start: peggyPositionToLSPPosition(location.start),
+    end: peggyPositionToLSPPosition(location.end),
   };
   const diagnostic = {
     severity: DiagnosticSeverity.Error,
@@ -53,7 +53,7 @@ function errorDiagnostic(error) {
  *
  * @param {@import("@weborigami/language").Position} peggyPosition
  */
-function peggyPositionToLspPosition(peggyPosition) {
+function peggyPositionToLSPPosition(peggyPosition) {
   return {
     line: peggyPosition.line - 1,
     character: peggyPosition.column - 1,
