@@ -37,7 +37,14 @@ export function activate(context) {
     { scheme: "file", language: "origami" },
     { scheme: "untitled", language: "origami" },
   ];
-  const clientOptions = { documentSelector };
+  const clientOptions = {
+    documentSelector,
+    synchronize: {
+      fileEvents: [
+        vscode.workspace.createFileSystemWatcher("**/*")
+      ]
+    }
+  };
 
   // Create the language client
   client = new LanguageClient(

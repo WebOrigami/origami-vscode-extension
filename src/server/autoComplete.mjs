@@ -31,7 +31,7 @@ const cachedFolderCompletions = new Map();
  * @param {import("./types.js").CompileResult} compileResult
  * @returns {Promise<CompletionItem[]>}
  */
-export default async function autoComplete(
+export async function autoComplete(
   document,
   lspPosition,
   workspaceFolderPaths,
@@ -73,6 +73,16 @@ export default async function autoComplete(
   );
 
   return positionCompletions.concat(scopeCompletions);
+}
+
+/**
+ * A file was created or deleted; forget the cached completions for that folder
+ *
+ * @param {string} uri
+ */
+export function folderChanged(uri) {
+  const folderPath = path.dirname(fileURLToPath(new URL(uri)));
+  cachedFolderCompletions.delete(folderPath);
 }
 
 /**

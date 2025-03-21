@@ -1,21 +1,25 @@
 import { fileURLToPath } from "node:url";
 import { TextDocument } from "vscode-languageserver-textdocument";
-import autoComplete from "./autoComplete.mjs";
+import { autoComplete, folderChanged } from "./autoComplete.mjs";
 import definition from "./definition.mjs";
 import * as diagnostics from "./diagnostics.mjs";
 
+// Hack to import the CommonJS version of vscode-languageserver;
+// can't use `import { … }` syntax because it's a CommonJS module.
 import languageServerPackage from "vscode-languageserver";
 const {
-  createConnection,
+  DidChangeWatchedFilesNotification,
   DocumentDiagnosticReportKind,
+  FileChangeType,
   ProposedFeatures,
-  TextDocuments,
   TextDocumentSyncKind,
+  TextDocuments,
+  createConnection,
 } = languageServerPackage;
 
 // Create a connection for the server, using Node's IPC as a transport.
 // Also include all preview / proposed LSP features.
-// @ts-ignore The import above doesn't get the correct function signature
+// @ts-ignore The import hack above doesn't get the correct type
 const connection = createConnection(ProposedFeatures.all);
 
 let workspaceFolderPaths;
@@ -44,6 +48,12 @@ connection.onInitialize(
           workspaceDiagnostics: false,
         },
         textDocumentSync: TextDocumentSyncKind.Incremental,
+        workspace: {
+          // @ts-ignore The import hack above doesn't get the correct type
+          didChangeWatchedFiles: {
+            dynamicRegistration: false,
+          },
+        },
       },
     };
 
@@ -99,6 +109,16 @@ connection.onDefinition((params) => {
     return [];
   }
   return definition(document, position, workspaceFolderPaths, compileResult);
+});
+
+connection.onNotification(DidChangeWatchedFilesNotification.type, (params) => {
+  for (const change of params.changes) {
+    const { uri, type } = change;
+    if (type === FileChangeType.Created || type === FileChangeType.Deleted) {
+      // Let AutoComplete know it needs to recalc folder completions
+      folderChanged(uri);
+    }
+  }
 });
 
 // Make the text document manager listen on the connection

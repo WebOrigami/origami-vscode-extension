@@ -7,7 +7,7 @@
   package.yaml = yaml(package.json)
   about.html = mdHtml(ReadMe.md)
   data.json = json(data)
-
+  
   // Test Go to Definition for various path types
   functions.json = src/client/builtins.json
   template = fixtures/template.ori

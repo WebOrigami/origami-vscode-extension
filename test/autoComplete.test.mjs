@@ -1,6 +1,6 @@
 import assert from "node:assert";
 import { describe, test } from "node:test";
-import autoComplete from "../src/server/autoComplete.mjs";
+import { autoComplete } from "../src/server/autoComplete.mjs";
 import documentFixture from "./documentFixture.mjs";
 
 describe("auto complete", () => {
