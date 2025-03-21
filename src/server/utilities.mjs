@@ -10,16 +10,23 @@
  */
 
 /**
- * If the offset is inside a path, return the complete path. Otherwise, return
+ * If the offset is touching a path, return the complete path. Otherwise return
  * null.
+ *
+ * A path is a series of characters that are not whitespace, parentheses,
+ * brackets, braces, or commas. A path must include at least one slash.
  *
  * If expandRight is true, the returned path will include path characters to the
  * right of the offset.
  *
  * @param {string} text
  * @param {number} offset
+ * @param {{ expandRight?: boolean, requireSlash?: boolean }} [options]
  */
-export function getPathAtOffset(text, offset, expandRight = true) {
+export function getPathAtOffset(text, offset, options) {
+  const expandRight = options?.expandRight ?? true;
+  const requireSlash = options?.requireSlash ?? false;
+
   // Based on the Origami path regex in origami.pegjs, but allows slashes
   // because we're not parsing the path here. Also allows colons to account for
   // protocols and port numbers.
@@ -36,7 +43,14 @@ export function getPathAtOffset(text, offset, expandRight = true) {
       end++;
     }
   }
-  return start < end ? text.slice(start, end) : null;
+
+  const fragment = start < end ? text.slice(start, end) : null;
+
+  if (requireSlash && !fragment?.includes("/")) {
+    return null;
+  }
+
+  return fragment;
 }
 
 /**

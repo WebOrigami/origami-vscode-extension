@@ -44,18 +44,21 @@ export default async function autoComplete(
   const documentPath = fileURLToPath(uri);
   const folderPath = path.dirname(documentPath);
 
-  // Is the character at the position a trailing slash?
+  // Are we at the end of a path?
   const text = document.getText();
   const offset = document.offsetAt(lspPosition);
-  const char = text[offset - 1];
-  const isTrailingSlash = char ? trailingSlash.has(char) : false;
-
-  if (isTrailingSlash) {
-    // We're at the end of a path
-    const targetPath = utilities.getPathAtOffset(text, offset, false);
-    return targetPath === null
-      ? []
-      : await getPathCompletions(targetPath, folderPath, workspaceFolderPaths);
+  const targetPath = utilities.getPathAtOffset(text, offset, {
+    expandRight: false,
+    requireSlash: true,
+  });
+  if (targetPath) {
+    // We're at/near the end of a path
+    const pathCompletions = await getPathCompletions(
+      targetPath,
+      folderPath,
+      workspaceFolderPaths
+    );
+    return pathCompletions;
   }
 
   let positionCompletions = [];
@@ -138,11 +141,12 @@ async function getPathCompletions(
   workspaceFolderPaths
 ) {
   const keys = targetPath.split("/");
-  // The path should end in a slash, so last key should be a space
-  if (keys.at(-1) === "") {
-    keys.pop();
-  }
+  // Completions are based on the path up to the last slash
+  keys.pop();
   const rootKey = keys.shift();
+  if (rootKey === undefined) {
+    return null; // No key to complete on
+  }
 
   // Find the root in the project scope
   const root = await findInProjectScope(
