@@ -10,12 +10,12 @@ import languageServerPackage from "vscode-languageserver";
 const { CompletionItemKind } = languageServerPackage;
 
 /**
- * @typedef {import("@weborigami/language").Code} Code
- * @typedef {import("./index.ts").OrigamiPosition} OrigamiPosition
+ * @typedef {import("./types.js").OrigamiPosition} OrigamiPosition
+ * @typedef {import("@weborigami/language").AnnotatedCode} AnnotatedCode
  * @typedef {import("vscode-languageserver").CompletionItemKind} CompletionItemKind
  * @typedef {import("vscode-languageserver").CompletionItem} CompletionItem
- * @typedef {import("vscode-languageserver").TextDocument} TextDocument
  * @typedef {import("vscode-languageserver").Position} LSPPosition
+ * @typedef {import("vscode-languageserver").TextDocument} TextDocument
  */
 
 // Maps a folder URI to a set of completions for that folder's files
@@ -28,14 +28,14 @@ const cachedFolderCompletions = new Map();
  * @param {TextDocument} document
  * @param {LSPPosition} lspPosition
  * @param {string[]} workspaceFolderPaths
- * @param {any} compiledResult
+ * @param {import("./types.js").CompileResult} compileResult
  * @returns {Promise<CompletionItem[]>}
  */
 export default async function autoComplete(
   document,
   lspPosition,
   workspaceFolderPaths,
-  compiledResult
+  compileResult
 ) {
   const uri = new URL(document.uri);
   if (uri.protocol !== "file:") {
@@ -59,9 +59,8 @@ export default async function autoComplete(
   }
 
   let positionCompletions = [];
-  if (utilities && compiledResult && !(compiledResult instanceof Error)) {
-    const { code } = compiledResult;
-    positionCompletions = getPositionCompletions(code, lspPosition);
+  if (utilities && compileResult && !(compileResult instanceof Error)) {
+    positionCompletions = getPositionCompletions(compileResult, lspPosition);
   }
 
   // Get completions based on the scope available in the folder
@@ -179,7 +178,7 @@ async function getPathCompletions(
  * didn't compile, or if the start position doesn't fall within the source that
  * produced the compiled result
  *
- * @param {Code|Error} code
+ * @param {AnnotatedCode} code
  * @param {LSPPosition} lspPosition
  * @returns {CompletionItem[]}
  */

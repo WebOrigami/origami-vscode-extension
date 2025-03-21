@@ -9,8 +9,8 @@ import * as utilities from "./utilities.mjs";
 /**
  * Compile the document and return diagnostics
  *
- * @typedef {import("@weborigami/language").Code} Code
- * @typedef {import("./index.ts").OrigamiPosition} OrigamiPosition
+ * @typedef {import("@weborigami/language").AnnotatedCode} AnnotatedCode
+ * @typedef {import("./types.js").OrigamiPosition} OrigamiPosition
  * @typedef {import("vscode-languageserver").Location} Location
  * @typedef {import("vscode-languageserver").Position} LSPPosition
  * @typedef {import("vscode-languageserver-textdocument").TextDocument} TextDocument
@@ -18,14 +18,14 @@ import * as utilities from "./utilities.mjs";
  * @param {TextDocument} document
  * @param {LSPPosition} lspPosition
  * @param {string[]} workspaceFolderPaths
- * @param {Code | Error} compiledResult
+ * @param {import("./types.js").CompileResult} compileResult
  * @returns {Promise<Location | null>}
  */
 export default async function definition(
   document,
   lspPosition,
   workspaceFolderPaths,
-  compiledResult
+  compileResult
 ) {
   // Get the path the cursor is inside of
   const text = document.getText();
@@ -45,18 +45,13 @@ export default async function definition(
   // Find path root in project scope, might be a file or a folder
   const keys = targetPath.split("/");
   const rootKey = keys.shift();
+  if (rootKey === undefined) {
+    return null;
+  }
 
-  if (
-    keys.length === 0 &&
-    compiledResult &&
-    !(compiledResult instanceof Error)
-  ) {
+  if (keys.length === 0 && compileResult && !(compileResult instanceof Error)) {
     // Path is a single key, try looking for local declarations first
-    const range = localDeclarationRange(
-      compiledResult.code,
-      rootKey,
-      lspPosition
-    );
+    const range = localDeclarationRange(compileResult, rootKey, lspPosition);
     if (range !== null) {
       return {
         uri,
@@ -78,6 +73,8 @@ export default async function definition(
   // Follow as many keys as possible until we find a file
   let { path: filePath, value: current } = root;
   while (current instanceof FileTree && keys.length > 0) {
+    /** @type {string} */
+    // @ts-ignore always defined
     const key = keys.shift();
     const value = await current.get(key);
     if (value === undefined) {
@@ -108,10 +105,10 @@ export default async function definition(
  * If the key corresponds to a local declaration in the code, return the range
  * of the declaration. Otherwise, return null.
  *
- * @param {Code} code
+ * @param {AnnotatedCode} code
  * @param {string} key
  * @param {LSPPosition} lspPosition
- * @returns {LSPPosition | null}
+ * @returns {import("vscode-languageserver").Range | null}
  */
 function localDeclarationRange(code, key, lspPosition) {
   const origamiPosition = utilities.lspPositionToOrigamiPosition(lspPosition);

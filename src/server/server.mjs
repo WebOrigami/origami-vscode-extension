@@ -8,7 +8,6 @@ import languageServerPackage from "vscode-languageserver";
 const {
   createConnection,
   DocumentDiagnosticReportKind,
-  InitializeResult,
   ProposedFeatures,
   TextDocuments,
   TextDocumentSyncKind,
@@ -16,6 +15,7 @@ const {
 
 // Create a connection for the server, using Node's IPC as a transport.
 // Also include all preview / proposed LSP features.
+// @ts-ignore The import above doesn't get the correct function signature
 const connection = createConnection(ProposedFeatures.all);
 
 let workspaceFolderPaths;
@@ -24,14 +24,14 @@ let workspaceFolderPaths;
 const documents = new TextDocuments(TextDocument);
 
 connection.onInitialize(
-  /** @param {@import("vscode-languageserver").InitializeParams} params */
+  /** @param {import("vscode-languageserver").InitializeParams} params */
   (params) => {
     const workspaceFolders = params.workspaceFolders ?? [];
     workspaceFolderPaths = workspaceFolders.map((folder) =>
       fileURLToPath(folder.uri)
     );
 
-    /** @type {InitializeResult} */
+    /** @type {import("vscode-languageserver").InitializeResult} */
     const result = {
       capabilities: {
         completionProvider: {
@@ -57,7 +57,7 @@ connection.onInitialized(() => {
 
 connection.languages.diagnostics.on(async (params) => {
   const document = documents.get(params.textDocument.uri);
-  /** @type {DocumentDiagnosticReport} */
+  /** @type {import("vscode-languageclient").DocumentDiagnosticReport} */
   let result;
   if (document !== undefined) {
     result = {
@@ -80,8 +80,12 @@ connection.onCompletion((params) => {
   const { textDocument, position } = params;
   const uri = textDocument.uri;
   const document = documents.get(uri);
-  const compiledResult = diagnostics.compileResults.get(uri);
-  return autoComplete(document, position, workspaceFolderPaths, compiledResult);
+  const compileResult = diagnostics.compileResults.get(uri);
+  if (document === undefined || compileResult === undefined) {
+    // Called before diagnostics; shouldn't happen
+    return [];
+  }
+  return autoComplete(document, position, workspaceFolderPaths, compileResult);
 });
 
 // Go to Definition
@@ -89,8 +93,12 @@ connection.onDefinition((params) => {
   const { textDocument, position } = params;
   const uri = textDocument.uri;
   const document = documents.get(uri);
-  const compiledResult = diagnostics.compileResults.get(uri);
-  return definition(document, position, workspaceFolderPaths, compiledResult);
+  const compileResult = diagnostics.compileResults.get(uri);
+  if (document === undefined || compileResult === undefined) {
+    // Called before diagnostics; shouldn't happen
+    return [];
+  }
+  return definition(document, position, workspaceFolderPaths, compileResult);
 });
 
 // Make the text document manager listen on the connection

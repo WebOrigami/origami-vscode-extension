@@ -5,7 +5,7 @@
  * Origami positions are based on Peggy.js positions, which use 1-based line and
  * column numbers. LSP positions use 0-based line and column numbers.
  *
- * @typedef {import("./index.ts").OrigamiPosition} OrigamiPosition
+ * @typedef {import("./types.js").OrigamiPosition} OrigamiPosition
  * @typedef {import("vscode-languageserver").Position} LSPPosition
  */
 

@@ -6,7 +6,7 @@ import documentFixture from "./documentFixture.mjs";
 
 describe("definition", () => {
   test("retrieve definition of a local variable", async () => {
-    const { compiledResult, document, workspaceFolderPaths } =
+    const { compileResult, document, workspaceFolderPaths } =
       await documentFixture();
 
     // Get a position inside the template substitution
@@ -18,9 +18,10 @@ describe("definition", () => {
       document,
       position,
       workspaceFolderPaths,
-      compiledResult
+      compileResult
     );
 
+    assert(location);
     assert(location.uri.endsWith("fixtures/test.ori")); // in same file
     assert.deepEqual(location.range, {
       start: { line: 4, character: 9 }, // start of lambda parameters
@@ -29,7 +30,7 @@ describe("definition", () => {
   });
 
   test("retrieve definition of a file between source file and workspace root", async () => {
-    const { compiledResult, document, workspaceFolderPaths } =
+    const { compileResult, document, workspaceFolderPaths } =
       await documentFixture();
 
     // Get position in the template.ori reference
@@ -41,9 +42,10 @@ describe("definition", () => {
       document,
       position,
       workspaceFolderPaths,
-      compiledResult
+      compileResult
     );
 
+    assert(location);
     assert(location.uri.endsWith("/test/fixtures/template.ori"));
     assert.deepEqual(location.range, {
       start: { line: 0, character: 0 },

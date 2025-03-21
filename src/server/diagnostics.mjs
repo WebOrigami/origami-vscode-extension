@@ -3,15 +3,19 @@ import languageServerPackage from "vscode-languageserver";
 import { origamiPositionToLSPPosition } from "./utilities.mjs";
 const { Diagnostic, DiagnosticSeverity } = languageServerPackage;
 
-// Map document URIs to their compiled Code, or Error, or null (if source is
-// empty)
+/**
+ * Map document URIs for Origami files to the result of compiling the file
+ *
+ * @typedef {import("./types.js").CompileResult} CompileResult
+ * @type {Map<string, CompileResult>}
+ */
 export const compileResults = new Map();
 
 /**
  * Compile the document and return diagnostics
  *
  * @typedef {import("vscode-languageserver").Diagnostic} Diagnostic
- * @typedef {import("./index.ts").OrigamiPosition} OrigamiPosition
+ * @typedef {import("./types.js").OrigamiPosition} OrigamiPosition
  * @typedef {import("vscode-languageserver").DiagnosticSeverity} DiagnosticSeverity
  * @typedef {import("vscode-languageserver-textdocument").TextDocument} TextDocument
  *
@@ -22,9 +26,9 @@ export function validate(document) {
   const text = document.getText();
   let result;
   try {
-    result = text.trim().length > 0 ? compile.expression(text) : null;
+    result = text.trim().length > 0 ? compile.expression(text).code : null;
   } catch (error) {
-    result = error;
+    result = /** @type {Error} */ (error);
   }
   compileResults.set(document.uri, result);
 

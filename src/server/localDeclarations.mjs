@@ -5,10 +5,10 @@ import { ops } from "@weborigami/language";
  * declarations that surround that position, working up toward the root of the
  * code.
  *
- * @typedef {import("./index.ts").OrigamiPosition} OrigamiPosition
- * @typedef {import("@weborigami/language").Code} Code
+ * @typedef {import("./types.js").OrigamiPosition} OrigamiPosition
+ * @typedef {import("@weborigami/language").AnnotatedCode} AnnotatedCode
  *
- * @param {Code} code
+ * @param {AnnotatedCode} code
  * @param {OrigamiPosition} origamiPosition
  */
 export default function* localDeclarations(code, origamiPosition) {
@@ -33,6 +33,7 @@ export default function* localDeclarations(code, origamiPosition) {
   for (const arg of code) {
     if (Array.isArray(arg)) {
       // If position is outside argument this will return immediately
+      // @ts-ignore arg must be AnnotatedCode
       yield* localDeclarations(arg, origamiPosition);
     }
   }

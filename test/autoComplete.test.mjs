@@ -5,7 +5,7 @@ import documentFixture from "./documentFixture.mjs";
 
 describe("auto complete", () => {
   test("completions include names of files between source file and workspace root", async () => {
-    const { compiledResult, document, workspaceFolderPaths } =
+    const { compileResult, document, workspaceFolderPaths } =
       await documentFixture();
 
     const position = { line: 0, character: 0 };
@@ -13,7 +13,7 @@ describe("auto complete", () => {
       document,
       position,
       workspaceFolderPaths,
-      compiledResult
+      compileResult
     );
 
     assert(hasCompletion(completions, "test.ori.html")); // in same folder
@@ -22,19 +22,19 @@ describe("auto complete", () => {
   });
 
   test("completions include object keys and lambda parameters within scope of cursor", async () => {
-    const { compiledResult, document, workspaceFolderPaths } =
+    const { compileResult, document, workspaceFolderPaths } =
       await documentFixture();
 
     // Get a position inside the template substitution in the lambda
     const text = document.getText();
-    const offset = text.indexOf("${") + 2;
+    const offset = text.indexOf("${ ") + 3;
     const position = document.positionAt(offset);
 
     const completions = await autoComplete(
       document,
       position,
       workspaceFolderPaths,
-      compiledResult
+      compileResult
     );
 
     assert(hasCompletion(completions, "name")); // lambda parameter
@@ -42,7 +42,7 @@ describe("auto complete", () => {
   });
 
   test("completions after path with trailing slash include file names", async () => {
-    const { compiledResult, document, workspaceFolderPaths } =
+    const { compileResult, document, workspaceFolderPaths } =
       await documentFixture();
 
     // Get a position after a path fragment
@@ -55,7 +55,7 @@ describe("auto complete", () => {
       document,
       position,
       workspaceFolderPaths,
-      compiledResult
+      compileResult
     );
 
     assert(hasCompletion(completions, "builtins.json")); // file in same folder
