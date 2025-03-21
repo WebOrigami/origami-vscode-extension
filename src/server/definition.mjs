@@ -2,9 +2,9 @@ import { FileTree } from "@weborigami/async-tree";
 import { ops } from "@weborigami/language";
 import path from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
+import * as utilities from "../utilities.mjs";
 import findInProjectScope from "./findInProjectScope.mjs";
 import localDeclarations from "./localDeclarations.mjs";
-import * as utilities from "./utilities.mjs";
 
 /**
  * Compile the document and return diagnostics

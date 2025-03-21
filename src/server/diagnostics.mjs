@@ -1,6 +1,6 @@
 import { compile } from "@weborigami/language";
 import languageServerPackage from "vscode-languageserver";
-import { origamiPositionToLSPPosition } from "./utilities.mjs";
+import { origamiPositionToLSPPosition } from "../utilities.mjs";
 const { Diagnostic, DiagnosticSeverity } = languageServerPackage;
 
 /**

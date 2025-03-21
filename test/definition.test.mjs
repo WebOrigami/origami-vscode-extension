@@ -1,7 +1,7 @@
 import assert from "node:assert";
 import { describe, test } from "node:test";
 import definition from "../src/server/definition.mjs";
-import { getPathAtOffset } from "../src/server/utilities.mjs";
+import { getPathAtOffset } from "../src/utilities.mjs";
 import documentFixture from "./documentFixture.mjs";
 
 describe("definition", () => {

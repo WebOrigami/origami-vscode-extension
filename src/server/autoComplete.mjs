@@ -2,9 +2,9 @@ import { FileTree, trailingSlash } from "@weborigami/async-tree";
 import { ops } from "@weborigami/language";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import * as utilities from "../utilities.mjs";
 import findInProjectScope from "./findInProjectScope.mjs";
 import localDeclarations from "./localDeclarations.mjs";
-import * as utilities from "./utilities.mjs";
 
 import languageServerPackage from "vscode-languageserver";
 const { CompletionItemKind } = languageServerPackage;
@@ -44,7 +44,7 @@ export default async function autoComplete(
   const documentPath = fileURLToPath(uri);
   const folderPath = path.dirname(documentPath);
 
-  // Are we at the end of a path?
+  // Are we touching a path?
   const text = document.getText();
   const offset = document.offsetAt(lspPosition);
   const targetPath = utilities.getPathAtOffset(text, offset, {
@@ -52,7 +52,7 @@ export default async function autoComplete(
     requireSlash: true,
   });
   if (targetPath) {
-    // We're at/near the end of a path
+    // Yes, we're touching a path
     const pathCompletions = await getPathCompletions(
       targetPath,
       folderPath,
