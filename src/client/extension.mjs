@@ -4,6 +4,8 @@
 import * as path from "path";
 import builtinCompletions from "./builtins.json" with { type: "json" };
 
+import vscode from "./vscode.cjs";
+
 // vscode-languageclient is a CommonJS module so we can't use `import { … }`
 // syntax, but we can use destructuring assignment instead
 import languageClientPackage from "vscode-languageclient";
