@@ -215,11 +215,12 @@ function getPositionCompletions(code, lspPosition) {
         break;
 
       case ops.lambda:
-        // Add the lambda arguments
-        const args = declaration[1];
-        for (const arg of args) {
+        // Add the lambda parameters
+        const parameters = declaration[1];
+        for (const parameter of parameters) {
+          const label = parameter[1];
           completions.push({
-            label: arg,
+            label,
             kind: CompletionItemKind.Variable,
           });
         }

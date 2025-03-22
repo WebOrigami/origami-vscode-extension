@@ -125,11 +125,9 @@ function localDeclarationRange(code, key, lspPosition) {
 
       case ops.lambda:
         const args = declaration[1];
-        const argIndex = args.indexOf(key);
-        if (argIndex >= 0) {
-          // We don't have enough information to go to the exact position of the
-          // argument, so we just go to the start of the lambda
-          location = declaration.location;
+        const arg = args.find((arg) => arg[1] === key);
+        if (arg) {
+          location = arg.location;
         }
         break;
     }
@@ -137,7 +135,7 @@ function localDeclarationRange(code, key, lspPosition) {
     if (location) {
       const range = {
         start: utilities.origamiPositionToLSPPosition(location.start),
-        end: utilities.origamiPositionToLSPPosition(location.start),
+        end: utilities.origamiPositionToLSPPosition(location.end),
       };
       return range;
     }

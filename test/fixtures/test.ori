@@ -3,6 +3,7 @@
   index.html = greet(teamLead)
   teamLead = teamData.yaml/0/name
   greet: (name) => `Hello, ${ name }!`
+  fn: (foo, bar) => foo + bar
   data = https://example.com/teamData.yaml
   package.yaml = yaml(package.json)
   about.html = mdHtml(ReadMe.md)

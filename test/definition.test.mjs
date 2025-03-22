@@ -24,8 +24,8 @@ describe("definition", () => {
     assert(location);
     assert(location.uri.endsWith("fixtures/test.ori")); // in same file
     assert.deepEqual(location.range, {
-      start: { line: 4, character: 9 }, // start of lambda parameters
-      end: { line: 4, character: 9 },
+      start: { line: 4, character: 10 }, // start of parameter
+      end: { line: 4, character: 14 }, // end of parameter
     });
   });
 
