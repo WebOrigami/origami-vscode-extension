@@ -6,4 +6,4 @@ A [Visual Studio Code](https://code.visualstudio.com/) extension that adds synta
 
 - Highlights Origami syntax errors
 - AutoComplete the names of: [Origami builtin functions](https://weborigami.org/builtins/), folders and files in scope, object properties and function parameters in scope
-- "Go to Definition" for file paths opens the corresponding file
+- "Go to Definition" for paths that start with files (opens the corresponding file), object properties, or lambda parameters

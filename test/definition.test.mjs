@@ -8,43 +8,67 @@ describe("definition", () => {
   test("retrieve definition of a local variable", async () => {
     const { compileResult, document, workspaceFolderPaths } =
       await documentFixture();
-
-    // Get a position inside the template substitution
-    const text = document.getText();
-    const offset = text.indexOf("${ na") + 4;
-    const position = document.positionAt(offset);
-
+    const position = positionOfText(document, "${ na"); // Inside "name"
     const location = await definition(
       document,
       position,
       workspaceFolderPaths,
       compileResult
     );
-
     assert(location);
     assert(location.uri.endsWith("fixtures/test.ori")); // in same file
     assert.deepEqual(location.range, {
-      start: { line: 4, character: 10 }, // start of parameter
-      end: { line: 4, character: 14 }, // end of parameter
+      start: { line: 7, character: 10 }, // start of parameter
+      end: { line: 7, character: 14 }, // end of parameter
+    });
+  });
+
+  test("retrieve definition of a non-enumerable property", async () => {
+    const { compileResult, document, workspaceFolderPaths } =
+      await documentFixture();
+    const position = positionOfText(document, "data");
+    const location = await definition(
+      document,
+      position,
+      workspaceFolderPaths,
+      compileResult
+    );
+    assert(location);
+    assert(location.uri.endsWith("fixtures/test.ori")); // in same file
+    assert.deepEqual(location.range, {
+      start: { line: 2, character: 2 },
+      end: { line: 2, character: 44 },
+    });
+  });
+
+  test("retrieve definition of a property with trailing slash", async () => {
+    const { compileResult, document, workspaceFolderPaths } =
+      await documentFixture();
+    const position = positionOfText(document, "posts");
+    const location = await definition(
+      document,
+      position,
+      workspaceFolderPaths,
+      compileResult
+    );
+    assert(location);
+    assert(location.uri.endsWith("fixtures/test.ori")); // in same file
+    assert.deepEqual(location.range, {
+      start: { line: 12, character: 2 },
+      end: { line: 12, character: 38 },
     });
   });
 
   test("retrieve definition of a file between source file and workspace root", async () => {
     const { compileResult, document, workspaceFolderPaths } =
       await documentFixture();
-
-    // Get position in the template.ori reference
-    const text = document.getText();
-    const offset = text.indexOf("template.ori");
-    const position = document.positionAt(offset);
-
+    const position = positionOfText(document, "template.ori"); // template reference
     const location = await definition(
       document,
       position,
       workspaceFolderPaths,
       compileResult
     );
-
     assert(location);
     assert(location.uri.endsWith("/test/fixtures/template.ori"));
     assert.deepEqual(location.range, {
@@ -60,3 +84,9 @@ describe("definition", () => {
     assert.equal(path, "test/fixtures/test.ori.html");
   });
 });
+
+function positionOfText(document, searchText) {
+  const text = document.getText();
+  const offset = text.indexOf(searchText) + searchText.length;
+  return document.positionAt(offset);
+}

@@ -1,17 +1,17 @@
 // Test file for spot-checking syntax highlighting and language features
 {
-  index.html = greet(teamLead)
-  teamLead = teamData.yaml/0/name
-  greet: (name) => `Hello, ${ name }!`
-  fn: (foo, bar) => foo + bar
-  data = https://example.com/teamData.yaml
-  package.yaml = yaml(package.json)
+  (data) = https://example.com/teamData.yaml
   about.html = mdHtml(ReadMe.md)
-  data.json = json(data)
-  
-  // Test Go to Definition for various path types
-  functions.json = src/client/builtins.json
-  template = fixtures/template.ori
-  hosts = /etc/hosts
   bash_profile = ~/.bash_profile
+  fn: (foo, bar) => foo + bar
+  functions.json = src/client/builtins.json
+  greet: (name) => `Hello, ${ name }!`
+  hosts = /etc/hosts
+  index.html = greet(teamLead)
+  output.json = json(data)
+  feed.json = rss(posts)
+  posts/ = map(markdown, template.ori)
+  package.yaml = yaml(package.json)
+  teamLead = teamData.yaml/0/name
+  template = fixtures/template.ori
 }

@@ -1,4 +1,4 @@
-import { FileTree } from "@weborigami/async-tree";
+import { FileTree, trailingSlash } from "@weborigami/async-tree";
 import { ops } from "@weborigami/language";
 import path from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
@@ -119,7 +119,10 @@ function localDeclarationRange(code, key, lspPosition) {
     switch (fn) {
       case ops.object:
         const entries = declaration.slice(1);
-        const entry = entries.find((entry) => entry[0] === key);
+        const normalizedKey = trailingSlash.remove(key);
+        const entry = entries.find((entry) =>
+          matchPropertyName(normalizedKey, entry[0])
+        );
         location = entry?.location;
         break;
 
@@ -142,4 +145,13 @@ function localDeclarationRange(code, key, lspPosition) {
   }
 
   return null;
+}
+
+// Return true if the key matches the given property name
+function matchPropertyName(key, name) {
+  if (name.startsWith("(") && name.endsWith(")")) {
+    return key === name.slice(1, -1);
+  } else {
+    return key === trailingSlash.remove(name);
+  }
 }
