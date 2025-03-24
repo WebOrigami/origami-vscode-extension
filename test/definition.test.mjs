@@ -77,6 +77,24 @@ describe("definition", () => {
     });
   });
 
+  test("retrieve definition of a file referenced with shorthand property", async () => {
+    const { compileResult, document, workspaceFolderPaths } =
+      await documentFixture();
+    const position = positionOfText(document, "ReadMe.md");
+    const location = await definition(
+      document,
+      position,
+      workspaceFolderPaths,
+      compileResult
+    );
+    assert(location);
+    assert(location.uri.endsWith("ReadMe.md"));
+    assert.deepEqual(location.range, {
+      start: { line: 0, character: 0 },
+      end: { line: 0, character: 0 },
+    });
+  });
+
   test("getPathAtPosition returns the path at the given position", () => {
     const text = `random stuff test/fixtures/test.ori.html`;
     const position = 27; // "t" after last slash

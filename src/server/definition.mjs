@@ -118,10 +118,10 @@ function localDeclarationRange(code, key, lspPosition) {
     let location;
     switch (fn) {
       case ops.object:
-        const entries = declaration.slice(1);
+        const properties = declaration.slice(1);
         const normalizedKey = trailingSlash.remove(key);
-        const entry = entries.find((entry) =>
-          matchPropertyName(normalizedKey, entry[0])
+        const entry = properties.find((property) =>
+          matchProperty(normalizedKey, property)
         );
         location = entry?.location;
         break;
@@ -147,11 +147,30 @@ function localDeclarationRange(code, key, lspPosition) {
   return null;
 }
 
-// Return true if the key matches the given property name
-function matchPropertyName(key, name) {
+// Return true if the key matches the given property
+function matchProperty(key, property) {
+  let name = property[0];
+  // Ignore parentheses around the names of non-enumerable properties
   if (name.startsWith("(") && name.endsWith(")")) {
-    return key === name.slice(1, -1);
-  } else {
-    return key === trailingSlash.remove(name);
+    name = name.slice(1, -1);
   }
+  // Ignore trailing slashes in property names
+  name = trailingSlash.remove(name);
+
+  if (key !== name) {
+    return false;
+  }
+
+  // Possible match
+
+  // Are we looking at a shorthand property referencing an external file? We
+  // can't tell this from the code, so we resort to looking at the source code
+  // for the property. If the entire property is a name, it's a shorthand.
+  const { location } = property;
+  const source = location.source.text.slice(
+    location.start.offset,
+    location.end.offset
+  );
+  const isShorthand = source === name;
+  return !isShorthand;
 }

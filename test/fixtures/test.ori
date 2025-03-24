@@ -12,6 +12,7 @@
   feed.json = rss(posts)
   posts/ = map(markdown, template.ori)
   package.yaml = yaml(package.json)
+  ReadMe.md
   teamLead = teamData.yaml/0/name
   template = fixtures/template.ori
 }
