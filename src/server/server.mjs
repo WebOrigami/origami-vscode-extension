@@ -61,9 +61,9 @@ connection.onInitialize(
   }
 );
 
-connection.onInitialized(() => {
-  console.log("Origami LSP initialized");
-});
+// connection.onInitialized(() => {
+//   console.log("Origami LSP initialized");
+// });
 
 connection.languages.diagnostics.on(async (params) => {
   const document = documents.get(params.textDocument.uri);
