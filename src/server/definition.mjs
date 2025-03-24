@@ -49,8 +49,8 @@ export default async function definition(
     return null;
   }
 
-  if (keys.length === 0 && compileResult && !(compileResult instanceof Error)) {
-    // Path is a single key, try looking for local declarations first
+  if (compileResult && !(compileResult instanceof Error)) {
+    // Try looking for first key as local declaration first
     const range = localDeclarationRange(compileResult, rootKey, lspPosition);
     if (range !== null) {
       return {
