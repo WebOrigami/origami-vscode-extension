@@ -24,9 +24,19 @@ export const compileResults = new Map();
  */
 export function validate(document) {
   const text = document.getText();
+  const compilers = {
+    origami: compile.expression,
+    "origami-html": compile.templateDocument,
+    "origami-markdown": compile.templateDocument,
+  };
+  const compiler = compilers[document.languageId];
+  if (!compiler) {
+    throw new Error(`Unknown language ID: ${document.languageId}`);
+  }
+
   let result;
   try {
-    result = text.trim().length > 0 ? compile.expression(text).code : null;
+    result = text.trim().length > 0 ? compiler(text).code : null;
   } catch (error) {
     result = /** @type {Error} */ (error);
   }
