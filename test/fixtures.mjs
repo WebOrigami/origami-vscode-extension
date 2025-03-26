@@ -4,7 +4,7 @@ import url from "node:url";
 import { TextDocument } from "vscode-languageserver-textdocument";
 
 // Return an Origami document and associated data that can be used for testing
-export default async function documentFixture() {
+export async function origamiFixture() {
   const uri = url.resolve(import.meta.url, "fixtures/test.ori");
   const filePath = url.fileURLToPath(uri);
   const source = String(await fs.readFile(filePath));

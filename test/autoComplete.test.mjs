@@ -1,12 +1,12 @@
 import assert from "node:assert";
 import { describe, test } from "node:test";
 import { autoComplete } from "../src/server/autoComplete.mjs";
-import documentFixture from "./documentFixture.mjs";
+import { origamiFixture } from "./fixtures.mjs";
 
 describe("auto complete", () => {
   test("completions include names of files between source file and workspace root", async () => {
     const { compileResult, document, workspaceFolderPaths } =
-      await documentFixture();
+      await origamiFixture();
 
     const position = { line: 0, character: 0 };
     const completions = await autoComplete(
@@ -23,7 +23,7 @@ describe("auto complete", () => {
 
   test("completions include object keys and lambda parameters within scope of cursor", async () => {
     const { compileResult, document, workspaceFolderPaths } =
-      await documentFixture();
+      await origamiFixture();
 
     // Get a position inside the template substitution in the lambda
     const text = document.getText();
@@ -43,7 +43,7 @@ describe("auto complete", () => {
 
   test("completions after path with trailing slash include file names", async () => {
     const { compileResult, document, workspaceFolderPaths } =
-      await documentFixture();
+      await origamiFixture();
 
     // Get a position after a path fragment
     const text = document.getText();

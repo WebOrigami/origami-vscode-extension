@@ -36,6 +36,10 @@ export function activate(context) {
   const documentSelector = [
     { scheme: "file", language: "origami" },
     { scheme: "untitled", language: "origami" },
+    { scheme: "file", language: "origami-html" },
+    { scheme: "untitled", language: "origami-html" },
+    { scheme: "file", language: "origami-markdown" },
+    { scheme: "untitled", language: "origami-markdown" },
   ];
   const clientOptions = {
     documentSelector,

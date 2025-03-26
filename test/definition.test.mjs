@@ -2,12 +2,12 @@ import assert from "node:assert";
 import { describe, test } from "node:test";
 import definition from "../src/server/definition.mjs";
 import { getPathAtOffset } from "../src/utilities.mjs";
-import documentFixture from "./documentFixture.mjs";
+import { origamiFixture } from "./fixtures.mjs";
 
 describe("definition", () => {
   test("retrieve definition of a local variable", async () => {
     const { compileResult, document, workspaceFolderPaths } =
-      await documentFixture();
+      await origamiFixture();
     const position = positionOfText(document, "${ na"); // Inside "name"
     const location = await definition(
       document,
@@ -25,7 +25,7 @@ describe("definition", () => {
 
   test("retrieve definition of a non-enumerable property", async () => {
     const { compileResult, document, workspaceFolderPaths } =
-      await documentFixture();
+      await origamiFixture();
     const position = positionOfText(document, "data");
     const location = await definition(
       document,
@@ -43,7 +43,7 @@ describe("definition", () => {
 
   test("retrieve definition of a property with trailing slash", async () => {
     const { compileResult, document, workspaceFolderPaths } =
-      await documentFixture();
+      await origamiFixture();
     const position = positionOfText(document, "posts");
     const location = await definition(
       document,
@@ -61,7 +61,7 @@ describe("definition", () => {
 
   test("retrieve definition of a file between source file and workspace root", async () => {
     const { compileResult, document, workspaceFolderPaths } =
-      await documentFixture();
+      await origamiFixture();
     const position = positionOfText(document, "template.ori"); // template reference
     const location = await definition(
       document,
@@ -79,7 +79,7 @@ describe("definition", () => {
 
   test("retrieve definition of a file referenced with shorthand property", async () => {
     const { compileResult, document, workspaceFolderPaths } =
-      await documentFixture();
+      await origamiFixture();
     const position = positionOfText(document, "ReadMe.md");
     const location = await definition(
       document,

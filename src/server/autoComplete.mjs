@@ -206,7 +206,11 @@ function getPositionCompletions(code, lspPosition) {
         // Add each of the object keys
         const entries = declaration.slice(1);
         for (const entry of entries) {
-          const key = entry[0];
+          let key = entry[0];
+          // Remove parentheses from non-enumerable keys
+          if (key.startsWith("(") && key.endsWith(")")) {
+            key = key.slice(1, -1);
+          }
           completions.push({
             label: key,
             kind: CompletionItemKind.Property,
