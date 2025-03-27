@@ -15,22 +15,7 @@
       "contentName": "meta.frontmatter.origami",
       "patterns": [
         {
-          "begin": "^(?=[ \\t\\r\\n]*[A-Za-z0-9_]*[\\(\\.\\/\\{])",
-          "end": "^(?=---\\s*$)",
-          "patterns": [
-            {
-              "include": "source.origami"
-            }
-          ]
-        },
-        {
-          "begin": "^(?![ \\t\\r\\n]*[A-Za-z0-9_]*[\\(\\.\\/\\{])",
-          "end": "^(?=---\\s*$)",
-          "patterns": [
-            {
-              "include": "source.yaml"
-            }
-          ]
+          "include": "source.origami"
         }
       ]
     },
