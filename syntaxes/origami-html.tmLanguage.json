@@ -4,9 +4,6 @@
   "scopeName": "text.html.origami",
   "patterns": [
     {
-      "include": "text.html.basic"
-    },
-    {
       "begin": "^---$",
       "beginCaptures": {
         "0": { "name": "punctuation.definition.begin.frontmatter" }
@@ -37,6 +34,9 @@
           "include": "source.origami"
         }
       ]
+    },
+    {
+      "include": "text.html.basic"
     }
   ]
 }

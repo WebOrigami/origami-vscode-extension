@@ -54,7 +54,7 @@
       },
       {
         "language": "origami-markdown",
-        "scopeName": "text.html.markdown.origami",
+        "scopeName": "text.markdown.origami",
         "path": "./syntaxes/origami-markdown.tmLanguage.json"
       }
     ],
@@ -101,6 +101,13 @@
           "light": "./icon.svg",
           "dark": "./icon.svg"
         }
+      },
+      {
+        "id": "markdown-patched-for-origami",
+        "aliases": [
+          "markdown (patched for Origami)"
+        ],
+        "configuration": "./language-configuration.json"
       }
     ]
   }
