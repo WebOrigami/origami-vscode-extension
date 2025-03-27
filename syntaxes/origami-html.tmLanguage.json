@@ -4,18 +4,33 @@
   "scopeName": "text.html.origami",
   "patterns": [
     {
-      "begin": "^---$",
+      "begin": "^---\\s*$",
       "beginCaptures": {
         "0": { "name": "punctuation.definition.begin.frontmatter" }
       },
-      "end": "^---$",
+      "end": "^---\\s*$",
       "endCaptures": {
         "0": { "name": "punctuation.definition.end.frontmatter" }
       },
-      "contentName": "source.origami",
+      "contentName": "meta.frontmatter.origami",
       "patterns": [
         {
-          "include": "source.origami"
+          "begin": "^(?=[ \\t\\r\\n]*[A-Za-z0-9_]*[\\(\\.\\/\\{])",
+          "end": "^(?=---\\s*$)",
+          "patterns": [
+            {
+              "include": "source.origami"
+            }
+          ]
+        },
+        {
+          "begin": "^(?![ \\t\\r\\n]*[A-Za-z0-9_]*[\\(\\.\\/\\{])",
+          "end": "^(?=---\\s*$)",
+          "patterns": [
+            {
+              "include": "source.yaml"
+            }
+          ]
         }
       ]
     },
