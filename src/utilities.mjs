@@ -44,10 +44,15 @@ export function getPathAtOffset(text, offset, options) {
     }
   }
 
-  const fragment = start < end ? text.slice(start, end) : null;
-
-  if (requireSlash && !fragment?.includes("/")) {
-    return null;
+  let fragment = start < end ? text.slice(start, end) : null;
+  if (fragment) {
+    if (requireSlash && !fragment.includes("/")) {
+      return null;
+    }
+    if (fragment.startsWith("...") || fragment.startsWith("…")) {
+      // Path is part of a spread, remove spread operator
+      fragment = fragment.slice(3);
+    }
   }
 
   return fragment;
