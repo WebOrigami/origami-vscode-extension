@@ -1,6 +1,6 @@
 {
   "name": "origami-vscode-extension",
-  "version": "0.0.14",
+  "version": "0.0.15",
   "displayName": "Origami language support",
   "description": "Language support for the Origami expression language",
   "publisher": "WebOrigami",
@@ -29,15 +29,15 @@
   "dependencies": {
     "@types/node": "22.13.5",
     "@types/vscode": "1.98.0",
-    "@weborigami/async-tree": "0.2.11",
-    "@weborigami/language": "0.2.11",
+    "@weborigami/async-tree": "0.3.1",
+    "@weborigami/language": "0.3.1",
     "vscode-languageclient": "9.0.1",
     "vscode-languageserver": "9.0.1",
     "vscode-languageserver-textdocument": "1.0.12"
   },
   "devDependencies": {
     "@vscode/vsce": "3.3.0",
-    "@weborigami/origami": "0.2.11",
+    "@weborigami/origami": "0.3.1",
     "typescript": "5.8.2"
   },
   "contributes": {
