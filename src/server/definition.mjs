@@ -39,8 +39,6 @@ export default async function definition(
   }
 
   const uri = document.uri;
-  const documentPath = fileURLToPath(uri);
-  const folderPath = path.dirname(documentPath);
 
   // Find path root in project scope, might be a file or a folder
   const keys = targetPath.split("/");
@@ -49,16 +47,43 @@ export default async function definition(
     return null;
   }
 
-  if (compileResult && !(compileResult instanceof Error)) {
-    // Try looking for first key as local declaration first
+  const didCompile = compileResult && !(compileResult instanceof Error);
+
+  // If the key contains a period, try entire thing as a local
+  if (didCompile) {
     const range = localDeclarationRange(compileResult, rootKey, lspPosition);
     if (range !== null) {
-      return {
-        uri,
-        range,
-      };
+      return { uri, range };
+    }
+
+    // If the key contains a period, try just the head of the key as a local
+    if (rootKey.includes(".")) {
+      const keyHead = rootKey.split(".")[0];
+      const range = localDeclarationRange(compileResult, keyHead, lspPosition);
+      if (range !== null) {
+        return { uri, range };
+      }
     }
   }
+
+  const location = await externalLocation(
+    uri,
+    rootKey,
+    keys,
+    workspaceFolderPaths
+  );
+  return location;
+}
+
+async function externalLocation(uri, rootKey, keys, workspaceFolderPaths) {
+  if (!uri.startsWith("file:")) {
+    // Document may be unsaved or use some other schema, so we can't find any
+    // external definitions.
+    return null;
+  }
+
+  const documentPath = fileURLToPath(uri);
+  const folderPath = path.dirname(documentPath);
 
   const root = await findInProjectScope(
     rootKey,

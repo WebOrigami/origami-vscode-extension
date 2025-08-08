@@ -14,5 +14,5 @@
   package.yaml = Origami.yaml(package.json)
   ReadMe.md
   teamLead = teamData.yaml/0/name
-  template = fixtures/template.ori
+  templateRef = fixtures/template.ori
 }
