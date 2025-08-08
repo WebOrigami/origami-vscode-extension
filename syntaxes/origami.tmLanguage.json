@@ -14,6 +14,26 @@
     }
   ],
   "repository": {
+    "angle-bracket-path": {
+      "begin": "<",
+      "beginCaptures": {
+        "0": {
+          "name": "punctuation.definition.angle-bracket.begin.origami"
+        }
+      },
+      "end": ">",
+      "endCaptures": {
+        "0": {
+          "name": "punctuation.definition.angle-bracket.end.origami"
+        }
+      },
+      "name": "constant.other.link",
+      "patterns": [
+        {
+          "match": "[^>\t\n\r]+"
+        }
+      ]
+    },
     "array": {
       "begin": "\\[",
       "beginCaptures": {
@@ -38,26 +58,6 @@
         }
       ]
     },
-    "assignment": {
-      "name": "variable.origami",
-      "match": "([^=\\(\\)\\{\\}\\[\\]\\$\\\"\\'\\/:`%,#\\s]+/?)\\s*([=:](?!>))",
-      "captures": {
-        "1": {
-          "name": "entity.name.tag.origami"
-        },
-        "2": {
-          "name": "keyword.operator.origami"
-        }
-      }
-    },
-    "at-builtin": {
-      "name": "keyword.origami",
-      "match": "@[^=\\(\\)\\{\\}\\[\\]\\$\\\"\\'\\/:`%,#\\s]+"
-    },
-    "builtin-function": {
-      "name": "keyword.control.origami",
-      "match": "(?<!/)\\b[A-Za-z][A-Za-z0-9]*(?=(\\(|\\`))"
-    },
     "comment": {
       "patterns": [
         {
@@ -76,37 +76,16 @@
       "name": "meta.expression.origami",
       "patterns": [
         {
-          "include": "#namespace"
+          "include": "#angle-bracket-path"
         },
         {
           "include": "#array"
-        },
-        {
-          "include": "#assignment"
-        },
-        {
-          "include": "#at-builtin"
-        },
-        {
-          "include": "#builtin-function"
         },
         {
           "include": "#comment"
         },
         {
           "include": "#group"
-        },
-        {
-          "include": "#number"
-        },
-        {
-          "include": "#operators"
-        },
-        {
-          "include": "#identifier"
-        },
-        {
-          "include": "#separators"
         },
         {
           "include": "#string-double-quote"
@@ -116,8 +95,30 @@
         },
         {
           "include": "#template-literal"
+        },
+        {
+          "include": "#uri"
+        },
+        {
+          "include": "#function-call"
+        },
+        {
+          "include": "#number"
+        },
+        {
+          "include": "#key"
+        },
+        {
+          "include": "#separators"
+        },
+        {
+          "include": "#operators"
         }
       ]
+    },
+    "function-call": {
+      "name": "entity.name.function.origami",
+      "match": "[$_\\p{ID_Continue}\\.~][$_\\p{ID_Continue}\\.~@!+\\-*%&|^]+(?=\\()"
     },
     "group": {
       "begin": "\\(",
@@ -138,16 +139,12 @@
         }
       ]
     },
-    "identifier": {
+    "key": {
       "name": "variable.origami",
-      "match": "([^\\(\\)\\{\\}\\[\\]<>\\?!\\|\\-\\.=,\\/:`\"\\'«»\\\\→⇒…\\s]|(-(?!>))|(\\.(?!\\.\\.)))+"
-    },
-    "namespace": {
-      "name": "keyword.control.origami",
-      "match": "\\b(dev:|explore:|files:|help:|http:|https:|httpstree:|httptree:|image:|inherited:|js:|new:|node:|origami:|package:|scope:|site:|text:|tree:)"
+      "match": "[$_\\p{ID_Continue}\\.~][$_\\p{ID_Continue}\\.~@!+\\-*%&|^]+"
     },
     "number": {
-      "match": "(?x)        # turn on extended mode\n  -?        # an optional minus\n  (?:\n    0       # a zero\n    |       # ...or...\n    [1-9]   # a 1-9 character\n    \\d*     # followed by zero or more digits\n  )\n  (?:\n    (?:\n      \\.    # a period\n      \\d+   # followed by one or more digits\n    )?\n    (?:\n      [eE]  # an e character\n      [+-]? # followed by an option +/-\n      \\d+   # followed by one or more digits\n    )?      # make exponent optional\n  )?        # make decimal portion optional",
+      "match": "(\\d+(\\.\\d*)?)|(\\.\\d+)",
       "name": "constant.numeric.origami"
     },
     "operators": {
@@ -235,6 +232,10 @@
           "include": "#expression"
         }
       ]
+    },
+    "uri": {
+      "name": "constant.other.link",
+      "match": "\\b[a-z]+:[^,\\)\\]\\}\\s]+"
     }
   }
 }
