@@ -2,16 +2,16 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>${ data/title }</title>
+    <title>${ data.title }</title>
     <link rel="stylesheet" href="styles.css">
   </head>
   <body>
     <header>
       <img class="icon" src="personIcon.svg">
-      <h1>${ data/title }</h1>
+      <h1>${ data.title }</h1>
     </header>
     <ul class="tileGrid">
-    ${ map(data/team, (person) => `
+    ${ map(data.team, (person) => `
       <li class="tile">
         <a href="team/${ person/name }.html">
           <img class="avatar" src="thumbnails/${ person/image }" alt="${ person/name }">

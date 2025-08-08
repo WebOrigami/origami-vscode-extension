@@ -18,8 +18,8 @@ describe("definition", () => {
     assert(location);
     assert(location.uri.endsWith("fixtures/test.ori")); // in same file
     assert.deepEqual(location.range, {
-      start: { line: 7, character: 10 }, // start of parameter
-      end: { line: 7, character: 14 }, // end of parameter
+      start: { line: 8, character: 10 }, // start of parameter
+      end: { line: 8, character: 14 }, // end of parameter
     });
   });
 
@@ -55,7 +55,7 @@ describe("definition", () => {
     assert(location.uri.endsWith("fixtures/test.ori")); // in same file
     assert.deepEqual(location.range, {
       start: { line: 12, character: 2 },
-      end: { line: 12, character: 38 },
+      end: { line: 12, character: 43 },
     });
   });
 

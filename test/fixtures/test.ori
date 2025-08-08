@@ -1,17 +1,17 @@
 // Test file for spot-checking syntax highlighting and language features
 {
   (data) = https://example.com/teamData.yaml
-  about.html = mdHtml(ReadMe.md)
+  angle = <https://example.com>
+  about.html = Origami.mdHtml(ReadMe.md)
   bash_profile = ~/.bash_profile
   fn: (foo, bar) => foo + bar
   functions.json = src/client/builtins.json
   greet: (name) => `Hello, ${ name }!`
-  hosts = /etc/hosts
   index.html = greet(teamLead)
-  output.json = json(data)
-  feed.json = rss(posts)
-  posts/ = map(markdown, template.ori)
-  package.yaml = yaml(package.json)
+  output.json = Tree.json(data)
+  feed.json = Origami.rss(posts)
+  posts/ = Tree.map(markdown, template.ori)
+  package.yaml = Origami.yaml(package.json)
   ReadMe.md
   teamLead = teamData.yaml/0/name
   template = fixtures/template.ori
