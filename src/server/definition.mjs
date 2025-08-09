@@ -192,7 +192,7 @@ function matchProperty(key, property) {
   // can't tell this from the code, so we resort to looking at the source code
   // for the property. If the entire property is a name, it's a shorthand.
   const { location } = property;
-  const source = location.source.text.slice(
+  const source = location?.source.text.slice(
     location.start.offset,
     location.end.offset
   );
