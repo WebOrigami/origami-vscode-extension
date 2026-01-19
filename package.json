@@ -22,7 +22,7 @@
   "main": "./src/client/extension.cjs",
   "scripts": {
     "build": "mkdir -p build; vsce package --out build/origami.vsix",
-    "build-completions": "ori json src/scripts/completions.ori > src/client/builtins.json",
+    "build-completions": "ori Tree.json src/scripts/completions.ori > src/client/builtins.json",
     "test": "node --test --test-reporter=spec",
     "typecheck": "tsc"
   },
