@@ -29,15 +29,15 @@
   "dependencies": {
     "@types/node": "24.2.1",
     "@types/vscode": "1.102.0",
-    "@weborigami/async-tree": "0.6.7",
-    "@weborigami/language": "0.6.7",
+    "@weborigami/async-tree": "0.6.10",
+    "@weborigami/language": "0.6.10",
     "vscode-languageclient": "9.0.1",
     "vscode-languageserver": "9.0.1",
     "vscode-languageserver-textdocument": "1.0.12"
   },
   "devDependencies": {
     "@vscode/vsce": "3.6.0",
-    "@weborigami/origami": "0.6.7",
+    "@weborigami/origami": "0.6.10",
     "typescript": "5.9.2"
   },
   "contributes": {
