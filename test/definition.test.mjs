@@ -13,7 +13,7 @@ describe("definition", () => {
       document,
       position,
       workspaceFolderPaths,
-      compileResult
+      compileResult,
     );
     assert(location);
     assert(location.uri.endsWith("fixtures/test.ori")); // in same file
@@ -31,7 +31,7 @@ describe("definition", () => {
       document,
       position,
       workspaceFolderPaths,
-      compileResult
+      compileResult,
     );
     assert(location);
     assert(location.uri.endsWith("fixtures/test.ori")); // in same file
@@ -49,7 +49,7 @@ describe("definition", () => {
       document,
       position,
       workspaceFolderPaths,
-      compileResult
+      compileResult,
     );
     assert(location);
     assert(location.uri.endsWith("fixtures/test.ori")); // in same file
@@ -67,7 +67,7 @@ describe("definition", () => {
       document,
       position,
       workspaceFolderPaths,
-      compileResult
+      compileResult,
     );
     assert(location);
     assert(location.uri.endsWith("/test/fixtures/template.ori"));
@@ -85,7 +85,7 @@ describe("definition", () => {
       document,
       position,
       workspaceFolderPaths,
-      compileResult
+      compileResult,
     );
     assert(location);
     assert(location.uri.endsWith("ReadMe.md"));

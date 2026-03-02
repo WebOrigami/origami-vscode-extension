@@ -13,7 +13,7 @@ describe("auto complete", () => {
       document,
       position,
       workspaceFolderPaths,
-      compileResult
+      compileResult,
     );
 
     assert(hasCompletion(completions, "test.ori.html")); // in same folder
@@ -34,7 +34,7 @@ describe("auto complete", () => {
       document,
       position,
       workspaceFolderPaths,
-      compileResult
+      compileResult,
     );
 
     assert(hasCompletion(completions, "name")); // lambda parameter
@@ -55,7 +55,7 @@ describe("auto complete", () => {
       document,
       position,
       workspaceFolderPaths,
-      compileResult
+      compileResult,
     );
 
     assert(hasCompletion(completions, "builtins.json")); // file in same folder
@@ -64,6 +64,6 @@ describe("auto complete", () => {
 
 function hasCompletion(completions, label) {
   return Object.values(completions).some(
-    (completion) => completion.label === label
+    (completion) => completion.label === label,
   );
 }

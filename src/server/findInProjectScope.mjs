@@ -1,4 +1,4 @@
-import { FileTree } from "@weborigami/async-tree";
+import { FileMap } from "@weborigami/async-tree";
 import path from "node:path";
 import process from "node:process";
 
@@ -7,27 +7,27 @@ import process from "node:process";
 export default async function findInProjectScope(
   key,
   folderPath,
-  workspaceFolderPaths
+  workspaceFolderPaths,
 ) {
   // Special cases
   if (key === "") {
     // root folder
     return {
       path: "/",
-      value: new FileTree("/"),
+      value: new FileMap("/"),
     };
   } else if (key === "~" && process.env.HOME) {
     // home folder
     return {
       path: process.env.HOME,
-      value: new FileTree(process.env.HOME),
+      value: new FileMap(process.env.HOME),
     };
   }
 
   let currentPath = folderPath;
   while (currentPath !== "/") {
-    const fileTree = new FileTree(currentPath);
-    const value = await fileTree.get(key);
+    const tree = new FileMap(currentPath);
+    const value = await tree.get(key);
     if (value !== undefined) {
       return {
         path: path.join(currentPath, key),
@@ -37,7 +37,7 @@ export default async function findInProjectScope(
 
     const isWorkspaceFolder = workspaceFolderPaths.some(
       (workspaceFolder) =>
-        path.resolve(workspaceFolder) === path.resolve(currentPath)
+        path.resolve(workspaceFolder) === path.resolve(currentPath),
     );
     if (isWorkspaceFolder) {
       break;

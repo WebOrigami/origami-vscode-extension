@@ -1,4 +1,4 @@
-import { FileTree, trailingSlash } from "@weborigami/async-tree";
+import { FileMap, trailingSlash } from "@weborigami/async-tree";
 import { ops } from "@weborigami/language";
 import path from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
@@ -25,7 +25,7 @@ export default async function definition(
   document,
   lspPosition,
   workspaceFolderPaths,
-  compileResult
+  compileResult,
 ) {
   // Get the path the cursor is inside of
   const text = document.getText();
@@ -70,7 +70,7 @@ export default async function definition(
     uri,
     rootKey,
     keys,
-    workspaceFolderPaths
+    workspaceFolderPaths,
   );
   return location;
 }
@@ -88,7 +88,7 @@ async function externalLocation(uri, rootKey, keys, workspaceFolderPaths) {
   const root = await findInProjectScope(
     rootKey,
     folderPath,
-    workspaceFolderPaths
+    workspaceFolderPaths,
   );
 
   if (root === null) {
@@ -97,20 +97,20 @@ async function externalLocation(uri, rootKey, keys, workspaceFolderPaths) {
 
   // Follow as many keys as possible until we find a file
   let { path: filePath, value: current } = root;
-  while (current instanceof FileTree && keys.length > 0) {
+  while (current instanceof FileMap && keys.length > 0) {
     /** @type {string} */
     // @ts-ignore always defined
     const key = keys.shift();
     const value = await current.get(key);
     if (value === undefined) {
       break;
-    } else if (!(value instanceof FileTree)) {
+    } else if (!(value instanceof FileMap)) {
       filePath = path.join(current.path, key);
     }
     current = value;
   }
 
-  if (current instanceof FileTree) {
+  if (current instanceof FileMap) {
     // Path pointed to a folder, which we can't navigate to
     return null;
   }
@@ -146,16 +146,16 @@ function localDeclarationRange(code, key, lspPosition) {
         const properties = declaration.slice(1);
         const normalizedKey = trailingSlash.remove(key);
         const entry = properties.find((property) =>
-          matchProperty(normalizedKey, property)
+          matchProperty(normalizedKey, property),
         );
         location = entry?.location;
         break;
 
       case ops.lambda:
-        const args = declaration[1];
-        const arg = args.find((arg) => arg[1] === key);
-        if (arg) {
-          location = arg.location;
+        const parameters = declaration[2];
+        const parameter = parameters.find((arg) => arg[0] === key);
+        if (parameter) {
+          location = parameter.location;
         }
         break;
     }
@@ -194,7 +194,7 @@ function matchProperty(key, property) {
   const { location } = property;
   const source = location?.source.text.slice(
     location.start.offset,
-    location.end.offset
+    location.end.offset,
   );
   const isShorthand = source === name;
   return !isShorthand;
