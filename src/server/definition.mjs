@@ -30,12 +30,17 @@ export default async function definition(
   // Get the path the cursor is inside of
   const text = document.getText();
   const offset = document.offsetAt(lspPosition);
-  const targetPath = utilities.getPathAtOffset(text, offset);
+  let targetPath = utilities.getPathAtOffset(text, offset);
 
   // If the position isn't inside a path, return null. Also return null if the
   // path includes a colon -- we don't handle protocols (or port numbers).
   if (targetPath === null || targetPath.includes(":")) {
     return null;
+  }
+
+  // If the path is in angle brackets, remove them
+  if (targetPath.startsWith("<") && targetPath.endsWith(">")) {
+    targetPath = targetPath.slice(1, -1);
   }
 
   const uri = document.uri;

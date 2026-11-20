@@ -1,7 +1,8 @@
 // Test file for spot-checking syntax highlighting and language features
 {
   (data) = https://example.com/teamData.yaml
-  angle = <https://example.com>
+  angleFile = <fixtures/test.ori.md>
+  angleUrl = <https://example.com>
   about.html = Origami.mdHtml(ReadMe.md)
   bash_profile = ~/.bash_profile
   fn: (foo, bar) => foo + bar

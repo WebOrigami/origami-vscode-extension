@@ -18,8 +18,8 @@ describe("definition", () => {
     assert(location);
     assert(location.uri.endsWith("fixtures/test.ori")); // in same file
     assert.deepEqual(location.range, {
-      start: { line: 8, character: 10 }, // start of parameter
-      end: { line: 8, character: 14 }, // end of parameter
+      start: { line: 9, character: 10 }, // start of parameter
+      end: { line: 9, character: 14 }, // end of parameter
     });
   });
 
@@ -54,12 +54,12 @@ describe("definition", () => {
     assert(location);
     assert(location.uri.endsWith("fixtures/test.ori")); // in same file
     assert.deepEqual(location.range, {
-      start: { line: 12, character: 2 },
-      end: { line: 12, character: 43 },
+      start: { line: 13, character: 2 },
+      end: { line: 13, character: 43 },
     });
   });
 
-  test("retrieve definition of a file between source file and workspace root", async () => {
+  test("retrieve definition of local file between source file and workspace root", async () => {
     const { compileResult, document, workspaceFolderPaths } =
       await origamiFixture();
     const position = positionOfText(document, "template.ori"); // template reference
@@ -71,6 +71,24 @@ describe("definition", () => {
     );
     assert(location);
     assert(location.uri.endsWith("/test/fixtures/template.ori"));
+    assert.deepEqual(location.range, {
+      start: { line: 0, character: 0 },
+      end: { line: 0, character: 0 },
+    });
+  });
+
+  test("retrieve definition of local file using angle brackets", async () => {
+    const { compileResult, document, workspaceFolderPaths } =
+      await origamiFixture();
+    const position = positionOfText(document, "test.ori.md");
+    const location = await definition(
+      document,
+      position,
+      workspaceFolderPaths,
+      compileResult,
+    );
+    assert(location);
+    assert(location.uri.endsWith("/test/fixtures/test.ori.md"));
     assert.deepEqual(location.range, {
       start: { line: 0, character: 0 },
       end: { line: 0, character: 0 },
