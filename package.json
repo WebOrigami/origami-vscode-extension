@@ -36,7 +36,7 @@
     "vscode-languageserver-textdocument": "1.0.12"
   },
   "devDependencies": {
-    "@vscode/vsce": "3.6.0",
+    "@vscode/vsce": "4.1.1",
     "@weborigami/origami": "0.7.6",
     "typescript": "5.9.2"
   },
