@@ -1,4 +1,14 @@
-.vscode/**
-.vscode-test/**
+*.test.mjs
+../**
+.DS_Store
+.git/**
 .gitignore
+.vscode-test/**
+.vscode/**
+DevInstall.md
+build/**
+node_modules/**
+reinstall.sh
+test/**
+tsconfig.json
 vsc-extension-quickstart.md
