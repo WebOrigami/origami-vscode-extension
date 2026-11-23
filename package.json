@@ -27,17 +27,17 @@
     "typecheck": "tsc"
   },
   "dependencies": {
-    "@types/node": "24.2.1",
-    "@types/vscode": "1.102.0",
-    "@weborigami/async-tree": "0.6.12",
-    "@weborigami/language": "0.6.12",
+    "@types/node": "26.6.6",
+    "@types/vscode": "1.146.0",
+    "@weborigami/async-tree": "0.7.6",
+    "@weborigami/language": "0.7.6",
     "vscode-languageclient": "9.0.1",
     "vscode-languageserver": "9.0.1",
     "vscode-languageserver-textdocument": "1.0.12"
   },
   "devDependencies": {
     "@vscode/vsce": "3.6.0",
-    "@weborigami/origami": "0.6.12",
+    "@weborigami/origami": "0.7.6",
     "typescript": "5.9.2"
   },
   "contributes": {
